@@ -1,28 +1,29 @@
-:root {
-    --bg-edge: #cfdcfd;
-    --bg-middle: #d7fdff;
-    --bg-center: #f8fff8;
-    --text-color: #000;
-    --button-bg: #fff;
-  }
-  
-  .dark {
-    --bg-edge: #333;
-    --bg-middle: #444;
-    --bg-center: #555;
-    --text-color: #fff;
-    --button-bg: #666;
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-    background: radial-gradient(circle, var(--bg-center), var(--bg-middle), var(--bg-edge));
-    color: var(--text-color);
-    transition: background 0.3s, color 0.3s;
-  }
-  
-/* Bebas Neue for links */
+:root[data-theme="light"] {
+  --text: #000000;
+  --background: #fbfbfe;
+  --primary: #14223e;
+  --secondary: #dddbff;
+  --accent: #fda312;
+}
+
+:root[data-theme="dark"] {
+  --text: #ffffff;
+  --background: #010104;
+  --primary: #c1cfeb;
+  --secondary: #020024;
+  --accent: #ed9302;
+}
+
+/* Global styles using the new theme variables */
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Font definitions remain unchanged */
 @font-face {
   font-family: 'Bebas Neue';
   src: url('/fonts/BebasNeue.woff2') format('woff2'),
@@ -31,7 +32,6 @@
   font-style: normal;
 }
 
-/* Garet for general text */
 @font-face {
   font-family: 'Garet';
   src: url('/fonts/Garet.woff2') format('woff2'),
@@ -40,7 +40,6 @@
   font-style: normal;
 }
 
-/* Apply the fonts */
 body {
   font-family: 'Garet', sans-serif;
 }

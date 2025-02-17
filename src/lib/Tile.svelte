@@ -12,7 +12,8 @@
   
   <style>
     .tile {
-      background-color: #fff;
+      /* Change background-color to use the new secondary variable */
+      background-color: var(--secondary);
       border-radius: 8px;
       padding: 1rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -26,7 +27,8 @@
     }
     h2 {
       font-size: 1.5rem;
-      color: var(--text-color);
+      /* Update text color reference */
+      color: var(--text);
       margin: 0;
     }
   </style>

@@ -1,31 +1,34 @@
 <script>
-    import '../app.css'
-    import Menu from '$lib/Menu.svelte';
-    // Import any stores you use (e.g., for login state)
-  </script>
-  
-  <div class="logo-container">
-    <img src="/path/to/your-logo.png" alt="Your Logo" />
-  </div>
-  
+  import '../app.css';
+  import Menu from '$lib/Menu.svelte';
+</script>
 
-  <div class="app-container">
-    <!-- Non-sticky menu will be positioned in Menu.svelte -->
-    <Menu />
-    <slot />
-  </div>
-  
-  <style>
-    .app-container {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+<!-- Fixed logo at top left -->
+<div class="logo-container">
+  <img src="/path/to/your-logo.png" alt="Your Logo" />
+</div>
 
-    .logo-container {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-    }
+<!-- Main content container -->
+<div class="app-container">
+  <Menu />
+  <slot />
+</div>
 
-  </style>
+<style>
+  /* Fixed logo styling */
+  .logo-container {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000; /* Ensure logo appears above other content */
+  }
+
+  /* Main content container styling */
+  .app-container {
+    /* Add right padding to reserve space for the fixed menu.
+       Adjust '150px' to match the width (plus desired margin) of your Menu component. */
+    padding-right: 150px;
+    /* Add top margin to avoid overlap with the fixed logo if needed */
+    margin-top: 80px;
+  }
+</style>

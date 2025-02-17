@@ -3,38 +3,18 @@
   const dispatch = createEventDispatcher();
 
   // For demo purposes we auto-login with admin credentials.
-  // In a real app, you'll collect credentials from the user and verify them via Supabase.
   let email = 'admin@example.com';
   let username = 'admin';
 
   async function handleSubmit() {
-    // ==========================
     // SUPABASE INTEGRATION POINT:
-    // When you implement backend authentication with Supabase, you should:
-    //
-    // 1. Import your Supabase client instance:
-    //    import { supabase } from '$lib/supabaseClient';
-    //
-    // 2. Call the signInWithPassword (or similar) method with the entered email and password.
-    //    (If you add a password field to the form, bind it to a variable, e.g. let password = '')
-    //
-    // Example:
-    // const { data, error } = await supabase.auth.signInWithPassword({
-    //   email: email,
-    //   password: 'your-password-here' // Replace with the password variable if added.
-    // });
-    //
-    // 3. Handle any error that might occur:
-    // if (error) {
-    //   console.error('Login failed:', error.message);
-    //   // Optionally, display an error message to the user.
-    //   return;
-    // }
-    //
-    // 4. Optionally, fetch additional user profile information from Supabase.
-    // ==========================
-
-    // For now, automatically log in the admin user (simulate a successful login)
+    // Replace this demo auto-login with actual Supabase authentication.
+    // For example:
+    // import { supabase } from '$lib/supabaseClient';
+    // const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    // if (error) { handle the error; return; }
+    
+    // For now, simulate a successful login:
     dispatch('login', { email, username });
   }
 </script>
@@ -57,7 +37,8 @@
 
 <style>
   .modal {
-    background: var(--bg-center);
+    /* Update background to use the new global background variable */
+    background: var(--background);
     padding: 2rem;
     border-radius: 8px;
     max-width: 400px;
@@ -82,7 +63,8 @@
   }
   button {
     padding: 0.5rem 1rem;
-    background-color: var(--button-bg);
+    /* You might choose to update button backgrounds here as well */
+    background-color: var(--accent);
     border: none;
     border-radius: 4px;
     cursor: pointer;
