@@ -1,4 +1,5 @@
 <script>
+    import '../app.css'
     import Menu from '$lib/Menu.svelte';
     import ThemeToggle from '$lib/ThemeToggle.svelte';
     // Import any stores you use (e.g., for login state)

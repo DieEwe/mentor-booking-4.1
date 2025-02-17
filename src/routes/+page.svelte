@@ -9,7 +9,6 @@
 <main>
 	<section class="tiles" aria-label="Content Tiles">
 		{#each tiles as tile}
-			Title 123
 			<Tile title={tile} />
 		{/each}
 	</section>
@@ -20,9 +19,10 @@
 		padding: 2rem;
 		flex: 1;
 	}
-	.tiles {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 1.5rem;
-	}
+  .tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
 </style>
