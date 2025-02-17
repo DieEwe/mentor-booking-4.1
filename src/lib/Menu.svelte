@@ -1,16 +1,19 @@
 <script>
     import { user } from './stores'; // Assume a Svelte store holds login state
+    import ThemeToggle from '$lib/ThemeToggle.svelte';
   </script>
   
   <nav aria-label="Main Navigation" class="menu">
     {#if $user.loggedIn}
       <a href="/events" class="menu-link">Alle Coaching Events</a>
       <a href="/profile" class="menu-link">Mein Profil</a>
+      <ThemeToggle />
       <button on:click={() => {/* implement logout logic */}} class="menu-link">Logout</button>
     {:else}
       <!-- Bewerben opens a new tab -->
       <a href="https://your-bewerben-url.com" target="_blank" rel="noopener" class="menu-link">Bewerben</a>
       <button on:click={() => {/* open login modal */}} class="menu-link">Login</button>
+      <ThemeToggle />
     {/if}
   </nav>
   
