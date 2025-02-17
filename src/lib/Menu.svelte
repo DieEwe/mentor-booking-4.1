@@ -1,7 +1,6 @@
 <script>
   import { user } from './stores';
   import ThemeToggle from '$lib/ThemeToggle.svelte';
-  import { onMount } from 'svelte';
 
   // Demo auto‑login; replace with real authentication later.
   function loginAdmin() {
@@ -24,7 +23,14 @@
 </script>
 
 <nav class="menu">
-  <!-- Center: Only visible on desktop -->
+  <!-- Left: Logo (visible on desktop only) -->
+  <div class="menu-left">
+    <div class="menu-logo">
+      <img src="/path/to/your-logo.png" alt="Your Logo" />
+    </div>
+  </div>
+
+  <!-- Center: Navigation links (only when logged in) -->
   {#if $user.loggedIn}
     <div class="menu-center">
       <a href="/events" class="menu-link">Events</a>
@@ -32,7 +38,7 @@
     </div>
   {/if}
 
-  <!-- Right: Always visible -->
+  <!-- Right: Login/Logout, Theme Toggle, and burger button (on mobile) -->
   <div class="menu-right">
     {#if $user.loggedIn}
       <button on:click={logout} class="account-link">Logout</button>
@@ -41,13 +47,12 @@
     {/if}
     <ThemeToggle />
 
-    <!-- Burger button: Visible only on mobile when logged in -->
     {#if $user.loggedIn}
       <button class="burger" on:click={toggleBurger}>☰</button>
     {/if}
   </div>
 
-  <!-- Mobile Navigation Overlay: Only appears when burger is open -->
+  <!-- Mobile Navigation Overlay -->
   {#if burgerOpen}
     <div class="mobile-nav">
       <a href="/events" class="menu-link" on:click={closeBurger}>Events</a>
@@ -58,6 +63,7 @@
 
 
 
+
     <!-- Bewerben opens a new tab -->
     <!-- <a href="https://your-bewerben-url.com" target="_blank" rel="noopener" class="menu-link">Bewerben</a> -->
 
@@ -65,42 +71,36 @@
 <style>
 /* Base styles for the menu container */
 .menu {
-  position: relative;
   display: flex;
-  justify-content: flex-end; /* Right-aligned by default */
   align-items: center;
+  justify-content: space-between;
   padding: 1rem;
 }
 
-/* Center area: Positioned absolutely at the top center */
+/* Left section (logo) */
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-logo img {
+  height: 2rem;  /* Adjust as needed to match link height */
+}
+
+/* Center section: navigation links */
 .menu-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   gap: 1rem;
 }
 
-/* Right area: Contains login/logout, theme toggle, and burger */
+/* Right section: login/logout, theme toggle, burger button */
 .menu-right {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-/* Basic styling for links and buttons */
-.menu-link,
-.account-link {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.2rem;
-  color: var(--text);
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-/* Hide the burger button on desktop */
+/* Hide the burger button by default (mobile will override) */
 .burger {
   display: none;
   font-size: 1.5rem;
@@ -111,20 +111,21 @@
 
 /* Mobile Styles */
 @media (max-width: 600px) {
-  /* Hide the center links on mobile */
-  .menu-center {
+  /* Hide center links and logo on mobile */
+  .menu-center,
+  .menu-logo {
     display: none;
   }
   
-  /* Show the burger button on mobile */
+  /* Show burger button on mobile */
   .burger {
     display: inline-block;
   }
   
-  /* Style the mobile navigation overlay */
+  /* Mobile navigation overlay styling remains unchanged */
   .mobile-nav {
     position: absolute;
-    top: 100%; /* Just below the menu bar */
+    top: 100%; /* below the menu bar */
     right: 1rem;
     background: var(--background);
     border: 1px solid #ccc;
@@ -135,5 +136,6 @@
     z-index: 1000;
   }
 }
+
 
 </style>
