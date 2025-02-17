@@ -4,6 +4,9 @@
   // A simple store to track the current theme state
   export const isDark = writable(false);
 
+  // Reactive value for the button label.
+  $: themeLabel = $isDark ? 'dark' : 'light';
+
   function toggleTheme() {
     isDark.update(current => {
       const newTheme = !current;
@@ -15,7 +18,7 @@
 </script>
 
 <button on:click={toggleTheme} aria-label="Toggle Light/Dark Mode">
-  Toggle Theme
+  {themeLabel}
 </button>
 
 <style>
@@ -23,7 +26,7 @@
     margin: 1rem;
     padding: 0.5rem 1rem;
     /* Use the new accent color for the button background */
-    background: var(--accent);
+    background: var(--primary);
     border: none;
     border-radius: 4px;
     cursor: pointer;

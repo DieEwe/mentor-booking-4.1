@@ -12,46 +12,51 @@
   }
 </script>
 
-<nav aria-label="Main Navigation" class="menu">
+<nav aria-label="Account Controls" class="account-controls">
   {#if $user.loggedIn}
-    <a href="/events" class="menu-link">Alle Coaching Events</a>
-    <a href="/profile" class="menu-link">Mein Profil</a>
-    <ThemeToggle />
-    <button on:click={logout} class="menu-link">Logout</button>
+    <button on:click={logout} class="account-link">Logout</button>
   {:else}
-    <!-- Bewerben opens a new tab -->
-    <a href="https://your-bewerben-url.com" target="_blank" rel="noopener" class="menu-link">Bewerben</a>
     <button on:click={loginAdmin} class="menu-link">Login</button>
-    <ThemeToggle />
   {/if}
+  <ThemeToggle />
 </nav>
 
+
+    <!-- Bewerben opens a new tab -->
+    <!-- <a href="https://your-bewerben-url.com" target="_blank" rel="noopener" class="menu-link">Bewerben</a> -->
+
+
 <style>
-  /* Desktop styles: menu is fixed, vertically centered on the right with a fixed width */
-  .menu {
+  /* The account controls are fixed to the top right corner */
+    .account-controls {
     position: fixed;
     right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 1rem;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 1rem;
-    width: 200px; /* Ensures links span a consistent width */
   }
+  .account-link {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
   
   /* Responsive: on smartphones, the menu reverts to a centered top layout */
   @media (max-width: 600px) {
-    .menu {
-      position: static;
-      top: auto;
-      right: auto;
-      transform: none;
-      flex-direction: row;
-      justify-content: center;
-      width: auto;
-      margin: 1rem 0;
-    }
+    .account-controls {
+    position: static;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 0;
+    gap: 0.5rem;
   }
+}
   
   .menu-link {
     font-family: 'Bebas Neue', sans-serif;
