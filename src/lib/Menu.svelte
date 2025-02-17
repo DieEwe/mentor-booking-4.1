@@ -68,6 +68,7 @@
 <style>
 /* Base styles for the menu container */
 .menu {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;

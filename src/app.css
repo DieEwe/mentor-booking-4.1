@@ -1,15 +1,15 @@
 :root[data-theme="light"] {
   --text: #000000;        /* Black text for strong contrast */
   --background: #ffffff;   /* Pure white background */
-  --primary: #14213dff;      /* Dark blue remains for primary elements */
+  --primary: #fca311ff;      /* Dark blue remains for primary elements */
   --secondary: #888fa0ff;    /* Light gray for secondary elements to stand out on white */
-  --accent: #fca311ff;       /* Warm orange accent */
+  --accent: #14213dff;       /* Warm orange accent */
 }
 
 :root[data-theme="dark"] {
   --text: #ffffff;         /* White text on dark backgrounds */
-  --background: #121212;    /* Very dark gray for a deep background */
-  --primary: #1e88e5;       /* Brighter blue for primary elements in dark mode */
+  --background: #000000;    /* Very dark gray for a deep background */
+  --primary: #fca311ff;       /* Brighter blue for primary elements in dark mode */
   --secondary: #888fa0ff;     /* Medium-dark gray to contrast with the background */
   --accent: #fca311ff;        /* Bright orange accent for visual pop */
 }
@@ -22,6 +22,18 @@ body {
   color: var(--text);
   transition: background 0.3s, color 0.3s;
 }
+
+/* Style buttons on the right side and in the mobile nav */
+.menu-right button,
+.mobile-nav .menu-link {
+  background-color: var(--primary);
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 
 /* Font definitions remain unchanged */
 @font-face {

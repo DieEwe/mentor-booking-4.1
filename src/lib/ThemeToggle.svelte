@@ -3,7 +3,13 @@
   import { writable } from 'svelte/store';
 
   export const isDark = writable(false);
-  $: themeLabel = $isDark ? 'light' : 'dark';
+ 
+
+ // Reactive declaration for the image source.
+  // Replace the paths with your actual PNG file locations.
+  $: themeImage = $isDark
+    ? '/images/switchoff.png'  // Image for dark theme (switch toggled "on")
+    : '/images/switchon.png'; // Image for light theme (switch toggled "off")
 
   onMount(() => {
     document.documentElement.setAttribute('data-theme', 'light');
@@ -19,17 +25,20 @@
 </script>
 
 <button on:click={toggleTheme} aria-label="Toggle Light/Dark Mode">
-  {themeLabel}
+  <img src={themeImage} alt={$isDark ? "Switch to light mode" : "Switch to dark mode"} />
 </button>
 
 <style>
   button {
     margin: 1rem;
-    padding: 0.5rem 1rem;
-    /* Use the new accent color for the button background */
-    background: var(--primary);
+    padding: 0.5rem;
+    background: none;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
+  }
+  img {
+    display: block;
+    width: 2rem; /* Adjust size as needed */
+    height: auto;
   }
 </style>
