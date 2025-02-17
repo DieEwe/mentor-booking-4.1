@@ -1,20 +1,20 @@
 :root[data-theme="light"] {
-  --text: #000000;
-  --background: #fbfbfe;
-  --primary: #14223e;
-  --secondary: #dddbff;
-  --accent: #fda312;
+  --text: #000000;        /* Black text for strong contrast */
+  --background: #ffffff;   /* Pure white background */
+  --primary: #14213dff;      /* Dark blue remains for primary elements */
+  --secondary: #888fa0ff;    /* Light gray for secondary elements to stand out on white */
+  --accent: #fca311ff;       /* Warm orange accent */
 }
 
 :root[data-theme="dark"] {
-  --text: #ffffff;
-  --background: #010104;
-  --primary: #c1cfeb;
-  --secondary: #020024;
-  --accent: #ed9302;
+  --text: #ffffff;         /* White text on dark backgrounds */
+  --background: #121212;    /* Very dark gray for a deep background */
+  --primary: #1e88e5;       /* Brighter blue for primary elements in dark mode */
+  --secondary: #888fa0ff;     /* Medium-dark gray to contrast with the background */
+  --accent: #fca311ff;        /* Bright orange accent for visual pop */
 }
 
-/* Global styles using the new theme variables */
+/* Global styles using the theme variables */
 body {
   margin: 0;
   padding: 0;
