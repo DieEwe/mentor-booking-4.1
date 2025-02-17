@@ -26,7 +26,7 @@
   <!-- Left: Logo (visible on desktop only) -->
   <div class="menu-left">
     <div class="menu-logo">
-      <img src="/path/to/your-logo.png" alt="Your Logo" />
+      <img src="/images/g686.png" alt="Inklu-Connect Logo" />
     </div>
   </div>
 
@@ -61,9 +61,6 @@
   {/if}
 </nav>
 
-
-
-
     <!-- Bewerben opens a new tab -->
     <!-- <a href="https://your-bewerben-url.com" target="_blank" rel="noopener" class="menu-link">Bewerben</a> -->
 
@@ -84,7 +81,7 @@
 }
 
 .menu-logo img {
-  height: 2rem;  /* Adjust as needed to match link height */
+  height: 4rem;  /* Adjust as needed to match link height */
 }
 
 /* Center section: navigation links */

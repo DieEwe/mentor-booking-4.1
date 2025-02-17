@@ -14,7 +14,8 @@
 
   /* Main content container styling */
   .app-container {
-    /* Add top margin to avoid overlap with the fixed logo if needed */
-    margin-top: 0px;
+    max-width: 1200px; /* or whatever max width you prefer */
+  margin: 0 auto;    /* center the content */
+  padding: 0 1rem;   /* 1rem of space on left and right */
   }
 </style>

@@ -53,7 +53,8 @@
 <style>
   /* Reserve space on the right to avoid overlapping with the fixed menu */
   .events-container {
-    margin-right: 150px; /* Adjust this value to match your Menu's width + desired spacing */
+    margin: 0 auto;
+    padding: 1rem;
   }
 
   .view-toggle {

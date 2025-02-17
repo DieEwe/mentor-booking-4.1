@@ -1,16 +1,17 @@
 <script>
+  import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
 
-  // A simple store to track the current theme state
   export const isDark = writable(false);
+  $: themeLabel = $isDark ? 'light' : 'dark';
 
-  // Reactive value for the button label.
-  $: themeLabel = $isDark ? 'dark' : 'light';
+  onMount(() => {
+    document.documentElement.setAttribute('data-theme', 'light');
+  });
 
   function toggleTheme() {
     isDark.update(current => {
       const newTheme = !current;
-      // Set the data-theme attribute on the document element
       document.documentElement.setAttribute('data-theme', newTheme ? 'dark' : 'light');
       return newTheme;
     });
