@@ -1,12 +1,8 @@
 <script lang="ts">
   import Calendar from '$lib/components/Calendar.svelte';
   import type { EventInput } from '@fullcalendar/core';
-
-  // Sample events array with FullCalendar event format
-  let events: EventInput[] = [
-    { id: '1', start: '2025-03-01T10:00:00', end: '2025-03-01T12:00:00', title: 'Event 1' },
-    { id: '2', start: '2025-03-02T11:00:00', end: '2025-03-02T13:00:00', title: 'Event 2' }
-  ];
+  
+  export let events: any[]; // You can type this as CalendarEvent[] if you import the type
 
   let view: 'table' | 'calendar' = 'table';
 
@@ -14,7 +10,6 @@
     view = view === 'table' ? 'calendar' : 'table';
   }
 </script>
-
 <!-- Wrapper container for events view -->
 <div class="events-container">
   <!-- Toggle Buttons Section -->
@@ -33,11 +28,12 @@
     <table>
       <thead>
         <tr>
-          <th>Date and Time</th>
-          <th>Säule</th>
-          <th>Pledger</th>
+          <th>Datum und Uhrzeit</th>
           <th>Coach</th>
-          <th>Mentor</th>
+          <th>Pledger</th>
+          <th>Adresse</th>
+          <th>Säule</th>
+          <th>MentorIn</th>
         </tr>
       </thead>
       <tbody>
@@ -45,9 +41,10 @@
           <tr>
             <!-- Adjust these cell values to match the property names of your event objects -->
             <td>{event.dateAndTime}</td>
-            <td>{event.saeule}</td>
-            <td>{event.pledger}</td>
             <td>{event.coach}</td>
+            <td>{event.pledger}</td>
+            <td>{event.adress}</td>
+            <td>{event.saeule}</td>
             <td>{event.mentor}</td>
           </tr>
         {/each}

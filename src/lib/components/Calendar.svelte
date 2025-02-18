@@ -1,15 +1,14 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import type { CalendarEvent, CalendarOptions } from '../types/event-calendar';
     import FullCalendar from 'svelte-fullcalendar';
     import daygridPlugin from '@fullcalendar/daygrid';
     import timegridPlugin from '@fullcalendar/timegrid';
     import interactionPlugin from '@fullcalendar/interaction';
-    import type { CalendarOptions } from '@fullcalendar/core';
-
-    let calendarRef: any;
-    
-    export let events: any[] = [];
-    
+  
+    export let events: CalendarEvent[] = [];
+  
+    let calendarRef: InstanceType<typeof FullCalendar>;
+  
     let options: CalendarOptions = {
         plugins: [daygridPlugin, timegridPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
@@ -23,24 +22,16 @@
         selectable: true,
         weekends: true
     };
-
-    $: if (events) {
-        options = {
-            ...options,
-            events
-        };
-    }
-
+  
+    $: options = { ...options, events };
+  
     export function getAPI() {
         return calendarRef?.getAPI();
     }
 </script>
 
 <div class="calendar-container">
-    <FullCalendar 
-        bind:this={calendarRef}
-        {options}
-    />
+    <FullCalendar bind:this={calendarRef} {options} />
 </div>
 
 <style>

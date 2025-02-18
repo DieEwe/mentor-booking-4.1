@@ -1,42 +1,42 @@
 [
     {
       "Datum und Uhrzeit": "2025-02-17 14:00",
-      "Coach": "Nils",
-      "Pfleger": "Bredehöft",
-      "Absage": "Testabsage 2",
-      "State": "Teststatus 2",
+      "Coach": "Max",
+      "Pledger": "Bredehöft",
+      "Adresse": "Teststraße 2",
+      "Säule": "6",
       "MentorIn": "MentorIn 1"
     },
     {
       "Datum und Uhrzeit": "2025-02-17 15:00",
-      "Coach": "Nils",
-      "Pfleger": "Strukturi Bremen Test...",
-      "Absage": "Testabsage 3",
-      "State": "Teststatus 3",
+      "Coach": "Mia",
+      "Pledger": "Strukturi Bremen Test...",
+      "Adresse": "Teststraße 3",
+      "Säule": "6",
       "MentorIn": "MentorIn 2"
     },
     {
       "Datum und Uhrzeit": "2025-02-18 14:00",
-      "Coach": "Nils",
-      "Pfleger": "Radio Bremen",
-      "Absage": "Testabsage 4",
-      "State": "Teststatus 4",
+      "Coach": "Mia",
+      "Pledger": "Radio Bremen",
+      "Adresse": "Teststraße 2",
+      "Säule": "6",
       "MentorIn": "MentorIn 3"
     },
     {
       "Datum und Uhrzeit": "2025-02-18 15:00",
-      "Coach": "Nils",
-      "Pfleger": "Gastrosos direkt",
-      "Absage": "Testabsage 5",
-      "State": "Teststatus 5",
+      "Coach": "Max",
+      "Pledger": "Gastrosos direkt",
+      "Adresse": "Teststraße 2",
+      "Säule": "6",
       "MentorIn": "MentorIn 4"
     },
     {
       "Datum und Uhrzeit": "2025-02-19 10:00",
-      "Coach": "Nils",
-      "Pfleger": "Mustermann AG",
-      "Absage": "Testabsage 6",
-      "State": "Teststatus 6",
+      "Coach": "Mia",
+      "Pledger": "Mustermann AG",
+      "Adresse": "Teststraße 4",
+      "Säule": "6",
       "MentorIn": "MentorIn 5"
     }
   ]
