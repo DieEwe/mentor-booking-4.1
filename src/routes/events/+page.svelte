@@ -1,14 +1,15 @@
 <script lang="ts">
-  import Calendar from '$lib/components/Calendar.svelte';
-  import type { EventInput } from '@fullcalendar/core';
-  
-  export let events: any[]; // You can type this as CalendarEvent[] if you import the type
+    import Calendar from '$lib/components/Calendar.svelte';
+    import type { PageData } from './$types';
+    
+    export let data: PageData;
+    let events = data.events;
 
-  let view: 'table' | 'calendar' = 'table';
+    let view: 'table' | 'calendar' = 'table';
 
-  function toggleView() {
-    view = view === 'table' ? 'calendar' : 'table';
-  }
+    function toggleView() {
+        view = view === 'table' ? 'calendar' : 'table';
+    }
 </script>
 <!-- Wrapper container for events view -->
 <div class="events-container">
