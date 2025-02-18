@@ -40,12 +40,12 @@
         {#each events as event}
           <tr>
             <!-- Adjust these cell values to match the property names of your event objects -->
-            <td>{event.dateAndTime}</td>
-            <td>{event.coach}</td>
-            <td>{event.pledger}</td>
-            <td>{event.adress}</td>
-            <td>{event.saeule}</td>
-            <td>{event.mentor}</td>
+            <td>{event["Datum und Uhrzeit"]}</td>
+            <td>{event["Coach"]}</td>
+            <td>{event["Pledger"]}</td>
+            <td>{event["Adresse"]}</td>
+            <td>{event["Säule"]}</td>
+            <td>{event["MentorIn"]}</td>
           </tr>
         {/each}
       </tbody>
