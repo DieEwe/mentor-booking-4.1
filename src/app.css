@@ -11,7 +11,7 @@
   --background: #000000;    /* Very dark gray for a deep background */
   --primary: #fca311ff;       /* Brighter blue for primary elements in dark mode */
   --secondary: #888fa0ff;     /* Medium-dark gray to contrast with the background */
-  --accent: #fca311ff;        /* Bright orange accent for visual pop */
+  --accent: #14213dff;        /* Bright orange accent for visual pop */
 }
 
 /* Global styles using the theme variables */

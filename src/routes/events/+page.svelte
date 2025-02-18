@@ -9,37 +9,46 @@
   ];
 
   let view: 'table' | 'calendar' = 'table';
+
+  function toggleView() {
+    view = view === 'table' ? 'calendar' : 'table';
+  }
 </script>
 
 <!-- Wrapper container for events view -->
 <div class="events-container">
   <!-- Toggle Buttons Section -->
   <div class="view-toggle" role="group" aria-label="Toggle between table and calendar views">
-    <button on:click={() => view = 'table'} disabled={view === 'table'}>
-      Table View
+    <button on:click={toggleView} aria-pressed={view === 'calendar'}>
+      {view === 'table' ? 'Switch to Calendar View' : 'Switch to Table View'}
     </button>
-    <button on:click={() => view = 'calendar'} disabled={view === 'calendar'}>
-      Calendar View
+    <button on:click={() => window.open('https://cloud.seatable.io/dtable/external-links/custom/Coachings/', '_blank')} class="add-event">
+      Add Event
     </button>
   </div>
 
   <!-- Conditional rendering of view -->
   {#if view === 'table'}
     <!-- Custom Table View for events -->
-    <table aria-label="Coaching Events Table">
+    <table>
       <thead>
         <tr>
-          <th>Select</th>
-          <th>Date &amp; Time</th>
-          <th>Title</th>
+          <th>Date and Time</th>
+          <th>Säule</th>
+          <th>Pledger</th>
+          <th>Coach</th>
+          <th>Mentor</th>
         </tr>
       </thead>
       <tbody>
-        {#each events as event (event.id)}
+        {#each events as event}
           <tr>
-            <td><!-- Add selection control here (e.g., radio button) --></td>
-            <td>{event.start}</td>
-            <td>{event.title}</td>
+            <!-- Adjust these cell values to match the property names of your event objects -->
+            <td>{event.dateAndTime}</td>
+            <td>{event.saeule}</td>
+            <td>{event.pledger}</td>
+            <td>{event.coach}</td>
+            <td>{event.mentor}</td>
           </tr>
         {/each}
       </tbody>
@@ -65,7 +74,8 @@
 
   .view-toggle button {
     padding: 0.5rem 1rem;
-    background-color: var(--button-bg, #fff);
+    color: white;
+    background-color: var(--accent);
     border: none;
     border-radius: 4px;
     cursor: pointer;
