@@ -106,7 +106,7 @@ a {
 }
 .fc-toolbar-title {
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: medium;
 }
 .fc-event {
   border: none;
@@ -124,3 +124,4 @@ a {
 .fc-button:hover {
   background-color: darken(var(--accent), 10%);
 }
+/*fsefs*/
