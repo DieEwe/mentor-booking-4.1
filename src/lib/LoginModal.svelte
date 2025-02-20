@@ -19,31 +19,52 @@
 	}
 </script>
 
-<div class="modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
-	<h2 id="login-title">Login</h2>
-	<form on:submit|preventDefault={handleSubmit}>
-		<label for="email">Email-Adresse</label>
-		<input id="email" type="email" bind:value={email} required />
-
-		<label for="username">Benutzername</label>
-		<input id="username" type="text" bind:value={username} required />
-
-		<div class="buttons">
-			<button type="submit">Login</button>
-			<button type="button" on:click={() => dispatch('close')}>Cancel</button>
-		</div>
-	</form>
+<div class="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <h2 id="login-title">Login</h2>
+    <form on:submit|preventDefault={handleSubmit}>
+      <label for="email">Email-Adresse</label>
+      <input id="email" type="email" bind:value={email} required />
+      <label for="username">Benutzername</label>
+      <input id="username" type="text" bind:value={username} required />
+      <div class="buttons">
+        <button type="submit">Login</button>
+        <button type="button" on:click={() => dispatch('close')}>Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>
 
+
 <style>
-  .modal {
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal {
   background: var(--background);
   padding: 2rem;
-  border-radius: 8px; /* slightly larger rounding */
+  border-radius: var(--border-radius);
   max-width: 450px;
-  margin: 2rem auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease-out;
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 
   label {
     display: block;

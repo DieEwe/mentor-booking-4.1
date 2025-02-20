@@ -1,8 +1,5 @@
 <script lang="ts">
-	// Import the Tile component from your lib folder
 	import Tile from '$lib/Tile.svelte';
-
-	// Create an array of placeholder items (for instance, numbers or titles)
 	const tiles = ['Tile 1', 'Tile 2', 'Tile 3', 'Tile 4'];
 </script>
 
@@ -21,7 +18,7 @@
 	}
 	.tiles {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 1.5rem;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
 	}
 </style>

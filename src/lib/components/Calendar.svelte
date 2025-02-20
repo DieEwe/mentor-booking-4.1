@@ -20,7 +20,8 @@
 		events,
 		editable: true,
 		selectable: true,
-		weekends: true
+		weekends: true,
+		height: 'auto'
 	};
 
 	$: options = { ...options, events };
@@ -35,13 +36,12 @@
 </div>
 
 <style>
-        .calendar-container {
-        width: 100%;
-        height: 100%;
-        padding: 1rem;
-        background-color: var(--background);
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
+  .calendar-container {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--background);
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    margin-top: 1rem;
+  }
 </style>

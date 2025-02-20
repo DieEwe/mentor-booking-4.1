@@ -32,26 +32,24 @@
 	}
 </script>
 
-<nav class="menu">
+<nav class="menu sticky">
 	<!-- Left: Logo -->
 	<div class="menu-left">
 		<div class="menu-logo">
+			<!-- Use a vector logo for sharper scaling -->
 			<img src="/images/g686.png" alt="Inklu-Connect Logo" />
 		</div>
 	</div>
-
-	<!-- Center: Navigation links including login/logout -->
+	<!-- Center: Navigation links -->
 	<div class="menu-center">
 		{#if $user.loggedIn}
 			<a href="/events" class="menu-link">Events</a>
 			<a href="/profile" class="menu-link">Mein Profil</a>
 			<button on:click={logout} class="menu-link">Logout</button>
-			<button on:click={toggleActive}>Toggle Active State</button>
 		{:else}
 			<button on:click={loginAdmin} class="menu-link">Login</button>
 		{/if}
 	</div>
-
 	<!-- Right: Theme Toggle and burger menu -->
 	<div class="menu-right">
 		<ThemeToggle />
@@ -59,10 +57,9 @@
 			<button class="burger" on:click={toggleBurger}>☰</button>
 		{/if}
 	</div>
-
 	<!-- Mobile Navigation Overlay -->
 	{#if burgerOpen}
-		<div class="mobile-nav">
+		<div class="mobile-nav slide-in">
 			<a href="/events" class="menu-link" on:click={closeBurger}>Events</a>
 			<a href="/profile" class="menu-link" on:click={closeBurger}>Mein Profil</a>
 			<button on:click={logout} class="menu-link">Logout</button>
@@ -70,76 +67,67 @@
 	{/if}
 </nav>
 
+
 <!-- Bewerben opens a new tab -->
 <!-- <a href="https://your-bewerben-url.com" target="_blank" rel="noopener" class="menu-link">Bewerben</a> -->
 
 <style>
 	/* Base styles for the menu container */
 	.menu {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 1rem;
-	}
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 2rem;
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(5px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background 0.3s;
+}
 
-	/* Left section (logo) */
-	.menu-left {
-		display: flex;
-		align-items: center;
-	}
+.burger {
+	display: none;
+	font-size: 1.5rem;
+	background: none;
+	border: none;
+	cursor: pointer;
+	transition: transform 0.3s;
+}
 
-	.menu-logo img {
-		height: 4rem; /* Adjust as needed to match link height */
-	}
+.burger:hover {
+	transform: scale(1.1);
+}
 
-	/* Center section: navigation links */
-	.menu-center {
-		display: flex;
-		gap: 1rem;
-	}
+.mobile-nav {
+	position: absolute;
+	top: 100%;
+	right: 1rem;
+	background: var(--background);
+	border: 1px solid #ccc;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	z-index: 1000;
+	opacity: 0;
+	transform: translateY(-10px);
+	transition: opacity 0.3s, transform 0.3s;
+}
 
-	/* Right section: login/logout, theme toggle, burger button */
-	.menu-right {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-	}
+.mobile-nav.slide-in {
+	opacity: 1;
+	transform: translateY(0);
+}
 
-	/* Hide the burger button by default (mobile will override) */
-	.burger {
+@media (max-width: 768px) {
+	.menu-center,
+	.menu-logo {
 		display: none;
-		font-size: 1.5rem;
-		background: none;
-		border: none;
-		cursor: pointer;
 	}
-
-	/* Mobile Styles */
-	@media (max-width: 768px) {
-		/* Hide center links and logo on mobile */
-		.menu-center,
-		.menu-logo {
-			display: none;
-		}
-
-		/* Show burger button on mobile */
-		.burger {
-			display: inline-block;
-		}
-
-		/* Mobile navigation overlay styling remains unchanged */
-		.mobile-nav {
-			position: absolute;
-			top: 100%; /* below the menu bar */
-			right: 1rem;
-			background: var(--background);
-			border: 1px solid #ccc;
-			padding: 0.5rem;
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-			z-index: 1000;
-		}
+	.burger {
+		display: inline-block;
 	}
+}
 </style>
