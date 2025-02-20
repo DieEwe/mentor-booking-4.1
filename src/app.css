@@ -1,18 +1,28 @@
 :root[data-theme="light"] {
-  --text: #000000;        /* Black text for strong contrast */
-  --background: #ffffff;   /* Pure white background */
-  --primary: #fca311ff;      /* Dark blue remains for primary elements */
-  --secondary: #888fa0ff;    /* Light gray for secondary elements to stand out on white */
-  --accent: #14213dff;       /* Warm orange accent */
+  /* Old values:
+  --text: #000000;
+  --background: #ffffff;
+  --primary: #fca311ff;
+  --secondary: #888fa0ff;
+  --accent: #14213dff;
+  */
+  /* New values (example from Schedule‑X design) */
+  --text: #333333;           /* Soft dark text */
+  --background: #f7f7f7;      /* Clean, off‐white background */
+  --primary: #0055aa;         /* Deep blue for primary elements */
+  --secondary: #cccccc;       /* Light gray for secondary accents */
+  --accent: #ff6600;          /* Vibrant accent (orange) */
 }
 
 :root[data-theme="dark"] {
-  --text: #ffffff;         /* White text on dark backgrounds */
-  --background: #000000;    /* Very dark gray for a deep background */
-  --primary: #fca311ff;       /* Brighter blue for primary elements in dark mode */
-  --secondary: #888fa0ff;     /* Medium-dark gray to contrast with the background */
-  --accent: #14213dff;        /* Bright orange accent for visual pop */
+  /* Replace with a dark variant that still uses the same accents */
+  --text: #e0e0e0;
+  --background: #121212;
+  --primary: #3377dd;
+  --secondary: #555555;
+  --accent: #ff6600;
 }
+
 
 /* Global styles using the theme variables */
 body {
@@ -26,51 +36,21 @@ body {
 /* Global button styling */
 button, .menu-link {
   width: 10em;
-  position: relative;
   height: 3.5em;
-  border: 3px ridge var(--accent);
-  outline: none;
-  background-color: transparent;
-  color: var(--text);
-  transition: 1s;
-  border-radius: 0.3em;
+  border: none;  /* remove the ridge border */
+  border-radius: 4px;
+  background-color: var(--accent);
+  color: #fff;  /* white text on accent */
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+button:hover, .menu-link:hover {
+  background-color: darken(var(--accent), 10%); /* if using a preprocessor; or pick a slightly darker color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-button::after, .menu-link::after {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: 3%;
-  width: 95%;
-  height: 40%;
-  background-color: var(--background);
-  transition: 0.5s;
-  transform-origin: center;
-}
-
-button::before, .menu-link::before {
-  content: "";
-  transform-origin: center;
-  position: absolute;
-  top: 80%;
-  left: 3%;
-  width: 95%;
-  height: 40%;
-  background-color: var(--background);
-  transition: 0.5s;
-}
-
-button:hover::before, button:hover::after,
-.menu-link:hover::before, .menu-link:hover::after {
-  transform: scale(0)
-}
-
-button:hover, .menu-link:hover  {
-  box-shadow: inset 0px 0px 25px var(--accent);
-}
 
 /* Font definitions remain unchanged */
 @font-face {
@@ -100,7 +80,7 @@ a {
 /* OVERWRITING FULLCALENDAR STYLES */
 
 .fc {
-  font-family: var(--font-body);
+  font-family: 'Garet', sans-serif;  /* or your chosen font */
   color: var(--text);
   background-color: var(--background);
 }
@@ -113,7 +93,7 @@ a {
   border-radius: 4px;
   padding: 0.25rem;
   background-color: var(--primary);
-  color: var(--text);
+  color: #fff;
 }
 .fc-button {
   background-color: var(--accent);
@@ -121,6 +101,7 @@ a {
   border: none;
   border-radius: 4px;
 }
+/* 
 .fc-button:hover {
-  background-color: darken(var(--accent), 10%);
-}
+  background-color: use a darker variant of var(--accent)
+}*/
