@@ -18,8 +18,8 @@
     <button on:click={toggleView} aria-pressed={view === 'calendar'}>
       {view === 'table' ? 'Switch to Calendar View' : 'Switch to Table View'}
     </button>
-    <button on:click={() => window.open('https://cloud.seatable.io/dtable/external-links/custom/Coachings/', '_blank')} class="add-event">
-      Add Event
+    <button on:click={() => window.open('https://cloud.seatable.io/dtable/forms/custom/NeuerCoachingTermin/', '_blank')} class="add-event">
+      Neuer Termin
     </button>
   </div>
 
@@ -41,12 +41,12 @@
         {#each events as event}
           <tr>
             <!-- Adjust these cell values to match the property names of your event objects -->
-            <td>{event["Datum und Uhrzeit"]}</td>
-            <td>{event["Coach"]}</td>
-            <td>{event["Pledger"]}</td>
-            <td>{event["Adresse"]}</td>
-            <td>{event["Säule"]}</td>
-            <td>{event["MentorIn"]}</td>
+            <td>{event.originalData["Datum und Uhrzeit"]}</td>
+            <td>{event.originalData["Coach"]}</td>
+            <td>{event.originalData["Pledger"]}</td>
+            <td>{event.originalData["Adresse"]}</td>
+            <td>{event.originalData["Säule"]}</td>
+            <td>{event.originalData["MentorIn"]}</td>
           </tr>
         {/each}
       </tbody>
