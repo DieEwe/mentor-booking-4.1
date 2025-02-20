@@ -11,7 +11,7 @@
   --background: #f7f7f7;      /* Clean, off‐white background */
   --primary: #0055aa;         /* Deep blue for primary elements */
   --secondary: #cccccc;       /* Light gray for secondary accents */
-  --accent: #ff6600;          /* Vibrant accent (orange) */
+  --accent: #ffc470ff;          /* Vibrant accent (orange) */
 }
 
 :root[data-theme="dark"] {
@@ -20,7 +20,7 @@
   --background: #121212;
   --primary: #3377dd;
   --secondary: #555555;
-  --accent: #ff6600;
+  --accent: #ffc470ff;
 }
 
 
