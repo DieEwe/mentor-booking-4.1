@@ -47,7 +47,8 @@
 			<a href="/profile" class="menu-link">Mein Profil</a>
 			<button on:click={logout} class="menu-link">Logout</button>
 		{:else}
-			<button on:click={loginAdmin} class="menu-link">Login</button>
+			<a href="google.de" class="auth-button">Bewerben</a>
+			<button on:click={loginAdmin} class="auth-button">Login</button>
 		{/if}
 	</div>
 	<!-- Right: Theme Toggle and burger menu -->
@@ -73,61 +74,64 @@
 
 <style>
 	/* Base styles for the menu container */
-	.menu {
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 1rem 2rem;
-	background: rgba(255, 255, 255, 0.95);
-	backdrop-filter: blur(5px);
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	transition: background 0.3s;
+
+.menu {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Remove fancy background or shadows */
+  background: none;
+  box-shadow: none;
+  padding: 1rem 2rem; /* You can keep some spacing if you like */
 }
 
+/* .burger is a button, so remove any special styling except font-size if needed */
 .burger {
-	display: none;
-	font-size: 1.5rem;
-	background: none;
-	border: none;
-	cursor: pointer;
-	transition: transform 0.3s;
+  display: none; /* remains hidden on desktop */
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  /* Remove transform or transitions */
 }
-
 .burger:hover {
-	transform: scale(1.1);
+  transform: none;
 }
 
+/* .mobile-nav can keep positioning but remove background/border so text is black */
 .mobile-nav {
-	position: absolute;
-	top: 100%;
-	right: 1rem;
-	background: var(--background);
-	border: 1px solid #ccc;
-	padding: 0.5rem;
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	z-index: 1000;
-	opacity: 0;
-	transform: translateY(-10px);
-	transition: opacity 0.3s, transform 0.3s;
+  position: absolute;
+  top: 100%;
+  right: 1rem;
+  background: none;
+  border: none;
+  padding: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s; /* optional if you want a show/hide effect */
 }
-
 .mobile-nav.slide-in {
-	opacity: 1;
-	transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
+}
+.menu-logo img {
+  max-height: 40px;
+  width: auto;
 }
 
 @media (max-width: 768px) {
-	.menu-center,
-	.menu-logo {
-		display: none;
-	}
-	.burger {
-		display: inline-block;
-	}
+  .menu-center,
+  .menu-logo {
+    display: none;
+  }
+  .burger {
+    display: inline-block;
+  }
 }
+
 </style>

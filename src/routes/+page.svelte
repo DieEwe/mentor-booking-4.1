@@ -1,24 +1,30 @@
 <script lang="ts">
-	import Tile from '$lib/Tile.svelte';
-	const tiles = ['Tile 1', 'Tile 2', 'Tile 3', 'Tile 4'];
+	// Remove Tile import and tiles array as they are no longer needed.
 </script>
 
 <main>
-	<section class="tiles" aria-label="Content Tiles">
-		{#each tiles as tile}
-			<Tile title={tile} />
-		{/each}
-	</section>
+	<div class="big-image">
+		<img src="/images/mentoring.webp" alt="Mentoring" />
+	</div>
 </main>
 
 <style>
-	main {
-		padding: 2rem;
-		flex: 1;
-	}
-	.tiles {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 2rem;
-	}
+main {
+	padding: 2rem;
+	flex: 1;
+}
+
+/* New container for the big image */
+.big-image {
+	text-align: center; /* Center the image */
+}
+
+/* Style the image */
+.big-image img {
+	width: 100%;         /* Make it fluid */
+	max-width: 1200px;     /* Limit the maximum width */
+	height: auto;
+	border-radius: 10px;   /* Optional: rounded corners */
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+}
 </style>

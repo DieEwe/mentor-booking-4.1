@@ -28,13 +28,7 @@
 </button>
 
 <style>
-	button {
-		margin: 1rem;
-		padding: 0.5rem;
-		background: none;
-		border: none;
-		cursor: pointer;
-	}
+
 	img {
 		display: block;
 		width: 2rem; /* Adjust size as needed */

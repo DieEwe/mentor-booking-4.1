@@ -1,7 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
-
 	// For demo purposes we auto-login with admin credentials.
 	let email = 'admin@example.com';
 	let username = 'admin';
@@ -27,10 +26,8 @@
       <input id="email" type="email" bind:value={email} required />
       <label for="username">Benutzername</label>
       <input id="username" type="text" bind:value={username} required />
-      <div class="buttons">
-        <button type="submit">Login</button>
-        <button type="button" on:click={() => dispatch('close')}>Cancel</button>
-      </div>
+        <button>Login</button>
+        <button on:click={() => dispatch('close')}>Cancel</button>
     </form>
   </div>
 </div>
@@ -77,17 +74,5 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  .buttons {
-    margin-top: 1rem;
-    display: flex;
-    gap: 1rem;
-  }
-  button {
-    padding: 0.5rem 1rem;
-    /* You might choose to update button backgrounds here as well */
-    background-color: var(--accent);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+
 </style>
