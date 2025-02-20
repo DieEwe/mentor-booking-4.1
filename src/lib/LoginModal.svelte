@@ -40,7 +40,7 @@
   background: var(--background);
   padding: 2rem;
   border-radius: 8px; /* slightly larger rounding */
-  max-width: 400px;
+  max-width: 450px;
   margin: 2rem auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }

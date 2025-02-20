@@ -30,6 +30,33 @@
 
 	<!-- Conditional rendering of view -->
 	{#if view === 'table'}
+			<!-- Custom Table View for events -->
+			<table>
+				<thead>
+					<tr>
+						<th>Datum und Uhrzeit</th>
+						<th>Coach</th>
+						<th>Pledger</th>
+						<th>Adresse</th>
+						<th>Säule</th>
+						<th>MentorIn</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each events as event}
+						<tr>
+							<!-- Adjust these cell values to match the property names of your event objects -->
+							<td>{event.originalData['Datum und Uhrzeit']}</td>
+							<td>{event.originalData['Coach']}</td>
+							<td>{event.originalData['Pledger']}</td>
+							<td>{event.originalData['Adresse']}</td>
+							<td>{event.originalData['Säule']}</td>
+							<td>{event.originalData['MentorIn']}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		
 		<!-- Custom Table View for events -->
 		<table>
 			<thead>
@@ -63,7 +90,6 @@
 </div>
 
 <style>
-	/* Reserve space on the right to avoid overlapping with the fixed menu */
 	.events-container {
 		margin: 0 auto;
 		padding: 1rem;

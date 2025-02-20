@@ -12,8 +12,10 @@
 <style>
 	/* Main content container styling */
 	.app-container {
-		max-width: 1200px; /* or whatever max width you prefer */
-		margin: 0 auto; /* center the content */
-		padding: 0 1rem; /* 1rem of space on left and right */
-	}
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
 </style>

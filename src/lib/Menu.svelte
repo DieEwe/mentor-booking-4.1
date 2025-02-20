@@ -116,7 +116,7 @@
 	}
 
 	/* Mobile Styles */
-	@media (max-width: 600px) {
+	@media (max-width: 768px) {
 		/* Hide center links and logo on mobile */
 		.menu-center,
 		.menu-logo {
