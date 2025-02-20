@@ -1,37 +1,37 @@
 <script lang="ts">
-    import type { CalendarEvent, CalendarOptions } from '../types/event-calendar';
-    import FullCalendar from 'svelte-fullcalendar';
-    import daygridPlugin from '@fullcalendar/daygrid';
-    import timegridPlugin from '@fullcalendar/timegrid';
-    import interactionPlugin from '@fullcalendar/interaction';
-  
-    export let events: CalendarEvent[] = [];
-  
-    let calendarRef: InstanceType<typeof FullCalendar>;
-  
-    let options: CalendarOptions = {
-        plugins: [daygridPlugin, timegridPlugin, interactionPlugin],
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        events,
-        editable: true,
-        selectable: true,
-        weekends: true
-    };
-  
-    $: options = { ...options, events };
-  
-    export function getAPI() {
-        return calendarRef?.getAPI();
-    }
+	import type { CalendarEvent, CalendarOptions } from '../types/event-calendar';
+	import FullCalendar from 'svelte-fullcalendar';
+	import daygridPlugin from '@fullcalendar/daygrid';
+	import timegridPlugin from '@fullcalendar/timegrid';
+	import interactionPlugin from '@fullcalendar/interaction';
+
+	export let events: CalendarEvent[] = [];
+
+	let calendarRef: FullCalendar | null = null;
+
+	let options: CalendarOptions = {
+		plugins: [daygridPlugin, timegridPlugin, interactionPlugin],
+		initialView: 'dayGridMonth',
+		headerToolbar: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		},
+		events,
+		editable: true,
+		selectable: true,
+		weekends: true
+	};
+
+	$: options = { ...options, events };
+
+	export function getAPI() {
+		return calendarRef?.getAPI();
+	}
 </script>
 
 <div class="calendar-container">
-    <FullCalendar bind:this={calendarRef} {options} />
+	<FullCalendar bind:this={calendarRef} {options} />
 </div>
 
 <style>

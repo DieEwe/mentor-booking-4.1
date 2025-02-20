@@ -1,38 +1,38 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  const dispatch = createEventDispatcher();
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
 
-  // For demo purposes we auto-login with admin credentials.
-  let email = 'admin@example.com';
-  let username = 'admin';
+	// For demo purposes we auto-login with admin credentials.
+	let email = 'admin@example.com';
+	let username = 'admin';
 
-  async function handleSubmit() {
-    // SUPABASE INTEGRATION POINT:
-    // Replace this demo auto-login with actual Supabase authentication.
-    // For example:
-    // import { supabase } from '$lib/supabaseClient';
-    // const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    // if (error) { handle the error; return; }
-    
-    // For now, simulate a successful login:
-    dispatch('login', { email, username });
-  }
+	async function handleSubmit() {
+		// SUPABASE INTEGRATION POINT:
+		// Replace this demo auto-login with actual Supabase authentication.
+		// For example:
+		// import { supabase } from '$lib/supabaseClient';
+		// const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+		// if (error) { handle the error; return; }
+
+		// For now, simulate a successful login:
+		dispatch('login', { email, username });
+	}
 </script>
 
 <div class="modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
-  <h2 id="login-title">Login</h2>
-  <form on:submit|preventDefault={handleSubmit}>
-    <label for="email">Email-Adresse</label>
-    <input id="email" type="email" bind:value={email} required />
+	<h2 id="login-title">Login</h2>
+	<form on:submit|preventDefault={handleSubmit}>
+		<label for="email">Email-Adresse</label>
+		<input id="email" type="email" bind:value={email} required />
 
-    <label for="username">Benutzername</label>
-    <input id="username" type="text" bind:value={username} required />
+		<label for="username">Benutzername</label>
+		<input id="username" type="text" bind:value={username} required />
 
-    <div class="buttons">
-      <button type="submit">Login</button>
-      <button type="button" on:click={() => dispatch('close')}>Cancel</button>
-    </div>
-  </form>
+		<div class="buttons">
+			<button type="submit">Login</button>
+			<button type="button" on:click={() => dispatch('close')}>Cancel</button>
+		</div>
+	</form>
 </div>
 
 <style>

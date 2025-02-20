@@ -26,11 +26,13 @@
 
 /* Global styles using the theme variables */
 body {
-  margin: 0;
-  padding: 0;
-  background: var(--background);
-  color: var(--text);
-  transition: background 0.3s, color 0.3s;
+	margin: 0;
+	padding: 0;
+	background: var(--background);
+	color: var(--text);
+	transition:
+		background 0.3s,
+		color 0.3s;
 }
 
 /* Global button styling */
@@ -54,27 +56,29 @@ button:hover, .menu-link:hover {
 
 /* Font definitions remain unchanged */
 @font-face {
-  font-family: 'Bebas Neue';
-  src: url('/fonts/BebasNeue.woff2') format('woff2'),
-       url('/fonts/BebasNeue.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Bebas Neue';
+	src:
+		url('/fonts/BebasNeue.woff2') format('woff2'),
+		url('/fonts/BebasNeue.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: 'Garet';
-  src: url('/fonts/Garet.woff2') format('woff2'),
-       url('/fonts/Garet.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Garet';
+	src:
+		url('/fonts/Garet.woff2') format('woff2'),
+		url('/fonts/Garet.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 body {
-  font-family: 'Garet', sans-serif;
+	font-family: 'Garet', sans-serif;
 }
 
 a {
-  font-family: 'Garet', sans-serif;
+	font-family: 'Garet', sans-serif;
 }
 
 /* OVERWRITING FULLCALENDAR STYLES */
@@ -96,13 +100,13 @@ a {
   color: #fff;
 }
 .fc-button {
-  background-color: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+	background-color: var(--accent);
+	color: #fff;
+	border: none;
+	border-radius: 4px;
 }
 /* 
 .fc-button:hover {
-  background-color: darken(var(--accent), 10%);
+	background-color: darken(var(--accent), 10%);
 }
 /*fsefs*/
