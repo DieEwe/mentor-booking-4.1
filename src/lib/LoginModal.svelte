@@ -37,14 +37,14 @@
 
 <style>
   .modal {
-    /* Update background to use the new global background variable */
-    background: var(--background);
-    padding: 2rem;
-    border-radius: 8px;
-    max-width: 400px;
-    margin: 2rem auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
+  background: var(--background);
+  padding: 2rem;
+  border-radius: 8px; /* slightly larger rounding */
+  max-width: 400px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
   label {
     display: block;
     margin-top: 1rem;
