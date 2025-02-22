@@ -47,10 +47,13 @@
 </div>
 
 <style>
-  .calendar-container {
+.calendar-container {
     background-color: var(--background);
     border-radius: var(--border-radius);
     box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    width: 100%;             /* Ensures full width of the parent container */
+    min-width: 360px;        /* Sets a minimum width to maintain readability */
+    overflow-x: auto;        /* Enables horizontal scrolling on smaller screens */
   }
 
   :global(.day-header) {
@@ -58,11 +61,11 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-	font-size: 0.85rem;
+    font-size: 0.85rem;
   }
 
   :global(.weekday) {
-  	font-weight: normal;
-  	text-transform: uppercase;
-}
+    font-weight: normal;
+    text-transform: uppercase;
+  }
 </style>
