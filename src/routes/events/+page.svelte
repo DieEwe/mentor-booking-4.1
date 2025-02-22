@@ -12,7 +12,9 @@
 <div class="events-container">
 	<div class="view-toggle" role="group" aria-label="Toggle between table and calendar views">
 		<button on:click={toggleView} aria-pressed={view === 'calendar'}>
-			{view === 'table' ? 'Switch to Calendar View' : 'Switch to Table View'}
+			<span>
+			{view === 'table' ? 'Kalender' : 'Liste'}
+			</span>
 		</button>
 		<button
 			on:click={() => window.open('https://cloud.seatable.io/dtable/forms/custom/NeuerCoachingTermin/', '_blank')}
@@ -65,24 +67,41 @@
 		margin-bottom: 1.5rem;
 	}
 	.view-toggle button {
-		padding: 0.75rem 1.5rem;
-		color: #fff;
-		background-color: var(--accent);
-		border: none;
-		border-radius: var(--border-radius);
+		padding: 0.5em 1em;
+		max-width: 140px;
+		border-radius: 50px;
 		cursor: pointer;
-		transition: background-color 0.3s;
-	}
+		border: 0;
+		background-color: white;
+		box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+		letter-spacing: 1.5px;
+		text-transform: uppercase;
+		font-size: 15px;
+		transition: all 0.5s ease;
+		}
+
 	.view-toggle button:hover {
-		background-color: darken(var(--accent), 5%);
-	}
+		letter-spacing: 3px;
+		background-color: hsl(0, 0%, 0%);
+		color: hsl(0, 0%, 100%);
+		box-shadow: rgb(0, 0, 0)px 7px 29px 0px;
+		}
+
+	.view-toggle button:active {
+			letter-spacing: 3px;
+		background-color: hsl(0, 0%, 0%);
+		color: hsl(0, 0%, 100%);
+		box-shadow: rgb(0, 0, 0)px 0px 0px 0px;
+		transition: 100ms;
+		}
+
 	.table-responsive {
 		overflow-x: auto;
 	}
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		font-size: 1rem;
+		font-size: 0.85rem;
 	}
 	th,
 	td {

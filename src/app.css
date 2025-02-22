@@ -1,6 +1,7 @@
 :root[data-theme="light"] {
   --text: #000000;
-  --background: #c8ffb3;
+  --background: #d7e4be;
+  --button-background: #ffc400;
   --primary: #ffffff;
   --secondary: #868686;
   --accent: #31a104;
@@ -21,7 +22,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #c8ffb3;
+  background: #d7e4be;
   color: var(--text);
   font-family: 'Inter', sans-serif;
   transition: background 0.3s ease, color 0.3s ease;
@@ -33,38 +34,40 @@ body {
 
 /* Container for the entire page content */
 .app-container {
-  background-color: white;
+  background-color: var(--primary);
   max-width: 1200px; /* Optional: restrict maximum width */
   margin: 0 auto;
   overflow: hidden;  /* Ensures content respects the rounded corners */
 }
-
-/* Medium screens: add 25px margins on top, left, and right */
-@media (min-width: 768px) and (max-width: 1199px) {
-  .app-container {
-    margin: 25px auto;
-    border-radius: 20px;
-  }
-}
-
-/* Large screens: add 50px margins on top, left, and right */
-@media (min-width: 1200px) {
-  .app-container {
-    margin: 50px auto;
-    border-radius: 20px;
-  }
-}
-@media (max-width: 767px) {
+/* small screens: remove margins and border radius */
+@media (max-width: 500px) {
   .content-container {
     margin: 0;
     border-radius: 0;
   }
 }
 
+/* Medium screens: add 25px margins on top, left, and right */
+@media (min-width: 501px) and (max-width: 1024px) {
+  .app-container {
+    margin: 25px auto;
+    border-radius: 25px;
+  }
+}
+
+/* Large screens: add 50px margins on top, left, and right */
+@media (min-width: 1025px) {
+  .app-container {
+    margin: 50px auto;
+    border-radius: 25px;
+  }
+}
+
+
 /* Global button styling */
 
 
-   button, a, .menu-link {
+a, .menu-link {
     color: black;
     text-decoration: none;
     background: none;
@@ -77,7 +80,7 @@ body {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   
-  button:hover, a:hover, .menu-link:hover {
+a:hover, .menu-link:hover {
     color: gray;
   }
   
@@ -108,12 +111,17 @@ body {
 .fc {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;  /* or your chosen font */
   color: var(--text);
-  background-color: var(--background);
+  background-color: var(--primary);
 }
 .fc-toolbar-title {
-  font-size: 1.5rem;
+  font-size: 0.85em;
   font-weight: medium;
 }
+
+.fc-daygrid-event {
+    min-height: 8em;
+  }
+
 .fc-event {
   border: none;
   border-radius: 4px;
@@ -146,13 +154,14 @@ body {
 
 /* Define styles only for .auth-button */
 .auth-button {
+  box-sizing: border-box;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   outline: none;
   height: 40px;
   text-align: center;
   width: 130px;
   border-radius: 40px;
-  background: #c8ffb3;
+  background: #d7e4be;
   border: 2px solid #000000;
   color: #000000;
   letter-spacing: 1px;

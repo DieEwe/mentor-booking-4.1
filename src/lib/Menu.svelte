@@ -4,13 +4,6 @@
 	import { goto } from '$app/navigation';
 	import '../app.css';
 
-	// For example, control the active state with a reactive variable.
-	let isActive = false;
-
-	function toggleActive() {
-		isActive = !isActive;
-	}
-
 	// Demo auto‑login; replace with real authentication later.
 	function loginAdmin() {
 		user.set({ loggedIn: true, email: 'admin@example.com', username: 'admin' });
@@ -24,114 +17,201 @@
 
 	// Burger menu state for mobile view
 	let burgerOpen = false;
+	let closeTimer: ReturnType<typeof setTimeout> | null = null;
+
 	function toggleBurger() {
 		burgerOpen = !burgerOpen;
 	}
+
 	function closeBurger() {
 		burgerOpen = false;
+	}
+
+	function scheduleClose() {
+		// Set a delay (e.g., 600ms) before closing the menu
+		closeTimer = setTimeout(() => {
+			closeBurger();
+		}, 600);
+	}
+
+	function cancelClose() {
+		// Cancel the scheduled close if pointer reenters
+		if (closeTimer) {
+			clearTimeout(closeTimer);
+			closeTimer = null;
+		}
 	}
 </script>
 
 <nav class="menu sticky">
-	<!-- Left: Logo -->
-	<div class="menu-left">
-		<div class="menu-logo">
-			<!-- Use a vector logo for sharper scaling -->
-			<img src="/images/g686.png" alt="Inklu-Connect Logo" />
-		</div>
-	</div>
-	<!-- Center: Navigation links -->
-	<div class="menu-center">
-		{#if $user.loggedIn}
-			<a href="/events" class="menu-link">Events</a>
-			<a href="/profile" class="menu-link">Mein Profil</a>
-			<button on:click={logout} class="menu-link">Logout</button>
-		{:else}
-			<a href="google.de" class="auth-button">Bewerben</a>
-			<button on:click={loginAdmin} class="auth-button">Login</button>
-		{/if}
-	</div>
-	<!-- Right: Theme Toggle and burger menu -->
-	<div class="menu-right">
-		<ThemeToggle />
-		{#if $user.loggedIn}
-			<button class="burger" on:click={toggleBurger}>☰</button>
-		{/if}
-	</div>
-	<!-- Mobile Navigation Overlay -->
-	{#if burgerOpen}
-		<div class="mobile-nav slide-in">
-			<a href="/events" class="menu-link" on:click={closeBurger}>Events</a>
-			<a href="/profile" class="menu-link" on:click={closeBurger}>Mein Profil</a>
-			<button on:click={logout} class="menu-link">Logout</button>
-		</div>
-	{/if}
+    <div class="menu-left">
+        <a href="/" class="menu-logo">
+            <img src="/images/InkluConnectLogo.svg" alt="Inklu-Connect Logo"/>
+        </a>
+    </div>
+    
+    <div class="menu-center">
+        {#if $user.loggedIn}
+            <a href="/events" class="menu-link">Events</a>
+            <a href="/profile" class="menu-link">Mein Profil</a>
+            <button on:click={logout} class="menu-link">Logout</button>
+        {:else}
+            <a href="google.de" class="menu-link">Bewerben</a>
+            <button on:click={loginAdmin} class="menu-link">Login</button>
+        {/if}
+    </div>
+    
+    <div class="menu-right">
+        <ThemeToggle />
+        <button 
+            class="burger"
+            on:click={toggleBurger}
+            on:keydown={e => e.key === 'Escape' && closeBurger()}
+            aria-expanded={burgerOpen}
+            aria-label="Toggle mobile menu"
+        >
+            ☰
+        </button>
+        
+        {#if burgerOpen}
+            <div 
+                class="mobile-nav slide-in"
+                role="menu"
+				tabindex="-1"
+                on:mouseleave={scheduleClose}
+                on:mouseenter={cancelClose}
+            >
+                {#if $user.loggedIn}
+                    <a href="/events" on:click={closeBurger} role="menuitem" tabindex="0">Events</a>
+                    <a href="/profile" on:click={closeBurger} role="menuitem" tabindex="0">Mein Profil</a>
+                    <button on:click={logout} role="menuitem" tabindex="0">Logout</button>
+                {:else}
+                    <a href="google.de" on:click={closeBurger} role="menuitem" tabindex="0">Bewerben</a>
+                    <button on:click={loginAdmin} on:click={closeBurger} role="menuitem" tabindex="0">Login</button>
+                {/if}
+            </div>
+        {/if}
+    </div>
 </nav>
 
-
-<!-- Bewerben opens a new tab -->
-<!-- <a href="https://your-bewerben-url.com" target="_blank" rel="noopener" class="menu-link">Bewerben</a> -->
-
 <style>
-	/* Base styles for the menu container */
+	.menu {
+		position: sticky;
+		top: 0;
+		z-index: 1000;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: none;
+		box-shadow: none;
+		padding: 1rem 2rem;
+	}
 
-.menu {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* Remove fancy background or shadows */
-  background: none;
-  box-shadow: none;
-  padding: 1rem 2rem; /* You can keep some spacing if you like */
-}
+	.menu-logo img {
+		max-height: fit-content;
+		width: auto;
+	}
 
-/* .burger is a button, so remove any special styling except font-size if needed */
-.burger {
-  display: none; /* remains hidden on desktop */
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-  /* Remove transform or transitions */
-}
-.burger:hover {
-  transform: none;
-}
+	.menu-center a,
+	.menu-center button {
+		padding: 0.5em 1em;
+		max-width: 140px;
+		border-radius: 50px;
+		cursor: pointer;
+		border: 0;
+		background-color: white;
+		box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+		letter-spacing: 1.5px;
+		text-transform: uppercase;
+		font-size: 15px;
+		transition: all 0.5s ease;
+	}
 
-/* .mobile-nav can keep positioning but remove background/border so text is black */
-.mobile-nav {
-  position: absolute;
-  top: 100%;
-  right: 1rem;
-  background: none;
-  border: none;
-  padding: 0;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s, transform 0.3s; /* optional if you want a show/hide effect */
-}
-.mobile-nav.slide-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-.menu-logo img {
-  max-height: 40px;
-  width: auto;
-}
+	.menu-center a:hover,
+	.menu-center button:hover {
+		letter-spacing: 3px;
+		background-color: hsl(0, 0%, 0%);
+		color: hsl(0, 0%, 100%);
+		box-shadow: rgb(0, 0, 0)px 7px 29px 0px;
+		}
 
-@media (max-width: 768px) {
-  .menu-center,
-  .menu-logo {
-    display: none;
-  }
-  .burger {
-    display: inline-block;
-  }
-}
+	.menu-center a:active,
+	.menu-center button:active {
+		letter-spacing: 3px;
+		background-color: hsl(0, 0%, 0%);
+		color: hsl(0, 0%, 100%);
+		box-shadow: rgb(0, 0, 0)px 0px 0px 0px;
+	
+		transition: 100ms;
+	}
+	
 
+	.burger {
+		display: none;
+		font-size: 1.5rem;
+		background: none;
+		border: none;
+		margin: 0;
+		padding: 0;
+		cursor: pointer;
+	}
+
+	.burger:hover {
+		transform: none;
+	}
+
+	/* Modern mobile nav overlay styling */
+	.mobile-nav {
+		position: absolute;
+		top: 110%;
+		right: 0;
+		background: var(--primary); /* white in light theme; adjust for dark theme as needed */
+		color: var(--text);
+		border-radius: 8px;
+		padding: 1rem;
+		min-width: 200px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		opacity: 0;
+		transform: translateY(-10px) scale(0.95);
+		transition: opacity 0.3s ease, transform 0.3s ease;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.mobile-nav.slide-in {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+
+	/* Style for links/buttons within mobile nav */
+	.mobile-nav a,
+	.mobile-nav button {
+		display: block;
+		width: 100%;
+		text-align: left;
+		background: none;
+		border: none;
+		padding: 0.5rem 1rem;
+		font-size: 1rem;
+		color: var(--text);
+		cursor: pointer;
+		transition: background 0.2s ease;
+		border-radius: 4px;
+	}
+
+	.mobile-nav a:hover,
+	.mobile-nav button:hover {
+		background: rgba(0, 0, 0, 0.05);
+	}
+
+	@media (max-width: 768px) {
+		.menu-center,
+		.menu-logo {
+			display: none;
+		}
+		.burger {
+			display: inline-block;
+		}
+	}
 </style>
