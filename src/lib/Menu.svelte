@@ -74,22 +74,22 @@
         </button>
         
         {#if burgerOpen}
-            <div 
-                class="mobile-nav slide-in"
-                role="menu"
+				<div 
+				class="mobile-nav slide-in"
+				role="menu"
 				tabindex="-1"
-                on:mouseleave={scheduleClose}
-                on:mouseenter={cancelClose}
-            >
-                {#if $user.loggedIn}
-                    <a href="/events" on:click={closeBurger} role="menuitem" tabindex="0">Events</a>
-                    <a href="/profile" on:click={closeBurger} role="menuitem" tabindex="0">Mein Profil</a>
-                    <button on:click={logout} role="menuitem" tabindex="0">Logout</button>
-                {:else}
-                    <a href="google.de" on:click={closeBurger} role="menuitem" tabindex="0">Bewerben</a>
-                    <button on:click={loginAdmin} on:click={closeBurger} role="menuitem" tabindex="0">Login</button>
-                {/if}
-            </div>
+				on:mouseleave={scheduleClose}
+				on:mouseenter={cancelClose}
+			>
+				{#if $user.loggedIn}
+				<a href="/events" on:click={closeBurger} role="menuitem" tabindex="0">Events</a>
+				<a href="/profile" on:click={closeBurger} role="menuitem" tabindex="0">Mein Profil</a>
+				<button on:click={logout} role="menuitem" tabindex="0">Logout</button>
+				{:else}
+				<a href="google.de" on:click={closeBurger} role="menuitem" tabindex="0">Bewerben</a>
+				<button on:click={loginAdmin} on:click={closeBurger} role="menuitem" tabindex="0">Login</button>
+				{/if}
+			</div>
         {/if}
     </div>
 </nav>
@@ -161,30 +161,30 @@
 	}
 
 	/* Modern mobile nav overlay styling */
+/* Modern mobile nav overlay styling */
 	.mobile-nav {
-		position: absolute;
-		top: 110%;
+		position: fixed;
+		top: 50%;
 		right: 0;
-		background: var(--primary); /* white in light theme; adjust for dark theme as needed */
+		width: 250px;  /* Adjust width as needed */
+		background: white;
 		color: var(--text);
 		border-radius: 8px;
 		padding: 1rem;
-		min-width: 200px;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-		opacity: 0;
-		transform: translateY(-10px) scale(0.95);
-		transition: opacity 0.3s ease, transform 0.3s ease;
+		transform: translate(100%, -50%);
+		transition: transform 0.3s ease;
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-	}
+		z-index: 1100; /* Ensure it appears above the menu */
+		}
 
 	.mobile-nav.slide-in {
-		opacity: 1;
-		transform: translateY(0) scale(1);
-	}
+		transform: translate(0, -50%);
+		}
 
-	/* Style for links/buttons within mobile nav */
+		/* Style for links/buttons within mobile nav */
 	.mobile-nav a,
 	.mobile-nav button {
 		display: block;
@@ -198,14 +198,14 @@
 		cursor: pointer;
 		transition: background 0.2s ease;
 		border-radius: 4px;
-	}
+		}
 
 	.mobile-nav a:hover,
 	.mobile-nav button:hover {
 		background: rgba(0, 0, 0, 0.05);
-	}
+		}
 
-	@media (max-width: 768px) {
+@media (max-width: 768px) {
 		.menu-center,
 		.menu-logo {
 			display: none;
