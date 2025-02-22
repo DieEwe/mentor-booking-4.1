@@ -104,7 +104,7 @@
 		justify-content: space-between;
 		background: none;
 		box-shadow: none;
-		padding: 1rem 2rem;
+		padding: 2rem;
 	}
 
 	.menu-logo img {
@@ -203,7 +203,13 @@
 	.mobile-nav a:hover,
 	.mobile-nav button:hover {
 		background: rgba(0, 0, 0, 0.05);
-		}
+			}
+
+	.menu-right {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
 
 @media (max-width: 768px) {
 		.menu-center,

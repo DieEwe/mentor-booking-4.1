@@ -5,6 +5,7 @@
 	import daygridPlugin from '@fullcalendar/daygrid';
 	import timegridPlugin from '@fullcalendar/timegrid';
 	import interactionPlugin from '@fullcalendar/interaction';
+	import '../../../static/css/calendar.css';
 
 	export let events: CalendarEvent[] = [];
 
@@ -21,17 +22,32 @@
 		events,
 		editable: true,
 		selectable: true,
-		weekends: false,
+		weekends: true,
 		height: 'auto',
-        dayHeaderContent: function(arg: DayHeaderContentArg) {
-            const weekday = arg.date.toLocaleDateString(undefined, { weekday: 'short' });
-            const day = arg.date.getDate();
-            return { 
-                html: `<div class="day-header">
-                    <div class="weekday">${weekday}</div>
-                    <div class="day">${day}</div>
-                </div>` 
-            };
+		slotMinTime: '07:00:00',  // Start time
+		slotMaxTime: '18:00:00',  // End time
+		allDaySlot: false, // Hide all-day slot
+		// for 24-hour format:
+		slotLabelFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    },
+    eventTimeFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    },
+		dayHeaderContent: function(arg: DayHeaderContentArg) {
+        const weekday = arg.date.toLocaleDateString(undefined, { weekday: 'short' });
+        const isMonthView = arg.view.type === 'dayGridMonth';
+        
+        return { 
+            html: `<div class="day-header">
+                <div class="weekday">${weekday}</div>
+                ${!isMonthView ? `<div class="day">${arg.date.getDate()}</div>` : ''}
+            </div>` 
+        };
 		}
 	};
 
@@ -46,26 +62,4 @@
 	<FullCalendar bind:this={calendarRef} {options} />
 </div>
 
-<style>
-.calendar-container {
-    background-color: var(--background);
-    border-radius: var(--border-radius);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-    width: 100%;             /* Ensures full width of the parent container */
-    min-width: 360px;        /* Sets a minimum width to maintain readability */
-    overflow-x: auto;        /* Enables horizontal scrolling on smaller screens */
-  }
 
-  :global(.day-header) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-  }
-
-  :global(.weekday) {
-    font-weight: normal;
-    text-transform: uppercase;
-  }
-</style>

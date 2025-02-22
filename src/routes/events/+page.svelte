@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Calendar from '$lib/components/Calendar.svelte';
 	import type { PageData } from './$types';
-
+	import '../../app.css';
 	export let data: PageData;
 	let events = data.events;
 	let view: 'table' | 'calendar' = 'table';
@@ -11,19 +11,26 @@
 </script>
 
 <div class="events-container">
-	<div class="view-toggle" role="group" aria-label="Toggle between table and calendar views">
-		<button on:click={toggleView} aria-pressed={view === 'calendar'}>
-			<span>
-			{view === 'table' ? 'Kalender' : 'Liste'}
-			</span>
-		</button>
-		<button
-			on:click={() => window.open('https://cloud.seatable.io/dtable/forms/custom/NeuerCoachingTermin/', '_blank')}
-			class="add-event"
-		>
-			Neuer Termin
-		</button>
-	</div>
+    <div class="header-controls">
+        <div class="view-toggle" role="group" aria-label="Toggle between table and calendar views">
+            <button on:click={toggleView} aria-pressed={view === 'calendar'} class="toggle-btn">
+                {#if view === 'table'}
+                    <img src="/images/calendar.svg" alt="Switch to calendar view" class="toggle-icon" />
+                    <span class="sr-only">Kalender</span>
+                {:else}
+                    <img src="/images/list.svg" alt="Switch to list view" class="toggle-icon" />
+                    <span class="sr-only">Liste</span>
+                {/if}
+            </button>
+        </div>
+        
+        <button
+            on:click={() => window.open('https://cloud.seatable.io/dtable/forms/custom/NeuerCoachingTermin/', '_blank')}
+            class="button-55"
+        >
+            Neuer Termin
+        </button>
+    </div>
 
 	{#if view === 'table'}
     <div class="limiter">
@@ -64,10 +71,72 @@
 </div>
 
 <style>
+
+.header-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        width: 100%;
+    }
+
+    .view-toggle {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .toggle-btn {
+        padding: 0.5em 1em;
+        max-width: 140px;
+        border-radius: 50px;
+        cursor: pointer;
+        border: 0;
+        background-color: white;
+        box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-size: 15px;
+        transition: all 0.2s ease;
+    }
+
+    .toggle-btn:hover {
+        transform: scale(1.10);
+    }
+
+/* icons for the view toggle */
+	.toggle-icon {
+		width: 2.5rem;
+		height: 2.5rem;
+		display: inline-block;
+		vertical-align: middle;
+		transition: opacity 0.2s ease;
+	}
+
+	.toggle-icon:hover {
+		opacity: 0.8;
+	}
+
+	@media (max-width: 768px) {
+		.toggle-icon {
+			width: 2rem;
+			height: 2rem;
+		}
+	}
+/* container for events */
+
+    .events-container {
+        width: 100%;
+        max-width: 1170px; /* matches table width */
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+/* toggle for view */
 	.view-toggle {
 		display: flex;
-		gap: 1rem;
-		margin-bottom: 1.5rem;
+		gap: 0.5rem;
+		margin-bottom: 0 auto;
+		padding: 1rem 2rem;
 	}
 	.view-toggle button {
 		padding: 0.5em 1em;
@@ -80,27 +149,17 @@
 		letter-spacing: 1.5px;
 		text-transform: uppercase;
 		font-size: 15px;
-		transition: all 0.5s ease;
+		transition: all 0.2s ease;
 		}
 
 	.view-toggle button:hover {
-		letter-spacing: 3px;
-		background-color: hsl(0, 0%, 0%);
-		color: hsl(0, 0%, 100%);
-		box-shadow: rgb(0, 0, 0)px 7px 29px 0px;
+		transform: scale(1.10); /* grows to 110% of original size */
 		}
 
-	.view-toggle button:active {
-			letter-spacing: 3px;
-		background-color: hsl(0, 0%, 0%);
-		color: hsl(0, 0%, 100%);
-		box-shadow: rgb(0, 0, 0)px 0px 0px 0px;
-		transition: 100ms;
-		}
 
-		.table100-head th {
-			font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-			font-size: 18px;
-			font-weight: 350 }
+	.table100-head th {
+		font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+		font-size: 18px;
+		font-weight: 400 }
 
 </style>
