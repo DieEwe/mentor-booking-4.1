@@ -95,17 +95,22 @@
 </nav>
 
 <style>
-	.menu {
-		position: sticky;
-		top: 0;
-		z-index: 1000;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		background: none;
-		box-shadow: none;
-		padding: 2rem;
-	}
+    .menu {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+        z-index: 1000;
+        display: flex;
+		max-height: 54px;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        backdrop-filter: blur(8px);
+    }
 
 	.menu-logo img {
 		max-height: fit-content;
@@ -211,13 +216,21 @@
 		gap: 1rem;
 	}
 
-@media (max-width: 768px) {
-		.menu-center,
-		.menu-logo {
-			display: none;
-		}
-		.burger {
-			display: inline-block;
-		}
-	}
+    @media (max-width: 768px) {
+        .menu {
+            top: 0;
+            margin: 0;
+            border-radius: 0;
+            width: 100%;
+        }
+        
+        .menu-center,
+        .menu-logo {
+            display: none;
+        }
+        
+        .burger {
+            display: inline-block;
+        }
+    }
 </style>
