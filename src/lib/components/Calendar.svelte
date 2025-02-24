@@ -1,6 +1,14 @@
 <script lang="ts">
 	import type { CalendarEvent, CalendarOptions } from '../types/event-calendar';
-	import type { DayHeaderContentArg } from '@fullcalendar/core';
+	import type { DayHeaderContentArg, EventClickArg } from '@fullcalendar/core';
+	import { createEventDispatcher, type EventDispatcher } from 'svelte';
+
+	interface CalendarDispatchEvents {
+		eventClick: CalendarEvent['originalData'];
+	}
+
+	const dispatch: EventDispatcher<CalendarDispatchEvents> = createEventDispatcher();
+
 	import FullCalendar from 'svelte-fullcalendar';
 	import daygridPlugin from '@fullcalendar/daygrid';
 	import timegridPlugin from '@fullcalendar/timegrid';
@@ -28,11 +36,14 @@
 		slotMaxTime: '18:00:00',  // End time
 		allDaySlot: false, // Hide all-day slot
 		// for 24-hour format:
-		slotLabelFormat: {
+	slotLabelFormat: {
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
-    },
+		},
+	eventClick: (info: EventClickArg) => {
+        dispatch('eventClick', info.event.extendedProps.originalData);
+    	},
     eventTimeFormat: {
         hour: '2-digit',
         minute: '2-digit',

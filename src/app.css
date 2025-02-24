@@ -26,23 +26,36 @@
 body {
   margin: 0; 
   padding: 0;
-  background: #d7e4be;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background-image: url('/images/countryside2.webp');
+  background-size: 1920px auto; /* Set a fixed width for the background image */
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
   color: var(--text);
-  font-family: 'Inter', sans-serif;
-  transition: background 0.3s ease, color 0.3s ease;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-
-/*app-container in Layout */
-
-/* Container for the entire page content */
-.app-container {
-  background-color: var(--primary);
-  max-width: 1200px; /* Optional: restrict maximum width */
-  margin: 0 auto;
-  overflow: hidden;  /* Ensures content respects the rounded corners */
+/* For larger screens, allow the background-image to be responsive */
+@media (min-width: 1920px) {
+  body {
+    background-size: 100% auto;
+  }
 }
+
+/* Add a pseudo-element for scrolling content */
+body::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100vh; /* Start after the viewport height */
+  height: 100vh; /* Full viewport height */
+  background: #f4f3d8;
+  z-index: -1;
+}
+
 /* small screens: remove margins and border radius */
 @media (max-width: 500px) {
   .content-container {
@@ -202,3 +215,4 @@ a:hover, .menu-link:hover {
       padding: 0.5rem;
   }
 }
+

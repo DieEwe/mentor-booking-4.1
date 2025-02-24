@@ -43,7 +43,7 @@
 	}
 </script>
 
-<nav class="menu sticky">
+<nav class="menu">
     <div class="menu-left">
         <a href="/" class="menu-logo">
             <img src="/images/InkluConnectLogo.svg" alt="Inklu-Connect Logo"/>
@@ -87,7 +87,7 @@
 				<button on:click={logout} role="menuitem" tabindex="0">Logout</button>
 				{:else}
 				<a href="google.de" on:click={closeBurger} role="menuitem" tabindex="0">Bewerben</a>
-				<button on:click={loginAdmin} on:click={closeBurger} role="menuitem" tabindex="0">Login</button>
+				<button on:click={() => { loginAdmin(); closeBurger(); }} role="menuitem" tabindex="0">Login</button>
 				{/if}
 			</div>
         {/if}
@@ -95,32 +95,71 @@
 </nav>
 
 <style>
-    .menu {
-        position: fixed;
-        top: 1rem;
-        left: 1rem;
-        right: 1rem;
-        z-index: 1000;
-        display: flex;
-		max-height: 54px;
-        align-items: center;
-        justify-content: space-between;
-        background: white;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        backdrop-filter: blur(8px);
-    }
+	.menu {
+		position: fixed;
+		top: 2rem;
+		left: 50%;          /* Center horizontally */
+		transform: translateX(-50%); /* Complete the centering */
+		max-width: 1200px; /* Added max-width for very large screens */
+        min-width: 700px; /* Added min-width to prevent too narrow menu */ 
+		z-index: 1000; /* Ensure it appears above other content */
+		display: flex; /* Flex container */
+		height: 60px;               /* fixed height of 60px */
+		align-items: center;
+		justify-content: space-between;  /* separate left, center, and right */
+		background: rgba(255, 255, 255, 0.856);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		padding: 0 2rem;            /* horizontal padding only */
+		border-radius: 50px;
+		backdrop-filter: blur(8px);
+	}
+
+	/*LOGO*/
+	.menu-logo {
+		display: flex;
+		align-items: center;
+		height: 100%;      /* Take full height of menu */
+		padding: 0.5rem 0; /* Add some vertical padding for spacing */
+	}
 
 	.menu-logo img {
-		max-height: fit-content;
-		width: auto;
+		height: 75%;       /* Take 75% of the logo container height */
+		width: auto;       /* Maintain aspect ratio */
+		object-fit: contain; /* Ensure image scales properly */
+		max-height: 60px;  /* Set a maximum height as fallback */
 	}
+
+	/*LINKS*/
+	.menu-left {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		height: 100%;        /* Match menu height */
+}
+
+	/*MITTE*/
+	.menu-center {
+		flex: 1;                     /* takes up remaining horizontal space */
+		display: flex;
+		justify-content: center;     /* center the links horizontally */
+		align-items: center;
+		gap: 1rem;                   /* adds space between links/buttons */
+	}
+
+	/*RECHTS*/
+	.menu-right {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		height: 100%;        /* Match menu height */
+	}
+
+
 
 	.menu-center a,
 	.menu-center button {
-		padding: 0.5em 1em;
-		max-width: 140px;
+		padding: 0 1em;
+		height: 100%;                /* fill the 60px height */
 		border-radius: 50px;
 		cursor: pointer;
 		border: 0;
@@ -130,6 +169,9 @@
 		text-transform: uppercase;
 		font-size: 15px;
 		transition: all 0.5s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.menu-center a:hover,
@@ -137,15 +179,15 @@
 		letter-spacing: 3px;
 		background-color: hsl(0, 0%, 0%);
 		color: hsl(0, 0%, 100%);
-		box-shadow: rgb(0, 0, 0)px 7px 29px 0px;
-		}
+		box-shadow: rgb(0, 0, 0) 0 7px 29px 0;
+	}
 
 	.menu-center a:active,
 	.menu-center button:active {
 		letter-spacing: 3px;
 		background-color: hsl(0, 0%, 0%);
 		color: hsl(0, 0%, 100%);
-		box-shadow: rgb(0, 0, 0)px 0px 0px 0px;
+		box-shadow: none;
 	
 		transition: 100ms;
 	}
@@ -156,17 +198,12 @@
 		font-size: 1.5rem;
 		background: none;
 		border: none;
-		margin: 0;
 		padding: 0;
 		cursor: pointer;
 	}
 
-	.burger:hover {
-		transform: none;
-	}
 
 	/* Modern mobile nav overlay styling */
-/* Modern mobile nav overlay styling */
 	.mobile-nav {
 		position: fixed;
 		top: 50%;
@@ -210,27 +247,27 @@
 		background: rgba(0, 0, 0, 0.05);
 			}
 
-	.menu-right {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-	}
 
-    @media (max-width: 768px) {
-        .menu {
-            top: 0;
-            margin: 0;
-            border-radius: 0;
-            width: 100%;
-        }
-        
-        .menu-center,
-        .menu-logo {
-            display: none;
-        }
-        
-        .burger {
-            display: inline-block;
-        }
+
+	@media (max-width: 768px) {
+    .menu {
+		min-width: unset; /* Remove min-width on mobile */
+		width: calc(100% - 2rem); /* Dynamic width with margins */
+        top: 1rem;
+        padding: 0 1rem;
+        border-radius: 8px;
+        width: 100%;
+        /* Reduce padding for a more compact menu */
+        padding: 0.5rem 1rem;
     }
+    
+    .menu-center,
+    .menu-logo {
+        display: none;
+    }
+    
+    .burger {
+        display: inline-block;
+    }
+}
 </style>

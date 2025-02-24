@@ -280,9 +280,6 @@ tbody tr:hover {
   .table100 table tbody tr td:nth-child(3):before {
     content: "Pledger";
   }
-  .table100 table tbody tr td:nth-child(4):before {
-    content: "Adresse";
-  }
   .table100 table tbody tr td:nth-child(5):before {
     content: "Säule";
   }
@@ -298,7 +295,6 @@ tbody tr:hover {
 
   .column4,
   .column5,
-  .column6,
   .column1,
   .column2,
   .column3 {
