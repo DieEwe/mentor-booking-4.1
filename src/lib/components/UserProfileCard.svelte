@@ -1,56 +1,14 @@
-<!-- src/lib/components/ProfileCard.svelte -->
 <script lang="ts">
+    import type { UserProfile } from '$lib/types/user';
     import { createEventDispatcher } from 'svelte';
-    import type { UserData } from '$lib/types/user';
-    
-    // TODO: Import Supabase client
-    // import { supabase } from '$lib/supabaseClient';
     
     const dispatch = createEventDispatcher<{
-        updateProfile: UserData;
+        updateProfile: UserProfile;
     }>();
 
-    export let userData: UserData;
+    export let userData: UserProfile;
     let isEditing = false;
     let avatarUrl = userData.avatar_url || '/images/avatar-placeholder.jpg';
-
-    // TODO: Add these functions when implementing Supabase
-    /*
-    async function uploadAvatar(event: Event) {
-        const file = (event.target as HTMLInputElement).files?.[0];
-        if (file) {
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${userData.id}-avatar.${fileExt}`;
-            const filePath = `avatars/${fileName}`;
-
-            // Upload to Supabase Storage
-            const { error: uploadError } = await supabase.storage
-                .from('avatars')
-                .upload(filePath, file, { upsert: true });
-
-            if (!uploadError) {
-                userData.avatar_url = filePath;
-                await updateProfile();
-            }
-        }
-    }
-
-    async function updateProfile() {
-        try {
-            const { error } = await supabase
-                .from('profiles')
-                .update(userData)
-                .eq('id', userData.id);
-
-            if (!error) {
-                isEditing = false;
-                dispatch('updateProfile', userData);
-            }
-        } catch (error) {
-            console.error('Error updating profile:', error);
-        }
-    }
-    */
 </script>
 
 <div class="profile-card" role="region" aria-label="User Profile">

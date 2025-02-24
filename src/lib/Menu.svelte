@@ -1,19 +1,29 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { user } from './stores';
 	import ThemeToggle from '$lib/ThemeToggle.svelte';
 	import { goto } from '$app/navigation';
 	import '../app.css';
+	import LoginModal from '$lib/components/LoginModal.svelte';
+	let showLoginModal = false;
+
+	function closeLoginModal() {
+		showLoginModal = false;
+		
+	}
 
 	// Demo auto‑login; replace with real authentication later.
-	function loginAdmin() {
-		user.set({ loggedIn: true, email: 'admin@example.com', username: 'admin' });
-	}
+	// function loginAdmin() {
+	// 	user.set({ loggedIn: true, email: 'admin@example.com', username: 'admin' });
+	// }
 
-	async function logout() {
-		user.set({ loggedIn: false });
-		closeBurger();
-		await goto('/'); // Redirect to home page
-	}
+	function logout() {
+    user.set({ 
+        loggedIn: false,
+        role: 'guest'
+    });
+    closeBurger();
+}
 
 	// Burger menu state for mobile view
 	let burgerOpen = false;
@@ -41,6 +51,9 @@
 			closeTimer = null;
 		}
 	}
+
+	// Helper function that checks if the current pathname equals or starts with the link's URL.
+	$: isActive = (path: string) => $page.url.pathname === path;
 </script>
 
 <nav class="menu">
@@ -50,16 +63,18 @@
         </a>
     </div>
     
-    <div class="menu-center">
-        {#if $user.loggedIn}
-            <a href="/events" class="menu-link">Events</a>
-            <a href="/profile" class="menu-link">Mein Profil</a>
-            <button on:click={logout} class="menu-link">Logout</button>
-        {:else}
-            <a href="google.de" class="menu-link">Bewerben</a>
-            <button on:click={loginAdmin} class="menu-link">Login</button>
-        {/if}
-    </div>
+	<div class="menu-center">
+		{#if $user.loggedIn}
+			<a href="/events" class="menu-link" class:active={isActive('/events')}>Events</a>
+			<a href="/profile" class="menu-link" class:active={isActive('/profile')}>Mein Profil</a>
+			<button on:click={logout} class="menu-link">Logout</button>
+		{:else}
+			<a href="google.de" class="menu-link" on:click={closeBurger}>Bewerben</a>
+			<button class="menu-link" on:click={() => { showLoginModal = true; closeBurger(); }}>
+				Login
+			</button>
+		{/if}
+	</div>
     
     <div class="menu-right">
         <ThemeToggle />
@@ -73,26 +88,40 @@
             ☰
         </button>
         
-        {#if burgerOpen}
-				<div 
-				class="mobile-nav slide-in"
-				role="menu"
-				tabindex="-1"
-				on:mouseleave={scheduleClose}
-				on:mouseenter={cancelClose}
-			>
-				{#if $user.loggedIn}
+		{#if burgerOpen}
+		<div 
+			class="mobile-nav slide-in"
+			role="menu"
+			tabindex="-1"
+			on:mouseleave={scheduleClose}
+			on:mouseenter={cancelClose}
+		>
+			{#if $user.loggedIn}
 				<a href="/events" on:click={closeBurger} role="menuitem" tabindex="0">Events</a>
 				<a href="/profile" on:click={closeBurger} role="menuitem" tabindex="0">Mein Profil</a>
 				<button on:click={logout} role="menuitem" tabindex="0">Logout</button>
-				{:else}
+			{:else}
 				<a href="google.de" on:click={closeBurger} role="menuitem" tabindex="0">Bewerben</a>
-				<button on:click={() => { loginAdmin(); closeBurger(); }} role="menuitem" tabindex="0">Login</button>
+					<button 
+					on:click={() => {
+						showLoginModal = true;
+						closeBurger();
+					}} 
+					role="menuitem" 
+					tabindex="0"
+				>
+					Login
+					</button>
 				{/if}
 			</div>
-        {/if}
+		{/if}
     </div>
 </nav>
+
+
+{#if showLoginModal}
+	<LoginModal on:close={closeLoginModal} />
+{/if}
 
 <style>
 	.menu {
@@ -157,39 +186,39 @@
 
 
 	.menu-center a,
-	.menu-center button {
-		padding: 0 1em;
-		height: 100%;                /* fill the 60px height */
-		border-radius: 50px;
-		cursor: pointer;
-		border: 0;
-		background-color: white;
-		box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
-		letter-spacing: 1.5px;
-		text-transform: uppercase;
-		font-size: 15px;
-		transition: all 0.5s ease;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+    .menu-center button {
+        padding: 0 1em;
+        height: 100%;
+        border: none;
+        background: none;
+        font-size: 17px;
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: none;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
 
 	.menu-center a:hover,
 	.menu-center button:hover {
-		letter-spacing: 3px;
-		background-color: hsl(0, 0%, 0%);
-		color: hsl(0, 0%, 100%);
-		box-shadow: rgb(0, 0, 0) 0 7px 29px 0;
+		letter-spacing: 6px;
+        transform: scale(1.1); /* Just grow slightly on hover */
+        background: none;
+        color: inherit; /* Keep original text color */
+        box-shadow: none;
+        letter-spacing: normal;
 	}
 
 	.menu-center a:active,
 	.menu-center button:active {
 		letter-spacing: 3px;
-		background-color: hsl(0, 0%, 0%);
-		color: hsl(0, 0%, 100%);
-		box-shadow: none;
-	
-		transition: 100ms;
+        background-color: rgba(0, 0, 0, 0.05); /* Very light gray background when active */
+        transform: scale(1);
+        color: inherit;
+        box-shadow: none;
 	}
 	
 

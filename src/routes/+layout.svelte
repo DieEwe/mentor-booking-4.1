@@ -1,9 +1,16 @@
 <script lang="ts">
     import '../app.css';
     import Menu from '$lib/Menu.svelte';
+    import RoleSwitcher from '$lib/components/RoleSwitcher.svelte';
+    import { dev } from '$app/environment';
 </script>
 
 <div class="app-container">
+    <!--role switcher temporary-->
+    {#if dev}
+        <RoleSwitcher />
+    {/if}
+    
     <Menu />
     <main class="main-content">
         <div class="content-container">

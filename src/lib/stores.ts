@@ -1,12 +1,22 @@
 import { writable } from 'svelte/store';
+import type { UserRole } from './types/user';
 
-interface User {
-	loggedIn: boolean;
-	email?: string;
-	username?: string;
+
+
+interface UserState {
+    loggedIn: boolean;
+    role: UserRole;
+    email?: string;
+    username?: string;
 }
 
-export const user = writable<User>({ loggedIn: false });
+const initialState: UserState = {
+    loggedIn: false,
+    role: 'guest'
+};
+
+export const user = writable<UserState>(initialState);
+
 
 export const theme = writable<'light' | 'dark'>('light');
 
