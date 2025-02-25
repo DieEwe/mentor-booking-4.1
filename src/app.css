@@ -1,9 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-/* Local CSS files */
 
+/* Base Layout Structure */
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Main transparent container that wraps all page content */
+.transparent-container {
+    flex: 1;
+    width: 90%;
+    max-width: 1800px;
+    margin: 8rem auto 4rem;
+    background: rgba(194, 0, 178, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 2rem;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Individual page content containers */
+.content-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    margin: 1rem 0;
+}
 
 :root[data-theme="light"] {
   --text: #181818;
+  --text-rgb: 24, 24, 24;
   --background: #ffffff;
   --button-background: #ffc400;
   --primary: #ffffff;
@@ -15,6 +46,7 @@
 
 :root[data-theme="dark"] {
   --text: #ffffff;
+  --text-rgb: 255, 255, 255;
   --background: #181818;
   --primary: #7e7e7e;
   --secondary: #ffffff;
@@ -26,34 +58,43 @@
 body {
   margin: 0; 
   padding: 0;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   background-image: url('/images/Image.jpg');
-  background-size: 1920px auto; /* Set a fixed width for the background image */
+  background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  background-color: #181818;
   color: var(--text);
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+  pointer-events: none;
 }
 
 /* For larger screens, allow the background-image to be responsive */
 @media (min-width: 1920px) {
   body {
-    background-size: 100% auto;
+    background-position: center center;
   }
 }
 
-/* Add a pseudo-element for scrolling content */
-body::after {
-  content: '';
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 100vh; /* Start after the viewport height */
-  height: 100vh; /* Full viewport height */
-  background: #f4f3d8;
-  z-index: -1;
+/* For medium screens, maintain aspect ratio but scale down */
+@media (max-width: 1919px) and (min-width: 768px) {
+  body {
+    background-position: center top;
+  }
 }
 
 /* small screens: remove margins and border radius */
@@ -64,46 +105,27 @@ body::after {
   }
 }
 
-/* Medium screens: add 25px margins on top, left, and right */
+/* Medium screens*/
 @media (min-width: 501px) and (max-width: 1024px) {
-  .app-container {
-    margin: 25px auto;
+  .transparent-container {
+    margin: 8rem auto;
     border-radius: 25px;
   }
 }
 
-/* Large screens: add 50px margins on top, left, and right */
+/* Large screens*/
 @media (min-width: 1025px) {
-  .app-container {
-    margin: 50px auto;
+  .transparent-container {
+    margin: 8rem auto;
     border-radius: 25px;
   }
-}
-/* GENERAL CONTENT */
-.content-container {
-  background: transparent; /* Default for most content */
-  border-radius: 25px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 2rem;
-  min-height: 600px;
-}
-
-.opaque-content-container {
-  background: white; /* Specific use case for solid background */
-  border-radius: 25px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  padding: 2rem;
-  min-height: auto; /* Or any desired size */
 }
 
 @media (max-width: 768px) {
   .content-container {
       padding: 1rem;
   }
-
 }
-/* Global button styling */
-
 
 a, .menu-link {
     color: black;
@@ -236,4 +258,3 @@ a:hover, .menu-link:hover {
       padding: 0.5rem;
   }
 }
-

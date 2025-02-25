@@ -2,20 +2,14 @@
 	import { page } from '$app/stores';
 	import { user } from './stores';
 	import ThemeToggle from '$lib/ThemeToggle.svelte';
-	import { goto } from '$app/navigation';
 	import '../app.css';
 	import LoginModal from '$lib/components/LoginModal.svelte';
+
 	let showLoginModal = false;
 
 	function closeLoginModal() {
 		showLoginModal = false;
-		
 	}
-
-	// Demo auto‑login; replace with real authentication later.
-	// function loginAdmin() {
-	// 	user.set({ loggedIn: true, email: 'admin@example.com', username: 'admin' });
-	// }
 
 	function logout() {
     user.set({ 
@@ -23,7 +17,7 @@
         role: 'guest'
     });
     closeBurger();
-}
+	}
 
 	// Burger menu state for mobile view
 	let burgerOpen = false;
@@ -56,67 +50,55 @@
 	$: isActive = (path: string) => $page.url.pathname === path;
 </script>
 
-<nav class="menu">
-    <div class="menu-left">
-        <a href="/" class="menu-logo">
-            <img src="/images/InkluConnectLogo.svg" alt="Inklu-Connect Logo"/>
-        </a>
-    </div>
+<div class="navigation">
+    <a href="/" class="logo">
+        <img src="/images/InkluConnectLogo.svg" alt="Inklu-Connect Logo"/>
+    </a>
     
-	<div class="menu-center">
+	<div class="menu-container">
 		{#if $user.loggedIn}
-			<a href="/events" class="menu-link" class:active={isActive('/events')}>Events</a>
-			<a href="/profile" class="menu-link" class:active={isActive('/profile')}>Mein Profil</a>
-			<button on:click={logout} class="menu-link">Logout</button>
+			<div class="nav-links">
+				<a href="/events" class="nav-link" class:active={isActive('/events')}>Events</a>
+				<a href="/profile" class="nav-link" class:active={isActive('/profile')}>Mein Profil</a>
+				<button on:click={logout} class="nav-link">Logout</button>
+			</div>
 		{:else}
-			<a href="google.de" class="menu-link" on:click={closeBurger}>Bewerben</a>
-			<button class="menu-link" on:click={() => { showLoginModal = true; closeBurger(); }}>
+			<a href="google.de" class="nav-link" on:click={closeBurger}>Bewerben</a>
+			<button class="nav-link" on:click={() => { showLoginModal = true; closeBurger(); }}>
 				Login
 			</button>
 		{/if}
-	</div>
-    
-    <div class="menu-right">
         <ThemeToggle />
-        <button 
-            class="burger"
-            on:click={toggleBurger}
-            on:keydown={e => e.key === 'Escape' && closeBurger()}
-            aria-expanded={burgerOpen}
-            aria-label="Toggle mobile menu"
-        >
-            ☰
-        </button>
-        
-		{#if burgerOpen}
-		<div 
-			class="mobile-nav slide-in"
-			role="menu"
-			tabindex="-1"
-			on:mouseleave={scheduleClose}
-			on:mouseenter={cancelClose}
-		>
-			{#if $user.loggedIn}
-				<a href="/events" on:click={closeBurger} role="menuitem" tabindex="0">Events</a>
-				<a href="/profile" on:click={closeBurger} role="menuitem" tabindex="0">Mein Profil</a>
-				<button on:click={logout} role="menuitem" tabindex="0">Logout</button>
-			{:else}
-				<a href="google.de" on:click={closeBurger} role="menuitem" tabindex="0">Bewerben</a>
-					<button 
-					on:click={() => {
-						showLoginModal = true;
-						closeBurger();
-					}} 
-					role="menuitem" 
-					tabindex="0"
-				>
-					Login
-					</button>
-				{/if}
-			</div>
-		{/if}
-    </div>
-</nav>
+	</div>
+
+	{#if burgerOpen}
+	<div 
+		class="mobile-nav slide-in"
+		role="menu"
+		tabindex="-1"
+		on:mouseleave={scheduleClose}
+		on:mouseenter={cancelClose}
+	>
+		{#if $user.loggedIn}
+			<a href="/events" on:click={closeBurger} role="menuitem" tabindex="0">Events</a>
+			<a href="/profile" on:click={closeBurger} role="menuitem" tabindex="0">Mein Profil</a>
+			<button on:click={logout} role="menuitem" tabindex="0">Logout</button>
+		{:else}
+			<a href="google.de" on:click={closeBurger} role="menuitem" tabindex="0">Bewerben</a>
+				<button 
+				on:click={() => {
+					showLoginModal = true;
+					closeBurger();
+				}} 
+				role="menuitem" 
+				tabindex="0"
+			>
+				Login
+				</button>
+			{/if}
+		</div>
+	{/if}
+</div>
 
 
 {#if showLoginModal}
@@ -124,113 +106,53 @@
 {/if}
 
 <style>
-	.menu {
+	.navigation {
 		position: fixed;
 		top: 2rem;
-		left: 50%;          /* Center horizontally */
-		transform: translateX(-50%); /* Complete the centering */
-		max-width: 1200px; /* Added max-width for very large screens */
-        min-width: 750px; /* Added min-width to prevent too narrow menu */ 
-		z-index: 1000; /* Ensure it appears above other content */
-		display: flex; /* Flex container */
-		height: 60px;               /* fixed height of 60px */
-		align-items: center;
-		justify-content: space-between;  /* separate left, center, and right */
-		background: rgba(255, 255, 255, 0.856);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-		padding: 0 2rem;            /* horizontal padding only */
-		border-radius: 50px;
-		backdrop-filter: blur(8px);
+		left: 2rem;
+		right: 2rem;
+		z-index: 1000;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 2rem;
 	}
 
-	/*LOGO*/
-	.menu-logo {
+	.menu-container {
 		display: flex;
 		align-items: center;
-		height: 100%;      /* Take full height of menu */
-		padding: 0.5rem 0; /* Add some vertical padding for spacing */
+		gap: 2rem;
 	}
 
-	.menu-logo img {
-		height: 75%;       /* Take 75% of the logo container height */
-		width: auto;       /* Maintain aspect ratio */
-		object-fit: contain; /* Ensure image scales properly */
-		max-height: 60px;  /* Set a maximum height as fallback */
+	.logo {
+		height: 50px;
 	}
 
-	/*LINKS*/
-	.menu-left {
+	.nav-links {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
-		height: 100%;        /* Match menu height */
-}
-
-	/*MITTE*/
-	.menu-center {
-		flex: 1;                     /* takes up remaining horizontal space */
-		display: flex;
-		justify-content: center;     /* center the links horizontally */
-		align-items: center;
-		gap: 1rem;                   /* adds space between links/buttons */
+		gap: 1.5rem;
 	}
 
-	/*RECHTS*/
-	.menu-right {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		height: 100%;        /* Match menu height */
-	}
-
-
-
-	.menu-center a,
-    .menu-center button {
-        padding: 0 1em;
-        height: 100%;
-        border: none;
-        background: none;
-        font-size: 17px;
-        transition: transform 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: none;
-        text-transform: uppercase;
-		text-decoration: none; /* Add this line */
-    }
-
-	.menu-center a:hover,
-	.menu-center button:hover{ 	
-        transform: scale(1.1); /* Just grow slightly on hover */
-        background: none;
-        color: inherit; /* Keep original text color */
-        box-shadow: none;
-		text-decoration: none; /* Add this line */
-	}
-
-	.menu-center a:active,
-	.menu-center button:active {
-        background-color: rgba(0, 0, 0, 0.05); /* Very light gray background when active */
-        transform: scale(1);
-        color: inherit;
-        box-shadow: none;
-	}
-	
-
-	.burger {
-		display: none;
-		font-size: 1.5rem;
+	.nav-link {
+		font-family: 'Inter', sans-serif;
+		font-size: 20px;
+		font-weight: 500;
+		color: rgba(var(--text-rgb), 0.9);
+		text-decoration: none;
 		background: none;
 		border: none;
-		padding: 0;
 		cursor: pointer;
+		padding: 0.5rem 1rem;
+		border-radius: 24px;
+		transition: background-color 0.2s ease;
 	}
 
+	.nav-link:hover,
+	.nav-link.active {
+		background-color: rgba(128, 128, 128, 0.2);
+	}
 
-	/* Modern mobile nav overlay styling */
 	.mobile-nav {
 		position: fixed;
 		top: 50%;
@@ -277,24 +199,20 @@
 
 
 	@media (max-width: 768px) {
-    .menu {
-		min-width: unset; /* Remove min-width on mobile */
+    .navigation {
 		width: calc(100% - 2rem); /* Dynamic width with margins */
         top: 1rem;
-        padding: 0 1rem;
+        left: 1rem;
+        right: 1rem;
         border-radius: 8px;
-        width: 100%;
         /* Reduce padding for a more compact menu */
         padding: 0.5rem 1rem;
     }
     
-    .menu-center,
-    .menu-logo {
+    .menu-container,
+    .logo {
         display: none;
     }
     
-    .burger {
-        display: inline-block;
-    }
 }
 </style>

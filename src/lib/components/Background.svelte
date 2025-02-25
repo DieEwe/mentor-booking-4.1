@@ -35,7 +35,7 @@
     height: 100%;
     /* 
       The z-index should be behind your main content but above the body’s background. 
-      Typically,  -1 or 0 is enough, as long as .app-container is above it.
+      Typically,  -1 or 0 is enough, as long as .transparent-container is above it.
     */
     z-index: 0;
     pointer-events: none; /* so user clicks pass through to main content */

@@ -9,7 +9,7 @@
     $: status = getEventStatus(event, $user.role, $user.username);
 </script>
 
-<div class="opaque-content-containe event-details-card">
+<div class="event-details-card">
         <button class="back-button" on:click={() => goto('/events')}>&larr; Zurück</button>
         
         <div class="event-header">

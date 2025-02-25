@@ -1,9 +1,9 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import Calendar from '$lib/components/Calendar.svelte';
-    import type { PageData } from './$types';
-    import '../../app.css';
     
+    import type { PageData } from './$types';
+
     import { user } from '$lib/stores';
     import { getEventStatus, isStatusClickable } from '$lib/utils/eventStatus';
     import type { Event } from '$lib/types/event';
@@ -16,9 +16,8 @@
     let events: (Event | CalendarEvent)[] = data.events;
     let view: 'table' | 'calendar' = 'table';
 
-        // Helper function to get event data regardless of type
     function getEventData(event: Event | CalendarEvent): Event {
-    return 'originalData' in event ? event.originalData : event;
+        return 'originalData' in event ? event.originalData : event;
     }
 
     $: eventStatuses = events.map(event => 
@@ -33,10 +32,9 @@
         const eventData = getEventData(event);
         goto(`/events/${eventData.id}`);
     }
-    // Variables for MentorOptInCard (for mentors)
+
     let showOptInCard = false;
     let selectedEvent: Event | null = null;
-    // Variables for MentorRequestsCard (for coaches)
     let showRequestsCard = false;
 
     function handleStatusClick(event: Event | CalendarEvent) {
@@ -51,13 +49,12 @@
     }
 
     function handleMentorOptIn() {
-        // TODO: Implement the actual mentor opt-in logic
         showOptInCard = false;
         selectedEvent = null;
     }
 </script>
 
-<div class="events-container">
+<div class="content-container">
     <div class="header-controls">
         <div class="left-controls">
             <button on:click={toggleView} aria-pressed={view === 'calendar'} class="toggle-btn">
@@ -81,17 +78,17 @@
         </div>
     </div>
 
-    <div class="opaque-container">
-		{#if view === 'table'}
-		<div class="events-table">
-			<table>
+    <div class="table-container">
+        {#if view === 'table'}
+        <div class="events-table">
+            <table>
                 <thead>
                     <tr>
                         <th>Datum und Uhrzeit</th>
                         <th>Coach</th>
                         <th>Pledger</th>
                         <th>Säule</th>
-                        <th>MentorInnen</th>  <!-- Changed from MentorIn to MentorInnen -->
+                        <th>MentorInnen</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -118,9 +115,9 @@
                     </tr>
                     {/each}
                 </tbody>
-			</table>
-		</div>
-	
+            </table>
+        </div>
+    
         {:else}
         <Calendar 
             events={events.map(event => {
@@ -138,7 +135,7 @@
             on:eventClick={({ detail }) => handleEventClick(detail)}
         />
     {/if}
-	</div>
+    </div>
 </div>
 
 {#if showOptInCard && selectedEvent}
@@ -161,11 +158,9 @@
             selectedEvent = null;
         }}
         on:select={({detail: selectedMentors}) => {
-            // Handle multiple mentor selections
             if (selectedEvent) {
                 selectedEvent.assignedMentors = selectedMentors;
                 selectedEvent.status = 'mentor_found';
-                // TODO: Update backend with selected mentors
             }
             showRequestsCard = false;
             selectedEvent = null;
@@ -174,38 +169,22 @@
 {/if}
 
 <style>
-    /* Container Styles */
-    .events-container {
-        width: 100%;
-        max-width: 1800px;
-        margin: 0 auto;
-        padding: 2rem;
-    }
-
-    .header-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .table-container {
         background: white;
-        border-radius: var(--border-radius);
-        padding: 1rem 2rem;
-        margin-bottom: 1rem;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-top: 1rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
-    .left-controls {
+    .header-controls {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 1rem;
     }
-
-    .right-controls {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    /* Toggle Styles */
 
     .toggle-btn {
         padding: 0.5em 1em;
@@ -232,8 +211,6 @@
         transition: opacity 0.2s ease;
     }
 
-    /* Table Styles */
-
     .date-cell {
         cursor: pointer;
         color: #2563eb;
@@ -246,11 +223,6 @@
     }
 
     @media (max-width: 768px) {
-
-        .events-container {
-            padding: 1rem;
-        }
-
         .header-controls {
             padding: 0.75rem 1rem;
         }
@@ -259,8 +231,8 @@
             width: 2rem;
             height: 2rem;
         }
-	}
- /* Status styles */
+    }
+
     .status-cell {
         cursor: default;
         padding: 0.5rem 1rem;
@@ -287,7 +259,7 @@
         background-color: #f8d7da;
         color: #721c24;
     }
-/* Make status cells clickable for mentors */
+
     .clickable {
         cursor: pointer;
     }
@@ -298,7 +270,6 @@
         transition: all 0.2s ease;
     }
 
-    /* Make sure non-clickable status cells look static */
     .status-cell:not(.clickable) {
         cursor: default;
     }

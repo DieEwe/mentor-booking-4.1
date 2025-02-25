@@ -11,7 +11,7 @@
     let avatarUrl = userData.avatar_url || '/images/avatar-placeholder.jpg';
 </script>
 
-<div class="profile-card opaque-content-container" role="region" aria-label="User Profile">
+<div class="profile-card" role="region" aria-label="User Profile">
     <div class="avatar-section">
         <div class="avatar-container">
             <img src="/images/avatar-placeholder.jpg" alt="User avatar" class="avatar" />

@@ -1,15 +1,15 @@
 <script lang="ts">
     import ProfileCard from '$lib/components/UserProfileCard.svelte';
-    import type { UserData } from '$lib/types/user';
+    import type { UserProfile } from '$lib/types/user';
     
     // TODO: Replace with Supabase data fetch
     // This will be replaced with actual data from Supabase
-    let userData: UserData = {
+    let userData: UserProfile = {
         id: "mock-id-123",
         vorname: 'Max',
         name: 'Mustermann',
         pronouns: 'er/ihm',
-        role: 'Mentor',
+        role: 'mentor',
         email: 'max.mustermann@example.com',
         Zitat: 'Erfolg ist nicht final, Misserfolg ist nicht fatal. Was zählt ist der Mut weiterzumachen.',
         disability: 'keine Angabe',
@@ -38,15 +38,15 @@
     */
 </script>
 
-<main>
+<div class="content-container">
     <ProfileCard {userData} />
-</main>
-  
+</div>
+
 <style>
-    main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2rem;
+    .content-container {
+        position: center;
+        max-width: 450px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        min-height: auto;
     }
 </style>
