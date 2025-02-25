@@ -9,8 +9,7 @@
     $: status = getEventStatus(event, $user.role, $user.username);
 </script>
 
-<div class="event-details-page">
-    <div class="event-card">
+<div class="opaque-content-containe event-details-card">
         <button class="back-button" on:click={() => goto('/events')}>&larr; Zurück</button>
         
         <div class="event-header">
@@ -24,14 +23,17 @@
                 <span class="value">{new Date(event.datum_uhrzeit).toLocaleString('de-DE')}</span>
             </div>
         </div>
-    </div>
 </div>
 
 <style>
-    .event-details-page {
-        min-height: 100vh;
+    .event-details-card {
+        background-color: #ffffff;
+        border-radius: 1.5rem;
+        max-width: 650px;  /* Reduced from 450px */
         padding: 2rem;
-        background: #f9fafb;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        position: relative;
+        margin: 0 auto;   /* Center the card */
     }
 
     .event-card {
@@ -106,7 +108,7 @@
     }
 
     @media (max-width: 768px) {
-        .event-details-page {
+        .event-details-card {
             padding: 1rem;
         }
 

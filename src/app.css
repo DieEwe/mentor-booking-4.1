@@ -82,7 +82,7 @@ body::after {
 /* GENERAL CONTENT */
 .content-container {
   background: transparent; /* Default for most content */
-  border-radius: var(--border-radius);
+  border-radius: 25px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 2rem;
   min-height: 600px;
@@ -90,7 +90,7 @@ body::after {
 
 .opaque-content-container {
   background: white; /* Specific use case for solid background */
-  border-radius: var(--border-radius);
+  border-radius: 25px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   padding: 2rem;
   min-height: auto; /* Or any desired size */
