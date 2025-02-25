@@ -27,7 +27,7 @@ body {
   margin: 0; 
   padding: 0;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  background-image: url('/images/countryside2.webp');
+  background-image: url('/images/Image.jpg');
   background-size: 1920px auto; /* Set a fixed width for the background image */
   background-position: top center;
   background-repeat: no-repeat;
@@ -79,8 +79,29 @@ body::after {
     border-radius: 25px;
   }
 }
+/* GENERAL CONTENT */
+.content-container {
+  background: transparent; /* Default for most content */
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  min-height: 600px;
+}
 
+.opaque-content-container {
+  background: white; /* Specific use case for solid background */
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  min-height: auto; /* Or any desired size */
+}
 
+@media (max-width: 768px) {
+  .content-container {
+      padding: 1rem;
+  }
+
+}
 /* Global button styling */
 
 

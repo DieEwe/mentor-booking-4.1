@@ -3,18 +3,30 @@
     import Menu from '$lib/Menu.svelte';
     import RoleSwitcher from '$lib/components/RoleSwitcher.svelte';
     import { dev } from '$app/environment';
+    import { user } from '$lib/stores';
+    import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
+    
+    // Define public routes that don't require authentication
+    const publicRoutes = ['/', '/login', '/bewerbung'];
+    
+    // Check if current route requires authentication
+    $: if (!$user.loggedIn && !publicRoutes.includes($page.url.pathname)) {
+        goto('/');
+    }
 </script>
 
 <div class="app-container">
-    <!--role switcher temporary-->
     {#if dev}
         <RoleSwitcher />
     {/if}
     
     <Menu />
     <main class="main-content">
-        <div class="content-container">
-            <slot />
+        <div class="opaque-container">
+            {#if $user.loggedIn || publicRoutes.includes($page.url.pathname)}
+                <slot />
+            {/if}
         </div>
     </main>
 </div>
@@ -28,13 +40,6 @@
 		overflow: hidden;  /* Ensures content respects the rounded corners */
     }
 
-    .content-container {
-        background: white;
-        border-radius: var(--border-radius);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        padding: 2rem;
-        min-height: 600px;
-    }
 
     .main-content {
         width: 90%;
@@ -42,10 +47,4 @@
     }
 
 
-
-    @media (max-width: 768px) {
-        .content-container {
-            padding: 1rem;
-        }
-    }
 </style>

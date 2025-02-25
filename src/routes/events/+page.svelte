@@ -4,16 +4,56 @@
     import type { PageData } from './$types';
     import '../../app.css';
     
+    import { user } from '$lib/stores';
+    import { getEventStatus, isStatusClickable } from '$lib/utils/eventStatus';
+    import type { Event } from '$lib/types/event';
+    import type { CalendarEvent } from '$lib/types/event-calendar';
+
+    import MentorOptInCard from '$lib/components/MentorOptInCard.svelte';
+    import MentorRequestsCard from '$lib/components/MentorRequestsCard.svelte';
+
     export let data: PageData;
-    let events = data.events;
+    let events: (Event | CalendarEvent)[] = data.events;
     let view: 'table' | 'calendar' = 'table';
+
+        // Helper function to get event data regardless of type
+    function getEventData(event: Event | CalendarEvent): Event {
+    return 'originalData' in event ? event.originalData : event;
+    }
+
+    $: eventStatuses = events.map(event => 
+        getEventStatus(getEventData(event), $user.role, $user.username)
+    );
     
     function toggleView() {
         view = view === 'table' ? 'calendar' : 'table';
     }
 
-    function handleEventClick(event: any) {
-        goto(`/events/${event.originalData?.id || event.id}`);
+    function handleEventClick(event: Event | CalendarEvent) {
+        const eventData = getEventData(event);
+        goto(`/events/${eventData.id}`);
+    }
+    // Variables for MentorOptInCard (for mentors)
+    let showOptInCard = false;
+    let selectedEvent: Event | null = null;
+    // Variables for MentorRequestsCard (for coaches)
+    let showRequestsCard = false;
+
+    function handleStatusClick(event: Event | CalendarEvent) {
+        const eventData = getEventData(event);
+        if ($user.role === 'mentor' && isStatusClickable(eventData, $user.role, $user.username)) {
+            showOptInCard = true;
+            selectedEvent = eventData;
+        } else if ($user.role === 'coach' && isStatusClickable(eventData, $user.role)) {
+            showRequestsCard = true;
+            selectedEvent = eventData;
+        }
+    }
+
+    function handleMentorOptIn() {
+        // TODO: Implement the actual mentor opt-in logic
+        showOptInCard = false;
+        selectedEvent = null;
     }
 </script>
 
@@ -41,48 +81,97 @@
         </div>
     </div>
 
-    <div class="content-container">
+    <div class="opaque-container">
 		{#if view === 'table'}
 		<div class="events-table">
 			<table>
-				<thead>
-					<tr>
+                <thead>
+                    <tr>
                         <th>Datum und Uhrzeit</th>
-						<th>Coach</th>
-						<th>Pledger</th>
-						<th>Säule</th>
-						<th>MentorIn</th>
-						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each events as event}
-						<tr>
-							 <td 
-                                class="date-cell"
-                                on:click={() => handleEventClick(event)}
-                            >
-                                {event.originalData.datum_uhrzeit}
-                            </td>
-							<td>{event.originalData.coach}</td>
-							<td>{event.originalData.pledger}</td>
-							<td>{event.originalData.saeule}</td>
-							<td>{event.originalData.mentor}</td>
-							<td>{event.originalData.status}</td>
-						</tr>
-					{/each}
-				</tbody>
+                        <th>Coach</th>
+                        <th>Pledger</th>
+                        <th>Säule</th>
+                        <th>MentorInnen</th>  <!-- Changed from MentorIn to MentorInnen -->
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each events as event, i}
+                    <tr>
+                        <td 
+                            class="date-cell"
+                            on:click={() => handleEventClick(event)}
+                        >
+                            {getEventData(event).datum_uhrzeit}
+                        </td>
+                        <td>{getEventData(event).coach}</td>
+                        <td>{getEventData(event).pledger}</td>
+                        <td>{getEventData(event).saeule}</td>
+                        <td>{getEventData(event).mentors?.join(', ') || ''}</td>
+                        <td 
+                            class="status-cell {eventStatuses[i].toLowerCase().replace(' ', '-')}"
+                            class:clickable={isStatusClickable(getEventData(event), $user.role, $user.username)}
+                            on:click={() => handleStatusClick(event)}
+                        >
+                            {eventStatuses[i]}
+                        </td>
+                    </tr>
+                    {/each}
+                </tbody>
 			</table>
 		</div>
 	
-    {:else}
+        {:else}
         <Calendar 
-            {events} 
+            events={events.map(event => {
+                const eventData = getEventData(event);
+                return {
+                    id: eventData.id,
+                    title: `${eventData.pledger} - ${eventData.coach}`,
+                    start: eventData.datum_uhrzeit,
+                    end: eventData.datum_uhrzeit,
+                    color: '#4338ca',
+                    description: `Säule: ${eventData.saeule}`,
+                    originalData: eventData
+                } satisfies CalendarEvent;
+            })} 
             on:eventClick={({ detail }) => handleEventClick(detail)}
         />
     {/if}
 	</div>
 </div>
+
+{#if showOptInCard && selectedEvent}
+    <MentorOptInCard 
+        event={selectedEvent}
+        on:confirm={handleMentorOptIn}
+        on:cancel={() => {
+            showOptInCard = false;
+            selectedEvent = null;
+        }}
+    />
+{/if}
+
+{#if showRequestsCard && selectedEvent}
+    <MentorRequestsCard 
+        event={selectedEvent}
+        mentorRequests={selectedEvent.mentorRequests || []}
+        on:close={() => {
+            showRequestsCard = false;
+            selectedEvent = null;
+        }}
+        on:select={({detail: selectedMentors}) => {
+            // Handle multiple mentor selections
+            if (selectedEvent) {
+                selectedEvent.assignedMentors = selectedMentors;
+                selectedEvent.status = 'mentor_found';
+                // TODO: Update backend with selected mentors
+            }
+            showRequestsCard = false;
+            selectedEvent = null;
+        }}
+    />
+{/if}
 
 <style>
     /* Container Styles */
@@ -171,4 +260,46 @@
             height: 2rem;
         }
 	}
+ /* Status styles */
+    .status-cell {
+        cursor: default;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    .mentorin-gesucht {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .mentorin-gefunden {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .du-bist-mentorin {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+
+    .bitte-warte-auf-rueckmeldung {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+/* Make status cells clickable for mentors */
+    .clickable {
+        cursor: pointer;
+    }
+
+    .clickable:hover {
+        opacity: 0.8;
+        transform: scale(1.02);
+        transition: all 0.2s ease;
+    }
+
+    /* Make sure non-clickable status cells look static */
+    .status-cell:not(.clickable) {
+        cursor: default;
+    }
 </style>

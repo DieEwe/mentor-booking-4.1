@@ -18,8 +18,10 @@ export const load: PageLoad = async ({ params }) => {
         coach: 'Max Mustermann',
         pledger: 'Radio Bremen',
         saeule: '4',
-        mentor: 'Anna Schmidt',
-        status: 'Bestätigt'
+        mentors: [],  // Initialize as empty array
+        status: 'looking_for_mentor',
+        mentorRequests: [],  // Initialize as empty array
+        assignedMentors: []  // Initialize as empty array
     };
 
     return {

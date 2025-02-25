@@ -1,12 +1,9 @@
 import { writable } from 'svelte/store';
 import type { UserRole } from './types/user';
 
-
-
 interface UserState {
     loggedIn: boolean;
     role: UserRole;
-    email?: string;
     username?: string;
 }
 

@@ -1,94 +1,82 @@
-import type { Event } from '$lib/types/event';
+import type { Event } from '../types/event';
 
 export const mockEvents: Event[] = [
-    {
-        id: 1,
-        datum_uhrzeit: '2025-02-24 10:00',
-        coach: 'Max Mustermann',
-        pledger: 'Radio Bremen',
-        saeule: '4',
-        mentor: 'Anna Schmidt',
-        status: 'Bestätigt'
-    },
-    {
-        id: 2,
-        datum_uhrzeit: '2025-02-24 14:00',
-        coach: 'Lisa Weber',
-        pledger: 'Technologiepark',
-        saeule: '3',
-        mentor: 'Tom Meyer',
-        status: 'Ausstehend'
-    },
+    // ...existing events (1 and 2)...
     {
         id: 3,
-        datum_uhrzeit: '2025-02-25 09:00',
-        coach: 'Sarah Mueller',
-        pledger: 'Sparkasse Bremen',
+        datum_uhrzeit: '2025-02-25 09:30',
+        coach: 'Sarah Klein',
+        pledger: 'Werder Bremen',
         saeule: '2',
-        mentor: 'Peter Wagner',
-        status: 'Bestätigt'
+        mentors: [],
+        status: 'in_process',
+        mentorRequests: ['Anna Schmidt', 'Michael Wagner']  // Multiple requests
     },
     {
         id: 4,
-        datum_uhrzeit: '2025-02-25 13:00',
-        coach: 'Thomas Klein',
-        pledger: 'Werder Bremen',
-        saeule: '5',
-        mentor: 'Maria Koch',
-        status: 'Abgesagt'
+        datum_uhrzeit: '2025-02-26 11:00',
+        coach: 'David Schmidt',
+        pledger: 'Sparkasse Bremen',
+        saeule: '1',
+        mentors: [],
+        status: 'looking_for_mentor'
     },
     {
         id: 5,
-        datum_uhrzeit: '2025-02-26 11:00',
-        coach: 'Julia Berg',
+        datum_uhrzeit: '2025-02-26 15:30',
+        coach: 'Julia Peters',
         pledger: 'Universität Bremen',
-        saeule: '1',
-        mentor: 'Klaus Weber',
-        status: 'Bestätigt'
+        saeule: '3',
+        mentors: ['Maria Müller', 'Peter Weber'],  // Multiple mentors
+        status: 'mentor_found',
+        assignedMentors: ['Maria Müller', 'Peter Weber']
     },
     {
         id: 6,
-        datum_uhrzeit: '2025-02-26 15:00',
-        coach: 'Mark Schmidt',
+        datum_uhrzeit: '2025-02-27 13:00',
+        coach: 'Thomas Becker',
         pledger: 'BSAG',
-        saeule: '3',
-        mentor: 'Sandra Wolf',
-        status: 'Ausstehend'
+        saeule: '4',
+        mentors: [],
+        status: 'in_process',
+        mentorRequests: ['Laura Koch']
     },
     {
         id: 7,
-        datum_uhrzeit: '2025-02-27 10:00',
-        coach: 'Anna Beck',
-        pledger: 'Bremer Bank',
-        saeule: '4',
-        mentor: 'Michael Bauer',
-        status: 'Bestätigt'
+        datum_uhrzeit: '2025-02-28 10:00',
+        coach: 'Anna Weber',
+        pledger: 'Jacobs University',
+        saeule: '2',
+        mentors: [],
+        status: 'looking_for_mentor'
     },
     {
         id: 8,
-        datum_uhrzeit: '2025-02-27 14:00',
-        coach: 'Paul Werner',
-        pledger: 'Hafengesellschaft',
-        saeule: '2',
-        mentor: 'Laura Krause',
-        status: 'Ausstehend'
+        datum_uhrzeit: '2025-03-01 14:30',
+        coach: 'Mark Schmidt',
+        pledger: 'Airbus Bremen',
+        saeule: '1',
+        mentors: ['Klaus Weber', 'Sandra Meyer'],
+        status: 'mentor_found',
+        assignedMentors: ['Klaus Weber', 'Sandra Meyer']
     },
     {
         id: 9,
-        datum_uhrzeit: '2025-02-28 09:00',
-        coach: 'Eva Fischer',
-        pledger: 'Handelskammer',
-        saeule: '5',
-        mentor: 'Martin Scholz',
-        status: 'Bestätigt'
+        datum_uhrzeit: '2025-03-02 11:00',
+        coach: 'Sophie Wagner',
+        pledger: 'Mercedes-Benz Bremen',
+        saeule: '4',
+        mentors: [],
+        status: 'in_process',
+        mentorRequests: ['Peter Müller', 'Lisa Schmidt', 'Max Koch']  // Multiple requests
     },
     {
         id: 10,
-        datum_uhrzeit: '2025-02-28 13:00',
-        coach: 'David Wagner',
-        pledger: 'Stadtbibliothek',
-        saeule: '1',
-        mentor: 'Christina Meyer',
-        status: 'Abgesagt'
+        datum_uhrzeit: '2025-03-03 09:00',
+        coach: 'Felix Bauer',
+        pledger: 'Bruker Bremen',
+        saeule: '3',
+        mentors: [],
+        status: 'looking_for_mentor'
     }
 ];

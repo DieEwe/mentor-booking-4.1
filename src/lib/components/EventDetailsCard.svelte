@@ -1,8 +1,12 @@
 <script lang="ts">
     import type { Event } from '$lib/types/event';
     import { goto } from '$app/navigation';
+    import { user } from '$lib/stores';
+    import { getEventStatus } from '$lib/utils/eventStatus';
     
     export let event: Event;
+    
+    $: status = getEventStatus(event, $user.role, $user.username);
 </script>
 
 <div class="event-details-page">
@@ -11,25 +15,13 @@
         
         <div class="event-header">
             <h2>{event.pledger}</h2>
-            <span class="status {event.status.toLowerCase()}">{event.status}</span>
+            <span class="status {status.toLowerCase().replace(' ', '-')}">{status}</span>
         </div>
 
         <div class="event-details">
             <div class="detail-item">
                 <span class="label">Datum & Uhrzeit:</span>
                 <span class="value">{new Date(event.datum_uhrzeit).toLocaleString('de-DE')}</span>
-            </div>
-            <div class="detail-item">
-                <span class="label">Coach:</span>
-                <span class="value">{event.coach}</span>
-            </div>
-            <div class="detail-item">
-                <span class="label">MentorIn:</span>
-                <span class="value">{event.mentor}</span>
-            </div>
-            <div class="detail-item">
-                <span class="label">Säule:</span>
-                <span class="value">{event.saeule}</span>
             </div>
         </div>
     </div>
@@ -132,4 +124,11 @@
             gap: 0.5rem;
         }
     }
+
+/* Mentorstatus styles */
+
+.mentorin-gesucht { background: #fff3cd; color: #856404; }
+    .mentorin-gefunden { background: #d4edda; color: #155724; }
+    .du-bist-mentorin { background: #cce5ff; color: #004085; }
+    .bitte-warte-auf-rückmeldung { background: #f8d7da; color: #721c24; }
 </style>

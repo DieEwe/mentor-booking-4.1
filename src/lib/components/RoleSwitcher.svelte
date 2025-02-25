@@ -1,15 +1,27 @@
 <script lang="ts">
     import { user } from '../stores';
+    import { goto } from '$app/navigation';
     import type { User, UserRole } from '../types/user';
     
     const roles: UserRole[] = ['guest', 'mentor', 'coach', 'admin'];
     
     function switchRole(role: UserRole) {
-        const userData: User = {
-            loggedIn: role !== 'guest',
-            role: role
-        };
-        user.set(userData);
+        if (role === 'guest') {
+            // If switching to guest, set logged out state and redirect to home
+            user.set({
+                loggedIn: false,
+                role: 'guest'
+            });
+            goto('/');
+        } else {
+            // For other roles, set logged in state
+            const userData: User = {
+                loggedIn: true,
+                role: role,
+                username: `test_${role}@example.com`
+            };
+            user.set(userData);
+        }
     }
 </script>
 
@@ -20,7 +32,7 @@
     >
         {#each roles as role}
             <option value={role}>
-                Test as: {role.charAt(0).toUpperCase() + role.slice(1)}
+                {role === 'guest' ? 'Logout' : `Test as: ${role.charAt(0).toUpperCase() + role.slice(1)}`}
             </option>
         {/each}
     </select>

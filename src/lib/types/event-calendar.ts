@@ -1,13 +1,13 @@
-import type { CalendarOptions as FullCalendarOptions } from '@fullcalendar/core';
+import type { Event } from './event';
 
 export interface CalendarEvent {
-	id: number;
-	title: string;
-	start: string; // ISO8601 date string
-	end: string; // ISO8601 date string
-	color?: string;
-	description?: string;
-	[key: string]: any;
+    id: string | number;
+    title: string;
+    start: string;
+    end: string;
+    color?: string;
+    description?: string;
+    originalData: Event;
 }
 
 export interface CalendarOptions {

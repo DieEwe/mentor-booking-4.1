@@ -130,7 +130,7 @@
 		left: 50%;          /* Center horizontally */
 		transform: translateX(-50%); /* Complete the centering */
 		max-width: 1200px; /* Added max-width for very large screens */
-        min-width: 700px; /* Added min-width to prevent too narrow menu */ 
+        min-width: 750px; /* Added min-width to prevent too narrow menu */ 
 		z-index: 1000; /* Ensure it appears above other content */
 		display: flex; /* Flex container */
 		height: 60px;               /* fixed height of 60px */
@@ -198,23 +198,21 @@
         justify-content: center;
         cursor: pointer;
         box-shadow: none;
-        letter-spacing: 3px;
         text-transform: uppercase;
+		text-decoration: none; /* Add this line */
     }
 
 	.menu-center a:hover,
-	.menu-center button:hover {
-		letter-spacing: 6px;
+	.menu-center button:hover{ 	
         transform: scale(1.1); /* Just grow slightly on hover */
         background: none;
         color: inherit; /* Keep original text color */
         box-shadow: none;
-        letter-spacing: normal;
+		text-decoration: none; /* Add this line */
 	}
 
 	.menu-center a:active,
 	.menu-center button:active {
-		letter-spacing: 3px;
         background-color: rgba(0, 0, 0, 0.05); /* Very light gray background when active */
         transform: scale(1);
         color: inherit;

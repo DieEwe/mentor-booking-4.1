@@ -19,7 +19,7 @@ export const load: PageServerLoad = async () => {
             title: event.pledger,
             start: event.datum_uhrzeit,
             end: event.datum_uhrzeit,
-            description: `Säule: ${event.saeule}, MentorIn: ${event.mentor}`,
+            description: `Säule: ${event.saeule}, MentorIn: ${event.mentors}`,
             originalData: event
         }));
 

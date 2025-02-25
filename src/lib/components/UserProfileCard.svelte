@@ -11,7 +11,7 @@
     let avatarUrl = userData.avatar_url || '/images/avatar-placeholder.jpg';
 </script>
 
-<div class="profile-card" role="region" aria-label="User Profile">
+<div class="profile-card opaque-content-container" role="region" aria-label="User Profile">
     <div class="avatar-section">
         <div class="avatar-container">
             <img src="/images/avatar-placeholder.jpg" alt="User avatar" class="avatar" />
@@ -61,11 +61,11 @@
     .profile-card {
         background-color: #ffffff;
         border-radius: 1.5rem;
-        max-width: 500px;
-        width: 100%;
+        max-width: 450px;  /* Reduced from 450px */
         padding: 2rem;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         position: relative;
+        margin: 0 auto;   /* Center the card */
     }
 
     .avatar-section {
@@ -181,12 +181,11 @@
         background-size: contain; /* Add this line to ensure the SVG fits within the button */
         }
 
-@media (max-width: 768px) {
+        @media (max-width: 768px) {
         .profile-card {
+            width: 90%;    /* Reduced from 95% */
             padding: 1.5rem;
-            border-radius: 1rem;
-            max-width: 100%;
-            margin: 0 1rem;
+            margin: 0 auto;
         }
 
         .avatar-container {
