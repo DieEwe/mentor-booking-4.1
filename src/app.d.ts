@@ -2,11 +2,15 @@
 // for information about these interfaces
 declare global {
 	namespace App {
-		// interface Error {}
-		// interface Locals {}
-		// interface PageData {}
-		// interface PageState {}
-		// interface Platform {}
+		interface PageData {
+			events: import('$lib/types/event-calendar').CalendarEvent[]
+		}
+		interface Locals {
+			userid: string
+		  }
+		interface Platform {
+			env: { API_KEY: string }
+		  }
 	}
 }
 

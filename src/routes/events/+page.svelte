@@ -9,36 +9,35 @@
     import type { Event } from '$lib/types/event';
     import type { CalendarEvent } from '$lib/types/event-calendar';
 
+    import EventTile from '$lib/components/EventTile.svelte';
     import MentorOptInCard from '$lib/components/MentorOptInCard.svelte';
     import MentorRequestsCard from '$lib/components/MentorRequestsCard.svelte';
 
     export let data: PageData;
-    let events: (Event | CalendarEvent)[] = data.events;
+    let events: CalendarEvent[] = data.events;
     let view: 'table' | 'calendar' = 'table';
-
-    function getEventData(event: Event | CalendarEvent): Event {
-        return 'originalData' in event ? event.originalData : event;
-    }
+    let isMobile = false;
+    $: isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    
 
     $: eventStatuses = events.map(event => 
-        getEventStatus(getEventData(event), $user.role, $user.username)
+        getEventStatus(event.originalData, $user.role, $user.username)
     );
     
     function toggleView() {
         view = view === 'table' ? 'calendar' : 'table';
     }
 
-    function handleEventClick(event: Event | CalendarEvent) {
-        const eventData = getEventData(event);
-        goto(`/events/${eventData.id}`);
+    function handleEventClick(event: CalendarEvent) {
+        goto(`/events/${event.originalData.id}`);
     }
 
     let showOptInCard = false;
     let selectedEvent: Event | null = null;
     let showRequestsCard = false;
 
-    function handleStatusClick(event: Event | CalendarEvent) {
-        const eventData = getEventData(event);
+    function handleStatusClick(event: CalendarEvent) {
+        const eventData = event.originalData;
         if ($user.role === 'mentor' && isStatusClickable(eventData, $user.role, $user.username)) {
             showOptInCard = true;
             selectedEvent = eventData;
@@ -80,61 +79,56 @@
 
     <div class="table-container">
         {#if view === 'table'}
-        <div class="events-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Datum und Uhrzeit</th>
-                        <th>Coach</th>
-                        <th>Pledger</th>
-                        <th>Säule</th>
-                        <th>MentorInnen</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each events as event, i}
-                    <tr>
-                        <td 
-                            class="date-cell"
-                            on:click={() => handleEventClick(event)}
-                        >
-                            {getEventData(event).datum_uhrzeit}
-                        </td>
-                        <td>{getEventData(event).coach}</td>
-                        <td>{getEventData(event).pledger}</td>
-                        <td>{getEventData(event).saeule}</td>
-                        <td>{getEventData(event).mentors?.join(', ') || ''}</td>
-                        <td 
-                            class="status-cell {eventStatuses[i].toLowerCase().replace(' ', '-')}"
-                            class:clickable={isStatusClickable(getEventData(event), $user.role, $user.username)}
-                            on:click={() => handleStatusClick(event)}
-                        >
-                            {eventStatuses[i]}
-                        </td>
-                    </tr>
-                    {/each}
-                </tbody>
-            </table>
-        </div>
-    
+                {#if isMobile}
+                    <div class="event-tiles">
+                        {#each events as event}
+                            <EventTile event={event.originalData} />
+                        {/each}
+                    </div>
+                {:else}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Datum und Uhrzeit</th>
+                                <th>Coach</th>
+                                <th>Pledger</th>
+                                <th>Säule</th>
+                                <th>MentorInnen</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each events as event, i}
+                            <tr>
+                                <td 
+                                    class="date-cell"
+                                    on:click={() => handleEventClick(event)}
+                                >
+                                    {event.originalData.datum_uhrzeit}
+                                </td>
+                                <td>{event.originalData.coach}</td>
+                                <td>{event.originalData.pledger}</td>
+                                <td>{event.originalData.saeule}</td>
+                                <td>{event.originalData.mentors?.join(', ') || ''}</td>
+                                <td 
+                                    class="status-cell {eventStatuses[i].toLowerCase().replace(' ', '-')}"
+                                    class:clickable={isStatusClickable(event.originalData, $user.role, $user.username)}
+                                    on:click={() => handleStatusClick(event)}
+                                >
+                                    {eventStatuses[i]}
+                                </td>
+                            </tr>
+                            {/each}
+                        </tbody>
+                    </table>
+                {/if}
         {:else}
-        <Calendar 
-            events={events.map(event => {
-                const eventData = getEventData(event);
-                return {
-                    id: eventData.id,
-                    title: `${eventData.pledger} - ${eventData.coach}`,
-                    start: eventData.datum_uhrzeit,
-                    end: eventData.datum_uhrzeit,
-                    color: '#4338ca',
-                    description: `Säule: ${eventData.saeule}`,
-                    originalData: eventData
-                } satisfies CalendarEvent;
-            })} 
-            on:eventClick={({ detail }) => handleEventClick(detail)}
-        />
-    {/if}
+            <Calendar 
+                events={events} 
+                handleEventClick={handleEventClick}
+                on:eventClick={({detail}) => handleEventClick(detail)}
+            />
+        {/if}
     </div>
 </div>
 
@@ -231,6 +225,12 @@
             width: 2rem;
             height: 2rem;
         }
+        
+        .event-tiles {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
     }
 
     .status-cell {
@@ -262,15 +262,5 @@
 
     .clickable {
         cursor: pointer;
-    }
-
-    .clickable:hover {
-        opacity: 0.8;
-        transform: scale(1.02);
-        transition: all 0.2s ease;
-    }
-
-    .status-cell:not(.clickable) {
-        cursor: default;
     }
 </style>

@@ -16,6 +16,7 @@
 	import '../../../static/css/calendar.css';
 
 	export let events: CalendarEvent[] = [];
+	export let handleEventClick: (event: CalendarEvent) => void;
 
 	let calendarRef: FullCalendar | null = null;
 
@@ -32,33 +33,27 @@
 		selectable: true,
 		weekends: true,
 		height: 'auto',
-		slotMinTime: '07:00:00',  // Start time
-		slotMaxTime: '18:00:00',  // End time
-		allDaySlot: false, // Hide all-day slot
-		// for 24-hour format:
-	slotLabelFormat: {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
+		slotMinTime: '07:00:00',
+		slotMaxTime: '18:00:00',
+		allDaySlot: false,
+		eventClick: (info: EventClickArg) => {
+			dispatch('eventClick', info.event.extendedProps.originalData);
 		},
-	eventClick: (info: EventClickArg) => {
-        dispatch('eventClick', info.event.extendedProps.originalData);
-    	},
-    eventTimeFormat: {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    },
+		eventTimeFormat: {
+			hour: '2-digit',
+			minute: '2-digit',
+			hour12: false
+		},
 		dayHeaderContent: function(arg: DayHeaderContentArg) {
-        const weekday = arg.date.toLocaleDateString(undefined, { weekday: 'short' });
-        const isMonthView = arg.view.type === 'dayGridMonth';
-        
-        return { 
-            html: `<div class="day-header">
-                <div class="weekday">${weekday}</div>
-                ${!isMonthView ? `<div class="day">${arg.date.getDate()}</div>` : ''}
-            </div>` 
-        };
+			const weekday = arg.date.toLocaleDateString(undefined, { weekday: 'short' });
+			const isMonthView = arg.view.type === 'dayGridMonth';
+
+			return {
+				html: `<div class="day-header">
+					<div class="weekday">${weekday}</div>
+					${!isMonthView ? `<div class="day">${arg.date.getDate()}</div>` : ''}
+				</div>`
+			};
 		}
 	};
 
@@ -72,5 +67,3 @@
 <div class="calendar-container">
 	<FullCalendar bind:this={calendarRef} {options} />
 </div>
-
-

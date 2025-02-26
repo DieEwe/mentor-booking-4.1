@@ -52,7 +52,7 @@
 
 <div class="navigation">
     <a href="/" class="logo">
-        <img src="/images/InkluConnectLogo.svg" alt="Inklu-Connect Logo"/>
+        <img src="/images/InkluConnectOrigicalC.svg" alt="Inklu-Connect Logo"/>
     </a>
     
 	<div class="menu-container">
