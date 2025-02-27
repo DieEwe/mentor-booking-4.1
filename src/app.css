@@ -14,9 +14,8 @@
   flex: 1;
   width: 90%;
   max-width: 1300px;
-  margin: 8rem 8rem 4rem;
-  background: rgba(194, 61, 0, 0.418);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0);
+  /* backdrop-filter: blur(10px); */
   border-radius: 25px;
   padding: 2rem;
   overflow-y: auto;
@@ -45,10 +44,16 @@
     --button-background: #ffc400;
 
     /*body styling*/
-    background-image: url('static/images/Backgroundlight.webp');
-    background-color: #181818;
-    color: var(--text);
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    /* Set the light theme background image: fixed, non-repeating, and cover the viewport */
+    background: url('static/images/Backgroundlight.webp') no-repeat fixed center;
+    background-size: cover;
+    transition: background 0.3s ease;
 }
 
 /* Dark theme override */
@@ -58,33 +63,14 @@
     --primary: #7e7e7e;
     --secondary: #ffffff;
     --accent: #43d816;
-    background-image: url('static/images/Backgrounddark.webp');
+    /*body styling*/
+    background: url('static/images/Backgrounddark.webp') no-repeat fixed center;
+    background-size: cover;
 }
 
 
 
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-  position: relative;
-  /* Use radial-gradient with variables */
-  background: radial-gradient(ellipse at center, var(--gradient-outer) 0%, var(--gradient-inner) 70%);
-  transition: background 0.3s ease; /* Smooth transition */
-}
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-  pointer-events: none;
-}
 
 /* For larger screens, allow the background-image to be responsive */
 @media (min-width: 1920px) {
@@ -100,33 +86,32 @@ body::before {
   }
 }
 
+
+/*TRANSPARENT CONTAINER*/
+
 /* small screens: remove margins and border radius */
-@media (max-width: 500px) {
-  .content-container {
-    margin: 0;
-    border-radius: 0;
+@media (max-width: 768px) { /* Modified breakpoint to match Menu.svelte */
+  .transparent-container {
+    margin: 8rem auto;
+    border-radius: 25px;
+    margin-left: auto; /* overrides left margin */
   }
 }
 
 /* Medium screens*/
-@media (min-width: 501px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1800px) {
   .transparent-container {
     margin: 8rem auto;
     border-radius: 25px;
+    margin-left: calc(2rem + 150px); /* Menu left + width */
   }
 }
 
 /* Large screens*/
-@media (min-width: 1025px) {
+@media (min-width: 1801px) { /* Modified breakpoint */
   .transparent-container {
     margin: 8rem auto;
     border-radius: 25px;
-  }
-}
-
-@media (max-width: 768px) {
-  .content-container {
-    padding: 1rem;
   }
 }
 
