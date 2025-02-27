@@ -41,7 +41,7 @@
 <style>
     .role-switcher {
         position: fixed;
-        top: 1rem;
+        bottom: 10rem;
         left: 1rem;
         z-index: 1001;
         background: white;

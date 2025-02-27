@@ -1,57 +1,64 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import Calendar from '$lib/components/Calendar.svelte';
-    
     import type { PageData } from './$types';
-
     import { user } from '$lib/stores';
     import { getEventStatus, isStatusClickable } from '$lib/utils/eventStatus';
     import type { Event } from '$lib/types/event';
     import type { CalendarEvent } from '$lib/types/event-calendar';
-
     import EventTile from '$lib/components/EventTile.svelte';
     import MentorOptInCard from '$lib/components/MentorOptInCard.svelte';
     import MentorRequestsCard from '$lib/components/MentorRequestsCard.svelte';
-
+  
     export let data: PageData;
     let events: CalendarEvent[] = data.events;
     let view: 'table' | 'calendar' = 'table';
     let isMobile = false;
-    $: isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    
-
-    $: eventStatuses = events.map(event => 
-        getEventStatus(event.originalData, $user.role, $user.username)
+  
+    // Update isMobile on mount and on window resize
+    onMount(() => {
+      const updateWidth = () => {
+        isMobile = window.innerWidth <= 768;
+      };
+      updateWidth();
+      window.addEventListener('resize', updateWidth);
+      return () => window.removeEventListener('resize', updateWidth);
+    });
+  
+    $: eventStatuses = events.map(event =>
+      getEventStatus(event.originalData, $user.role, $user.username)
     );
-    
+  
     function toggleView() {
-        view = view === 'table' ? 'calendar' : 'table';
+      view = view === 'table' ? 'calendar' : 'table';
     }
-
+  
     function handleEventClick(event: CalendarEvent) {
-        goto(`/events/${event.originalData.id}`);
+      goto(`/events/${event.originalData.id}`);
     }
-
+  
     let showOptInCard = false;
     let selectedEvent: Event | null = null;
     let showRequestsCard = false;
-
+  
     function handleStatusClick(event: CalendarEvent) {
-        const eventData = event.originalData;
-        if ($user.role === 'mentor' && isStatusClickable(eventData, $user.role, $user.username)) {
-            showOptInCard = true;
-            selectedEvent = eventData;
-        } else if ($user.role === 'coach' && isStatusClickable(eventData, $user.role)) {
-            showRequestsCard = true;
-            selectedEvent = eventData;
-        }
+      const eventData = event.originalData;
+      if ($user.role === 'mentor' && isStatusClickable(eventData, $user.role, $user.username)) {
+        showOptInCard = true;
+        selectedEvent = eventData;
+      } else if ($user.role === 'coach' && isStatusClickable(eventData, $user.role)) {
+        showRequestsCard = true;
+        selectedEvent = eventData;
+      }
     }
-
+  
     function handleMentorOptIn() {
-        showOptInCard = false;
-        selectedEvent = null;
+      showOptInCard = false;
+      selectedEvent = null;
     }
-</script>
+  </script>
+  
 
 <div class="content-container">
     <div class="header-controls">

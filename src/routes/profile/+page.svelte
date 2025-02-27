@@ -38,15 +38,12 @@
     */
 </script>
 
-<div class="content-container">
+<div class="profile-container">
     <ProfileCard {userData} />
 </div>
 
 <style>
-    .content-container {
-        position: center;
-        max-width: 450px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        min-height: auto;
+    .profile-container {
+    align-self: center;
     }
 </style>

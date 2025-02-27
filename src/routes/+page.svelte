@@ -1,5 +1,4 @@
 <script lang="ts">
-	// Remove Tile import and tiles array as they are no longer needed.
 </script>
 
 <main>
