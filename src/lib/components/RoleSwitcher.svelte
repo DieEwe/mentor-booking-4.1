@@ -2,41 +2,44 @@
     import { user } from '../stores';
     import { goto } from '$app/navigation';
     import type { User, UserRole } from '../types/user';
-    
+  
     const roles: UserRole[] = ['guest', 'mentor', 'coach', 'admin'];
-    
+  
+    // Create a reactive variable that reflects the current user role.
+    $: currentRole = $user.role;
+  
     function switchRole(role: UserRole) {
-        if (role === 'guest') {
-            // If switching to guest, set logged out state and redirect to home
-            user.set({
-                loggedIn: false,
-                role: 'guest'
-            });
-            goto('/');
-        } else {
-            // For other roles, set logged in state
-            const userData: User = {
-                loggedIn: true,
-                role: role,
-                username: `test_${role}@example.com`
-            };
-            user.set(userData);
-        }
+      if (role === 'guest') {
+        // Switching to guest: set logged-out state and redirect to home.
+        user.set({
+          loggedIn: false,
+          role: 'guest'
+        });
+        goto('/');
+      } else {
+        // For other roles, set logged-in state with a test username.
+        const userData: User = {
+          loggedIn: true,
+          role,
+          username: `test_${role}@example.com`
+        };
+        user.set(userData);
+      }
     }
-</script>
-
-<div class="role-switcher">
-    <select 
-        on:change={(e) => switchRole(e.currentTarget.value as UserRole)}
-        class="role-select"
+  </script>
+  
+  <div class="role-switcher">
+    <select
+      bind:value={currentRole}
+      on:change={(e) => switchRole(e.currentTarget.value as UserRole)}
+      class="role-select"
     >
-        {#each roles as role}
-            <option value={role}>
-                {role === 'guest' ? 'Logout' : `Test as: ${role.charAt(0).toUpperCase() + role.slice(1)}`}
-            </option>
-        {/each}
+      {#each roles as role}
+        <option value={role}>{role}</option>
+      {/each}
     </select>
-</div>
+  </div>
+  
 
 <style>
     .role-switcher {
