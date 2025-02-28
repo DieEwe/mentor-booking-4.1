@@ -11,6 +11,7 @@
     function handleTileClick() {
         goto(`/events/${event.id}`);
     }
+    
 </script>
 
 <div class="event-tile" on:click={handleTileClick}>

@@ -14,7 +14,7 @@ export const mockEvents: Event[] = [
         companyname: 'Airbus Bremen', // Assign random company name
         saeule: 'Leadership',
         mentors: ['Alice', 'Bob'],
-        status: 'mentorin_gesucht',
+        status: 'looking_for_mentor',
 		mentorRequests: ['Clara', 'David'],
 		assignedMentors: ['Alice']
     },
@@ -25,7 +25,7 @@ export const mockEvents: Event[] = [
         companyname: 'Bruker Bremen', // Assign random company name
         saeule: 'Innovation',
         mentors: ['Charlie'],
-        status: 'mentorin_gefunden',
+        status: 'mentor_found',
 		mentorRequests: ['Eve', 'Frank'],
 		assignedMentors: ['Charlie']
     },
@@ -36,7 +36,7 @@ export const mockEvents: Event[] = [
         companyname: 'Airbus Bremen', // Assign random company name
         saeule: 'Marketing',
         mentors: ['Grace', 'Heidi'],
-        status: 'du_bist_mentorin',
+        status: 'mentor_found',
 		mentorRequests: ['Judy', 'Ivy'],
 		assignedMentors: ['Grace']
     },
@@ -47,7 +47,7 @@ export const mockEvents: Event[] = [
         companyname: 'Bruker Bremen', // Assign random company name
         saeule: 'Sales',
         mentors: ['Kevin'],
-        status: 'bitte_warte_auf_rueckmeldung',
+        status: 'in_process',
 		mentorRequests: ['Lisa', 'Mike'],
 		assignedMentors: ['Kevin']
     },
@@ -58,7 +58,7 @@ export const mockEvents: Event[] = [
         companyname: 'Bruker Bremen',
         saeule: 'Technology',
         mentors: ['Nancy', 'Oscar'],
-        status: 'mentorin_gesucht',
+        status: 'mentor_found',
 		mentorRequests: ['Peggy', 'Quentin'],
 		assignedMentors: ['Nancy']
     },
@@ -69,7 +69,7 @@ export const mockEvents: Event[] = [
         companyname: 'Airbus Bremen',
         saeule: 'Finance',
         mentors: ['Rachel'],
-        status: 'mentorin_gefunden',
+        status: 'mentor_found',
 		mentorRequests: ['Steve', 'Tina'],
 		assignedMentors: ['Rachel']
     },
@@ -80,7 +80,7 @@ export const mockEvents: Event[] = [
         companyname: 'Bruker Bremen',
         saeule: 'Human Resources',
         mentors: ['Uma', 'Victor'],
-        status: 'du_bist_mentorin',
+        status: 'mentor_found',
 		mentorRequests: ['Wendy', 'Xavier'],
 		assignedMentors: ['Uma']
     },
@@ -91,7 +91,7 @@ export const mockEvents: Event[] = [
         companyname: 'Mercedes-Benz Bremen',
         saeule: 'Operations',
         mentors: ['Yara'],
-        status: 'bitte_warte_auf_rueckmeldung',
+        status: 'in_process',
 		mentorRequests: ['Zack', 'Amy'],
 		assignedMentors: ['Yara']
     }

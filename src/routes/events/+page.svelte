@@ -11,7 +11,7 @@
     import EventTile from '$lib/components/EventTile.svelte';
     import MentorOptInCard from '$lib/components/MentorOptInCard.svelte';
     import MentorRequestsCard from '$lib/components/MentorRequestsCard.svelte';
-    import PledgerProfileCard from '$lib/components/PledgerProfileCard.svelte';
+
 
     export let data: PageData;
     let events: CalendarEvent[] = data.events;
@@ -30,10 +30,6 @@
         window.addEventListener('resize', updateWidth);
         return () => window.removeEventListener('resize', updateWidth);
     });
-
-    $: eventStatuses = events.map(event =>
-        getEventStatus(event.originalData, $user.role, $user.username)
-    );
 
     function toggleView() {
         view = view === 'table' ? 'calendar' : 'table';
@@ -112,23 +108,24 @@
                     </thead>
                     <tbody>
                         {#each events as event, i}
-                            <tr>
-                                <td class="date-cell" on:click={() => handleEventClick(event)}>
-                                    {event.originalData.datum_uhrzeit}
-                                </td>
-                                <td>{event.originalData.coach}</td>
-                                <td>
-                                    {event.originalData.companyname}
-                                  </td>
-                                <td>{event.originalData.saeule}</td>
-                                <td>{event.originalData.mentors?.join(', ') || ''}</td>
+                        <tr>
+                            <td class="date-cell" on:click={() => handleEventClick(event)}>
+                                {event.originalData.datum_uhrzeit}
+                            </td>
+                            <td>{event.originalData.coach}</td>
+                            <td>
+                                {event.originalData.companyname}
+                              </td>
+                            <td>{event.originalData.saeule}</td>
+                            <td>{event.originalData.mentors?.join(', ') || ''}</td>
                                 <td
-                                    class="status-cell {eventStatuses[i].toLowerCase().replace(' ', '-')}"
+                                    class="status-cell {getEventStatus(event, $user.role, $user.username)}"
                                     class:clickable={isStatusClickable(event.originalData, $user.role, $user.username)}
-                                    on:click={() => handleStatusClick(event)}>
-                                    {eventStatuses[i]}
+                                    on:click={() => handleStatusClick(event)}
+                                >
+                                    {getEventStatus(event.originalData, $user.role, $user.username)}
                                 </td>
-                            </tr>
+                        </tr>
                         {/each}
                     </tbody>
                 </table>

@@ -25,7 +25,10 @@
         };
         user.set(userData);
       }
-    }
+      console.log($user.role)
+    } 
+
+    
   </script>
   
   <div class="role-switcher">
