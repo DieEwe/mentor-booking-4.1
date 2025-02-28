@@ -1,10 +1,11 @@
+<!-- src/lib/components/MentorRequestsCard.svelte -->
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
     import type { Event } from '$lib/types/event';
 
     export let event: Event;
     export let mentorRequests: string[] = [];
-    
+
     let selectedMentors: Set<string> = new Set();
 
     const dispatch = createEventDispatcher<{
@@ -29,11 +30,11 @@
 <div class="overlay" on:click|self={() => dispatch('close')}>
     <div class="requests-card">
         <button class="close-button" on:click={() => dispatch('close')}>&times;</button>
-        
+
         <h3>Mentor-Anfragen</h3>
         <div class="event-info">
             <p><strong>Datum & Zeit:</strong> {new Date(event.datum_uhrzeit).toLocaleString('de-DE')}</p>
-            <p><strong>Pledger:</strong> {event.pledger}</p>
+            <p><strong>Pledger:</strong> {event.pledgerProfile}</p>
             <p><strong>Coach:</strong> {event.coach}</p>
         </div>
 
@@ -43,8 +44,8 @@
                 {#each mentorRequests as mentor}
                     <div class="request-item">
                         <label class="checkbox-label">
-                            <input 
-                                type="checkbox" 
+                            <input
+                                type="checkbox"
                                 checked={selectedMentors.has(mentor)}
                                 on:change={() => toggleMentorSelection(mentor)}
                             />
@@ -53,8 +54,8 @@
                     </div>
                 {/each}
                 <div class="button-group">
-                    <button 
-                        class="accept-btn" 
+                    <button
+                        class="accept-btn"
                         on:click={handleAccept}
                         disabled={selectedMentors.size === 0}
                     >

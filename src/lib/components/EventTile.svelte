@@ -15,7 +15,7 @@
 
 <div class="event-tile" on:click={handleTileClick}>
     <div class="event-tile-header">
-        <h3>{event.pledger}</h3>
+        <h3>{event.companyname}</h3>
         <span class="status {status.toLowerCase().replace(' ', '-')}">{status}</span>
     </div>
     <div class="event-tile-details">

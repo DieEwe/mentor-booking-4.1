@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import type { CalendarEvent } from '$lib/types/event-calendar';
-import { mockEvents } from '$lib/mock/events';
+import { mockEvents } from '$lib/mock/mockevents';
 
 export const load: PageServerLoad = async () => {
     try {
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async () => {
 
         const calendarEvents: CalendarEvent[] = mockEvents.map(event => ({
             id: event.id,
-            title: event.pledger,
+            title: event.companyname ?? 'No Company Name',
             start: event.datum_uhrzeit,
             end: event.datum_uhrzeit,
             description: `Säule: ${event.saeule}, MentorIn: ${event.mentors?.join(', ')}`,
