@@ -117,14 +117,25 @@
                                 {event.originalData.companyname}
                               </td>
                             <td>{event.originalData.saeule}</td>
-                            <td>{event.originalData.mentors?.join(', ') || ''}</td>
-                                <td
-                                    class="status-cell {getEventStatus(event, $user.role, $user.username)}"
-                                    class:clickable={isStatusClickable(event.originalData, $user.role, $user.username)}
-                                    on:click={() => handleStatusClick(event)}
-                                >
-                                    {getEventStatus(event.originalData, $user.role, $user.username)}
-                                </td>
+                            <td>
+                                {#if event.originalData.status === 'in_process'}
+                                    <!--  Show nothing or a placeholder like "Anfragen ausstehend" -->
+                                    - - -
+                                {:else}
+                                    {event.originalData.mentors?.join(', ') || ''}
+                                {/if}
+                            </td>
+                            <td
+                                class="status-cell"
+                                class:clickable={isStatusClickable(event.originalData, $user.role, $user.username)}
+                                class:mentorin-gesucht={getEventStatus(event.originalData, $user.role, $user.username) === 'MentorIn gesucht'}
+                                class:mentorin-gefunden={getEventStatus(event.originalData, $user.role, $user.username) === 'MentorIn gefunden'}
+                                class:du-bist-mentorin={getEventStatus(event.originalData, $user.role, $user.username) === 'Du bist MentorIn'}
+                                class:bitte-warte-auf-rueckmeldung={getEventStatus(event.originalData, $user.role, $user.username) === 'Bitte warte auf Rückmeldung'}
+                                on:click={() => handleStatusClick(event)}
+                            >
+                                {getEventStatus(event.originalData, $user.role, $user.username)}
+                            </td>
                         </tr>
                         {/each}
                     </tbody>
