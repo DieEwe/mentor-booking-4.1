@@ -14,14 +14,14 @@ export const load: PageLoad = async ({ params }) => {
     // For now, return mock data
     const event: Event = {
         id: parseInt(params.id),
-        datum_uhrzeit: '2025-02-24 10:00',
-        coach: 'Max Mustermann',
-        pledger: 'Radio Bremen',
-        saeule: '4',
-        mentors: [],  // Initialize as empty array
-        status: 'looking_for_mentor',
-        mentorRequests: [],  // Initialize as empty array
-        assignedMentors: []  // Initialize as empty array
+    datum_uhrzeit: '2025-02-24 10:00',
+    coach: 'Max Mustermann',
+    companyname: 'Radio Bremen',
+    saeule: '4',
+    mentors: [],  // Initialize as empty array
+    status: 'looking_for_mentor',
+    mentorRequests: [],  // Initialize as empty array
+    assignedMentors: []  // Initialize as empty array
     };
 
     return {

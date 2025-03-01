@@ -34,7 +34,7 @@
         <h3>Mentor-Anfragen</h3>
         <div class="event-info">
             <p><strong>Datum & Zeit:</strong> {new Date(event.datum_uhrzeit).toLocaleString('de-DE')}</p>
-            <p><strong>Pledger:</strong> {event.pledgerProfile}</p>
+            <p><strong>Pledger:</strong> {event.companyname}</p>
             <p><strong>Coach:</strong> {event.coach}</p>
         </div>
 

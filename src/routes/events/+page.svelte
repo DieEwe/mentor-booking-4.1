@@ -45,7 +45,7 @@
 
     function handleStatusClick(event: CalendarEvent) {
         const eventData = event.originalData;
-        if ($user.role === 'mentor' && isStatusClickable(eventData, $user.role, $user.username)) {
+        if ($user.role === 'mentor' && isStatusClickable(eventData, $user.role, $user.vorname)) {
             showOptInCard = true;
             selectedEvent = eventData;
         } else if ($user.role === 'coach' && isStatusClickable(eventData, $user.role)) {
@@ -127,14 +127,14 @@
                             </td>
                             <td
                                 class="status-cell"
-                                class:clickable={isStatusClickable(event.originalData, $user.role, $user.username)}
-                                class:mentorin-gesucht={getEventStatus(event.originalData, $user.role, $user.username) === 'MentorIn gesucht'}
-                                class:mentorin-gefunden={getEventStatus(event.originalData, $user.role, $user.username) === 'MentorIn gefunden'}
-                                class:du-bist-mentorin={getEventStatus(event.originalData, $user.role, $user.username) === 'Du bist MentorIn'}
-                                class:bitte-warte-auf-rueckmeldung={getEventStatus(event.originalData, $user.role, $user.username) === 'Bitte warte auf Rückmeldung'}
+                                class:clickable={isStatusClickable(event.originalData, $user.role, $user.vorname)}
+                                class:mentorin-gesucht={getEventStatus(event.originalData, $user.role, $user.vorname) === 'MentorIn gesucht'}
+                                class:mentorin-gefunden={getEventStatus(event.originalData, $user.role, $user.vorname) === 'MentorIn gefunden'}
+                                class:du-bist-mentorin={getEventStatus(event.originalData, $user.role, $user.vorname) === 'Du bist MentorIn'}
+                                class:bitte-warte-auf-rueckmeldung={getEventStatus(event.originalData, $user.role, $user.vorname) === 'Bitte warte auf Rückmeldung'}
                                 on:click={() => handleStatusClick(event)}
                             >
-                                {getEventStatus(event.originalData, $user.role, $user.username)}
+                                {getEventStatus(event.originalData, $user.role, $user.vorname)}
                             </td>
                         </tr>
                         {/each}

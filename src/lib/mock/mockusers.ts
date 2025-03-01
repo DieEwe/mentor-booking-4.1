@@ -1,61 +1,62 @@
-import type { UserProfile, UserAuth } from '$lib/types/user';
+// src/lib/mock/mockusers.ts
 
-export const mockUserProfiles: Record<string, UserProfile> = {
-    admin: {
-        id: '1',
-        vorname: 'Admin',
-        name: 'User',
-        pronouns: 'they/them',
-        role: 'admin',
-        email: 'admin@example.com',
-        Zitat: 'Managing the platform',
-        disability: 'None',
-        languages: ['Deutsch', 'English'],
-        Beschreibung: 'Platform administrator'
-    },
-    mentor: {
-        id: '2',
-        vorname: 'Mentor',
-        name: 'Example',
-        pronouns: 'she/her',
-        role: 'mentor',
-        email: 'mentor@example.com',
-        Zitat: 'Helping others succeed',
-        disability: 'None',
-        languages: ['Deutsch'],
-        Beschreibung: 'Experienced mentor'
-    },
-    coach: {
-        id: '3',
-        vorname: 'Coach',
-        name: 'Test',
-        pronouns: 'he/him',
-        role: 'coach',
-        email: 'coach@example.com',
-        Zitat: 'Supporting growth',
-        disability: 'None',
-        languages: ['Deutsch', 'English', 'Español'],
-        Beschreibung: 'Professional coach'
-    }
-};
+import type { User } from '$lib/types/user';
 
-export const mockAuth: Record<string, UserAuth> = {
-    admin: {
-        id: '1',
-        email: 'admin@example.com',
-        role: 'admin',
-        isLoggedIn: true
-    },
-    mentor: {
-        id: '2',
-        email: 'mentor@example.com',
-        role: 'mentor',
-        isLoggedIn: true
-    },
-    coach: {
-        id: '3',
-        email: 'coach@example.com',
-        role: 'coach',
-        isLoggedIn: true
-    }
-};
+
+export const mockUsers: User[] = [
+
+    {
+        id: 1,
+		vorname: 'Hannah',
+		name: 'User',
+		pronouns: 'they/them',
+		role: 'admin',
+		email: 'Hannah@example.de',
+		Zitat: 'Managing the coffee',
+		disability: 'None',
+		languages: ['Deutsch', 'English'],
+		Beschreibung: 'tree administrator',
+        loggedIn: false
+	},
+    {
+		id: 2,
+        vorname: 'Karl',
+		name: 'User',
+		pronouns: 'they/them',
+		role: 'admin',
+		email: 'Karl@example.com',
+		Zitat: 'Managing the plants',
+		disability: 'None',
+		languages: ['Deutsch', 'English'],
+		Beschreibung: 'Platform planter',
+        loggedIn: false
+	},
+
+    {
+        id: 3,
+		vorname: 'Alice',
+		name: 'Miller',
+		pronouns: 'she/her',
+		role: 'mentor',
+		email: 'alice.miller@example.com',
+		Zitat: 'Inspiring others to excel',
+		disability: 'None',
+		languages: ['English', 'Spanish'],
+		Beschreibung: 'Experienced mentor with a passion for teaching',
+        loggedIn: false
+	},
+
+    {
+        id: 4,
+		vorname: 'Bob',
+		name: 'Anderson',
+		pronouns: 'he/him',
+		role: 'coach',
+		email: 'bob.anderson@example.com',
+		Zitat: 'Learning every day',
+		disability: 'None',
+		languages: ['Deutsch'],
+		Beschreibung: 'Aspiring professional eager to learn and grow',
+        loggedIn: false
+	}
+]

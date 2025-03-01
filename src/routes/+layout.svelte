@@ -1,11 +1,10 @@
 <script lang="ts">
     import '../app.css';
     import Menu from '$lib/Menu.svelte';
-    import RoleSwitcher from '$lib/components/RoleSwitcher.svelte';
-    import LoginModal from '$lib/components/LoginModal.svelte';
     import { user } from '$lib/stores';
     import { page } from '$app/stores';
     import ThemeToggle from '$lib/ThemeToggle.svelte';
+    import UserSwitcher from '$lib/components/UserSwitcher.svelte';
 
     const publicRoutes = ['/', '/login', '/bewerbung'];
 
@@ -26,14 +25,29 @@
 <div class="overwrite-themetoggle-position">
 <ThemeToggle />
 </div>
+<!-- temporary userswitcher -->
+ <div class="overwrite-userswitcher-position">
+    <UserSwitcher />
+  </div>
+  <!-- temporary userswitcher -->
 
-<RoleSwitcher />
+
+{#if $user.loggedIn}
+  <p>Logged in as: {$user.vorname} {$user.name} ({$user.role})</p>
+{:else}
+  <p>Not logged in.</p>
+{/if}
 
     <Menu />
     
-
-
   <style>
+    .overwrite-userswitcher-position {
+      position: fixed; /* Changed to fixed to keep it in place */
+      bottom: 2.5rem;
+      right: 2.5rem;
+      z-index: 1000;
+    }
+    
     .overwrite-themetoggle-position {
       position: fixed; /* Changed to fixed to keep it in place */
       top: 2.5rem;

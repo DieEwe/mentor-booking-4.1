@@ -1,7 +1,6 @@
 <script lang="ts">
     import '../app.css';
     import Menu from '$lib/Menu.svelte';
-    import RoleSwitcher from '$lib/components/RoleSwitcher.svelte';
     import LoginModal from '$lib/components/LoginModal.svelte';
     import { user } from '$lib/stores';
     import { page } from '$app/stores';

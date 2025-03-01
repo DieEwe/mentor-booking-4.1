@@ -1,12 +1,8 @@
 import { writable } from 'svelte/store';
-import type { UserAuth } from '$lib/types/user';
+import type { User } from '$lib/types/user';
 
-// Initial state
-const defaultAuth: UserAuth = {
-    id: '',
-    email: '',
-    role: 'guest',
-    isLoggedIn: false
-};
-
-export const authStore = writable<UserAuth>(defaultAuth);
+// Now update any function signatures or variables that formerly used UserAuth:
+export function login(user: User) {
+	// authentication logic using the new user shape
+	// e.g., check user.email, user.role, etc.
+}

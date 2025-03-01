@@ -1,25 +1,29 @@
+// src/lib/stores.ts
+
 import { writable } from 'svelte/store';
-import type { UserRole } from './types/user';
+import type { User } from '$lib/types/user';
 
-interface UserState {
-    loggedIn: boolean;
-    role: UserRole;
-    username?: string;
-}
-
-const initialState: UserState = {
-    loggedIn: false,
-    role: 'guest'
+const initialGuestUser: User = {
+  id: 0,
+  vorname: 'VornameGuest',
+  name: 'NachnameGuest',
+  pronouns: '',
+  role: 'guest',
+  email: '',
+  Zitat: '',
+  disability: 'None',
+  languages: [],
+  Beschreibung: 'No profile available',
+  loggedIn: false,
 };
 
-export const user = writable<UserState>(initialState);
-
+export const user = writable<User>(initialGuestUser);
 
 export const theme = writable<'light' | 'dark'>('light');
 
-// Subscribe to theme changes and update document
+// Subscribe to theme changes and update document attribute.
 theme.subscribe(value => {
-    if (typeof document !== 'undefined') {
-        document.documentElement.setAttribute('data-theme', value);
-    }
+	if (typeof document !== 'undefined') {
+		document.documentElement.setAttribute('data-theme', value);
+	}
 });

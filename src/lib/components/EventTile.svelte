@@ -1,38 +1,39 @@
+<!-- src/lib/components/EventTile.svelte -->
 <script lang="ts">
-    import type { Event } from '$lib/types/event';
-    import { getEventStatus } from '$lib/utils/eventStatus';
-    import { user } from '$lib/stores';
-    import { goto } from '$app/navigation';
+	import type { Event } from '$lib/types/event';
+	import { getEventStatus } from '$lib/utils/eventStatus';
+	import { user } from '$lib/stores';
+	import { goto } from '$app/navigation';
 
-    export let event: Event;
+	export let event: Event;
 
-    $: status = getEventStatus(event, $user.role, $user.username);
+	// Use email (or another appropriate field) as the identifier instead of username.
+	$: status = getEventStatus(event, $user.role, $user.email);
 
-    function handleTileClick() {
-        goto(`/events/${event.id}`);
-    }
-    
+	function handleTileClick() {
+		goto(`/events/${event.id}`);
+	}
 </script>
 
 <div class="event-tile" on:click={handleTileClick}>
-    <div class="event-tile-header">
-        <h3>{event.companyname}</h3>
-        <span class="status {status.toLowerCase().replace(' ', '-')}">{status}</span>
-    </div>
-    <div class="event-tile-details">
-        <div class="detail-item">
-            <span class="label">Datum & Uhrzeit:</span>
-            <span class="value">{new Date(event.datum_uhrzeit).toLocaleString('de-DE')}</span>
-        </div>
-        <div class="detail-item">
-            <span class="label">Coach:</span>
-            <span class="value">{event.coach}</span>
-        </div>
-        <div class="detail-item">
-            <span class="label">Säule:</span>
-            <span class="value">{event.saeule}</span>
-        </div>
-    </div>
+	<div class="event-tile-header">
+		<h3>{event.companyname}</h3>
+		<span class="status {status.toLowerCase().replace(' ', '-')}">{status}</span>
+	</div>
+	<div class="event-tile-details">
+		<div class="detail-item">
+			<span class="label">Datum & Uhrzeit:</span>
+			<span class="value">{new Date(event.datum_uhrzeit).toLocaleString('de-DE')}</span>
+		</div>
+		<div class="detail-item">
+			<span class="label">Coach:</span>
+			<span class="value">{event.coach}</span>
+		</div>
+		<div class="detail-item">
+			<span class="label">Säule:</span>
+			<span class="value">{event.saeule}</span>
+		</div>
+	</div>
 </div>
 
 <style>

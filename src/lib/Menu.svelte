@@ -1,9 +1,10 @@
+<!-- src/lib/components/Menu.svelte -->
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { user } from './stores';
 	import '../app.css';
 	import LoginModal from '$lib/components/LoginModal.svelte';
-	import { goto } from '$app/navigation'; // Import goto
+	import { goto } from '$app/navigation';
 
 	let showLoginModal = false;
 
@@ -12,27 +13,35 @@
 	}
 
 	function logout() {
+		// Reset the user store to a guest user using the new structure.
 		user.set({
-			loggedIn: false,
-			role: 'guest'
+			id: 0,
+			vorname: 'Guest',
+			name: 'User',
+			pronouns: '',
+			role: 'guest',
+			email: '',
+			Zitat: '',
+			disability: 'None',
+			languages: [],
+			Beschreibung: 'No profile available',
+			loggedIn: false // Add the missing 'loggedIn' property
 		});
 		closeBurger();
-		goto('/'); // Redirect to the home page
+		goto('/');
 	}
 
-	// Burger menu state for mobile view
+	// Burger menu state for mobile view.
 	let burgerOpen = false;
-
-
 	function closeBurger() {
 		burgerOpen = false;
 	}
 
-	// Check if current page is active
+	// Check if the current page is active.
 	$: isActive = (path: string) => $page.url.pathname === path;
 </script>
 
-{#if $user.loggedIn}
+{#if $user.role !== 'guest'}
 	<!-- Sidebar Navigation (Desktop) -->
 	<div class="menu-wrapper">
 		<div class="navigation">
@@ -40,10 +49,7 @@
 			<label class="hamburger">
 				<input type="checkbox" bind:checked={burgerOpen} />
 				<svg viewBox="0 0 32 32">
-					<path
-						class="line line-top-bottom"
-						d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
-					></path>
+					<path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
 					<path class="line" d="M7 16 27 16"></path>
 				</svg>
 			</label>

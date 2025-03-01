@@ -1,14 +1,9 @@
 import type { Event } from '$lib/types/event';
-import { mockPledgers } from './mockcompanies';
 
-// Helper function to get a random element from an array
-function getRandom<T>(arr: T[]): T {
-    return arr[Math.floor(Math.random() * arr.length)];
-}
 
 export const mockEvents: Event[] = [
     {
-        id: '1',
+        id: 1,
         datum_uhrzeit: '2024-07-10T10:00:00',
         coach: 'Max Mustermann',
         companyname: 'Airbus Bremen', // Assign random company name
@@ -19,7 +14,7 @@ export const mockEvents: Event[] = [
 		assignedMentors: ['Alice']
     },
     {
-        id: '2',
+        id: 2,
         datum_uhrzeit: '2024-07-15T14:00:00',
         coach: 'Erika Mustermann',
         companyname: 'Bruker Bremen', // Assign random company name
@@ -30,7 +25,7 @@ export const mockEvents: Event[] = [
 		assignedMentors: ['Charlie']
     },
     {
-        id: '3',
+        id: 3,
         datum_uhrzeit: '2024-07-20T09:00:00',
         coach: 'Max Mustermann',
         companyname: 'Airbus Bremen', // Assign random company name
@@ -41,7 +36,7 @@ export const mockEvents: Event[] = [
 		assignedMentors: ['Grace']
     },
     {
-        id: '4',
+        id: 4,
         datum_uhrzeit: '2024-07-25T11:00:00',
         coach: 'Erika Mustermann',
         companyname: 'Bruker Bremen', // Assign random company name
@@ -52,7 +47,7 @@ export const mockEvents: Event[] = [
 		assignedMentors: ['Kevin']
     },
 	{
-        id: '5',
+        id: 5,
         datum_uhrzeit: '2024-08-01T16:00:00',
         coach: 'John Doe',
         companyname: 'Bruker Bremen',
@@ -63,7 +58,7 @@ export const mockEvents: Event[] = [
 		assignedMentors: ['Nancy']
     },
     {
-        id: '6',
+        id: 6,
         datum_uhrzeit: '2024-08-05T13:00:00',
         coach: 'Jane Smith',
         companyname: 'Airbus Bremen',
@@ -74,7 +69,7 @@ export const mockEvents: Event[] = [
 		assignedMentors: ['Rachel']
     },
     {
-        id: '7',
+        id: 7,
         datum_uhrzeit: '2024-08-12T17:00:00',
         coach: 'John Doe',
         companyname: 'Bruker Bremen',
@@ -85,7 +80,7 @@ export const mockEvents: Event[] = [
 		assignedMentors: ['Uma']
     },
     {
-        id: '8',
+        id: 8,
         datum_uhrzeit: '2024-08-18T10:00:00',
         coach: 'Jane Smith',
         companyname: 'Mercedes-Benz Bremen',

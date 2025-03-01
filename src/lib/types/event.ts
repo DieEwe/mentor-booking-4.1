@@ -3,7 +3,7 @@ export type EventStatus = 'looking_for_mentor' | 'in_process' | 'mentor_found';
 
 
 export interface Event {
-    id: string;
+    id: number;
     datum_uhrzeit: string;
     coach: string;
     companyname: string; // Added companyname property

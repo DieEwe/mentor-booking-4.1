@@ -50,9 +50,10 @@
     width: 100%;
     overflow-x: hidden;
     position: relative;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(252,176,69,1) 100%);
     /* Set the light theme background image: fixed, non-repeating, and cover the viewport */
-    background: url('static/images/Backgroundlight.webp') no-repeat fixed center;
-    background-size: cover;
+    /* background: url('static/images/Backgroundlight.webp') no-repeat fixed center; */
+    /* background-size: cover; */
     transition: background 0.3s ease;
 }
 
@@ -64,8 +65,9 @@
     --secondary: #ffffff;
     --accent: #43d816;
     /*body styling*/
-    background: url('static/images/Backgrounddark.webp') no-repeat fixed center;
-    background-size: cover;
+    /* background: url('static/images/Backgrounddark.webp') no-repeat fixed center; */
+    background: linear-gradient(90deg, rgba(0,34,96,1) 0%, rgba(0,0,0,1) 100%);
+    /* background-size: cover; */
 }
 
 

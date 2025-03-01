@@ -1,14 +1,7 @@
 <script lang="ts">
-    import type { UserProfile } from '$lib/types/user';
-    import { createEventDispatcher } from 'svelte';
-    
-    const dispatch = createEventDispatcher<{
-        updateProfile: UserProfile;
-    }>();
+    import type { User } from '$lib/types/user';
 
-    export let userData: UserProfile;
-    let isEditing = false;
-    let avatarUrl = userData.avatar_url || '/images/avatar-placeholder.jpg';
+    export let userData: User;
 </script>
 
 <div class="profile-card" role="region" aria-label="User Profile">
