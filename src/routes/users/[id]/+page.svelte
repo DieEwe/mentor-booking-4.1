@@ -4,9 +4,12 @@
     export let data;
 </script>
 
-<main>
-    <UserProfileCard userData={data.user} />
-</main>
+<div class="transparent-container">
+    <main>
+        <UserProfileCard userData={data.user} />
+    </main>
+</div>
+
 
 <style>
     main {

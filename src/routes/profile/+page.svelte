@@ -7,12 +7,14 @@
     $: userData = $user.loggedIn ? $user : undefined;  // Use lowercase 'user' store
 </script>
 
-<div class="profile-container">
-    {#if userData}
-        <ProfileCard {userData} />
-    {:else}
-        <p>Please log in to view your profile.</p>
-    {/if}
+<div class="transparent-container">
+    <div class="profile-container">
+        {#if userData}
+            <ProfileCard {userData} />
+        {:else}
+            <p>Please log in to view your profile.</p>
+        {/if}
+    </div>
 </div>
 
 <style>

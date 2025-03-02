@@ -2,7 +2,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
     import type { Event } from '$lib/types/event';
-
+    import { formatDateTime } from '$lib/utils/dateUtils';
     export let event: Event;
     export let mentorRequests: string[] = [];
 
@@ -33,7 +33,7 @@
 
         <h3>Mentor-Anfragen</h3>
         <div class="event-info">
-            <p><strong>Datum & Zeit:</strong> {new Date(event.datum_uhrzeit).toLocaleString('de-DE')}</p>
+            <p><strong>Datum & Zeit:</strong> {formatDateTime(event)}</p>
             <p><strong>Pledger:</strong> {event.companyname}</p>
             <p><strong>Coach:</strong> {event.coach}</p>
         </div>

@@ -1,7 +1,100 @@
-/* app.css */
+/* app.css - Global variables and base styles */
+
+/* Font imports */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Base Layout Structure */
+/* Font definitions */
+@font-face {
+  font-family: 'Segoe UI Symbol'; 
+  src: url('/fonts/Segoe-UI-Symbol.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Legacy fonts - consider removing if not used */
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('/fonts/BebasNeue.woff2') format('woff2'),
+       url('/fonts/BebasNeue.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Garet';
+  src: url('/fonts/Garet.woff2') format('woff2'),
+       url('/fonts/Garet.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Global theme variables */
+:root {
+  /* Base colors */
+  --text: #181818;
+  --text-rgb: 24, 24, 24;
+  --primary: #ffffff;
+  --secondary: #868686;
+  --accent: #f84d42;
+  
+  /* Typography */
+  --font-family: 'Segoe UI Symbol', 'Segoe UI', sans-serif, 'Inter', system-ui, -apple-system;
+  --font-size-base: 16px;
+  
+  /* Layout */
+  --border-radius: 8px;
+  --border-radius-lg: 30px;
+  
+  /* Effects */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark theme override */
+:root[data-theme="dark"] {
+  --text: #ffffff;
+  --text-rgb: 255, 255, 255;
+  --primary: #1a202c;
+  --secondary: #a0aec0;
+  --accent: #f84d42;
+  
+  /* Effects for dark mode */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Base element styling */
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  background-color: white;
+  color: var(--text);
+  font-family: var(--font-family);
+  transition: all 0.3s ease;
+}
+
+/* Apply the dark theme background to body */
+:root[data-theme="dark"] body {
+  background-color: var(--primary);
+}
+
+
+/* Layout structures */
 .page-wrapper {
   min-height: 100vh;
   display: flex;
@@ -9,163 +102,31 @@
   position: relative;
 }
 
-/* Main transparent container that wraps all page content */
+/* Main transparent container */
 .transparent-container {
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
   flex: 1;
   width: 90%;
-  max-width: 1300px;
-  background: rgba(255, 255, 255, 0);
-  /* backdrop-filter: blur(10px); */
-  border-radius: 25px;
+  max-width: 1700px;
+  background: rgba(167, 185, 245, 0);
+  border-radius: var(--border-radius-lg);
   padding: 2rem;
   overflow-y: auto;
   position: relative;
   z-index: 1;
+  box-shadow: var(--shadow-lg);
 }
-
-/* Individual page content containers */
-.content-container {
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 2rem;
-  margin: 1rem 0;
-}
-
-/* Define BOTH themes' variables */
-:root {
-    --text: #181818;
-    --text-rgb: 24, 24, 24;
-    --primary: #ffffff;
-    --secondary: #868686;
-    --accent: #31a104;
-    --font-size-base: 16px;
-    --border-radius: 8px;
-    --button-background: #ffc400;
-
-    /*body styling*/
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    width: 100%;
-    overflow-x: hidden;
-    position: relative;
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(252,176,69,1) 100%);
-    /* Set the light theme background image: fixed, non-repeating, and cover the viewport */
-    /* background: url('static/images/Backgroundlight.webp') no-repeat fixed center; */
-    /* background-size: cover; */
-    transition: background 0.3s ease;
-}
-
-/* Dark theme override */
-:root[data-theme="dark"] {
-    --text: #ffffff;
-    --text-rgb: 255, 255, 255;
-    --primary: #7e7e7e;
-    --secondary: #ffffff;
-    --accent: #43d816;
-    /*body styling*/
-    /* background: url('static/images/Backgrounddark.webp') no-repeat fixed center; */
-    background: linear-gradient(90deg, rgba(0,34,96,1) 0%, rgba(0,0,0,1) 100%);
-    /* background-size: cover; */
+:root[data-theme="dark"] .transparent-container {
+  box-shadow: none;
 }
 
 
-
-
-
-/* For larger screens, allow the background-image to be responsive */
-@media (min-width: 1920px) {
-  body {
-    background-position: center center; /* Remove or adapt if using a gradient */
-  }
-}
-
-/* For medium screens, maintain aspect ratio but scale down */
-@media (max-width: 1919px) and (min-width: 768px) {
-  body {
-    background-position: center top; /* Remove or adapt if using a gradient */
-  }
-}
-
-
-/*TRANSPARENT CONTAINER*/
-
-/* small screens: remove margins and border radius */
-@media (max-width: 768px) { /* Modified breakpoint to match Menu.svelte */
-  .transparent-container {
-    margin: 8rem auto;
-    border-radius: 25px;
-    margin-left: auto; /* overrides left margin */
-  }
-}
-
-/* Medium screens*/
-@media (min-width: 769px) and (max-width: 1800px) {
-  .transparent-container {
-    margin: 8rem auto;
-    border-radius: 25px;
-    margin-left: calc(2rem + 150px); /* Menu left + width */
-  }
-}
-
-/* Large screens*/
-@media (min-width: 1801px) { /* Modified breakpoint */
-  .transparent-container {
-    margin: 8rem auto;
-    border-radius: 25px;
-  }
-}
-
-a,
-.menu-link {
-  color: black;
-  text-decoration: none;
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font-weight: normal;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-a:hover,
-.menu-link:hover {
-  color: gray;
-}
-
-
-/* Font definitions remain unchanged */
-@font-face {
-  font-family: 'Bebas Neue';
-  src:
-    url('/fonts/BebasNeue.woff2') format('woff2'),
-    url('/fonts/BebasNeue.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Garet';
-  src:
-    url('/fonts/Garet.woff2') format('woff2'),
-    url('/fonts/Garet.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-
-
-
-
-
-/* Additional buttons */
-
+/* Button styles */
 .button-55 {
   align-self: center;
-  background-color: #fff;
+  background-color: var(--primary);
   background-image: none;
   background-position: 0 90%;
   background-repeat: repeat no-repeat;
@@ -175,10 +136,10 @@ a:hover,
   border-width: 2px;
   box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
   box-sizing: border-box;
-  color: #41403e;
+  color: var(--text);
   cursor: pointer;
   display: inline-block;
-  font-family: var(--font-family, 'Inter', sans-serif);
+  font-family: var(--font-family);
   font-size: 1rem;
   line-height: 23px;
   outline: none;
@@ -203,13 +164,32 @@ a:hover,
   box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 
-@media screen and (max-width: 768px) {
+/* Responsive layout */
+@media (max-width: 768px) {
+  .transparent-container {
+    margin: 8rem auto;
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+    width: calc(100% - 2rem);
+  }
+  
   .button-55 {
     font-size: 0.9rem;
     padding: 0.5rem;
   }
 }
 
+@media (min-width: 769px) and (max-width: 1800px) {
+  .transparent-container {
+    margin: 8rem auto;
+    border-radius: var(--border-radius-lg);
+    margin-left: calc(2rem + 150px);
+  }
+}
 
-/* DEV MODE SWITCHER FOR ROLES */
-
+@media (min-width: 1801px) {
+  .transparent-container {
+    margin: 8rem auto;
+    border-radius: var(--border-radius-lg);
+  }
+}

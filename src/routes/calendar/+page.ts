@@ -1,27 +1,27 @@
-import type { PageServerLoad } from './$types';
+
+import type { PageLoad } from './$types';
 import type { CalendarEvent } from '$lib/types/event-calendar';
 import { mockEvents } from '$lib/mock/mockevents';
 import { getDateTime } from '$lib/utils/dateUtils';
 
-export const load: PageServerLoad = async () => {
+export const load: PageLoad = async () => {
     try {
+        // Use mockEvents directly instead of fetchEvents()
         const calendarEvents: CalendarEvent[] = mockEvents.map(event => ({
             id: String(event.id),
-            title: event.companyname ?? 'No Company Name',
-            start: getDateTime(event), // Use utility function
+            title: `${event.companyname} - ${event.coach}`,
+            start: getDateTime(event), // Use utility function if you have it
             end: getDateTime(event),   // Use utility function
+            color: '#4338ca',
             description: `Säule: ${event.saeule}`,
             originalData: event
         }));
-
-        // Debug log to verify data
-        console.log('Calendar Events:', calendarEvents);
 
         return {
             events: calendarEvents
         };
     } catch (error) {
-        console.error('Error loading events:', error);
+        console.error('Error loading mock events:', error);
         return { events: [] };
     }
 };

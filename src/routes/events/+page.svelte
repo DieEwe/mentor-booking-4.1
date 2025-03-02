@@ -2,25 +2,27 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
-    import Calendar from '$lib/components/Calendar.svelte';
     import type { PageData } from './$types';
     import { user } from '$lib/stores';
-    import { getEventStatus, isStatusClickable } from '$lib/utils/eventStatus';
+    import { isStatusClickable } from '$lib/utils/eventStatus';
     import type { Event } from '$lib/types/event';
     import type { CalendarEvent } from '$lib/types/event-calendar';
     import EventTile from '$lib/components/EventTile.svelte';
     import MentorOptInCard from '$lib/components/MentorOptInCard.svelte';
     import MentorRequestsCard from '$lib/components/MentorRequestsCard.svelte';
-
+    import { formatDateTime, formatDate, formatTime } from '$lib/utils/dateUtils';
+    import EventStatusButton from '$lib/components/EventStatusButton.svelte';
+    import '$lib/styles/table.css';
+    import Icons from '$lib/components/Icons.svelte';
+    import Buttons from '$lib/components/Buttons.svelte';
 
     export let data: PageData;
     let events: CalendarEvent[] = data.events;
-    let view: 'table' | 'calendar' = 'table';
     let isMobile = false;
 
-    // State for Pledger Profile Card
-    let showPledgerProfileCard = false;
-    let selectedPledger: any | null = null;
+    export function getEventData(event: Event | CalendarEvent): Event {
+    return 'originalData' in event ? event.originalData : event;
+}
 
     onMount(() => {
         const updateWidth = () => {
@@ -31,20 +33,25 @@
         return () => window.removeEventListener('resize', updateWidth);
     });
 
-    function toggleView() {
-        view = view === 'table' ? 'calendar' : 'table';
-    }
 
     function handleEventClick(event: CalendarEvent) {
-        goto(`/events/${event.originalData.id}`);
-    }
+    const eventData = getEventData(event);
+    goto(`/events/${eventData.id}`);
+}
 
     let showOptInCard = false;
     let selectedEvent: Event | null = null;
     let showRequestsCard = false;
 
-    function handleStatusClick(event: CalendarEvent) {
-        const eventData = event.originalData;
+
+
+    function handleMentorOptIn() {
+        showOptInCard = false;
+        selectedEvent = null;
+    }
+
+    function handleStatusButtonClick(event: CustomEvent<Event>) {
+        const eventData = event.detail;
         if ($user.role === 'mentor' && isStatusClickable(eventData, $user.role, $user.vorname)) {
             showOptInCard = true;
             selectedEvent = eventData;
@@ -54,101 +61,100 @@
         }
     }
 
-    function handleMentorOptIn() {
-        showOptInCard = false;
-        selectedEvent = null;
-    }
-
-
 </script>
 
-<div class="content-container">
-    <div class="header-controls">
-        <div class="left-controls">
-            <button on:click={toggleView} aria-pressed={view === 'calendar'} class="toggle-btn">
-                {#if view === 'table'}
-                    <img src="/images/calendar.svg" alt="Switch to calendar view" class="toggle-icon" />
-                    <span class="sr-only">Kalender</span>
-                {:else}
-                    <img src="/images/list.svg" alt="Switch to list view" class="toggle-icon" />
-                    <span class="sr-only">Liste</span>
-                {/if}
-            </button>
-        </div>
-
-        <div class="right-controls">
-            <button
-                on:click={() => window.open('https://cloud.seatable.io/dtable/forms/custom/NeuerCoachingTermin/', '_blank')}
-                class="button-55"
-            >
-                Neuer Termin
-            </button>
-        </div>
-    </div>
-
-    <div class="table-container">
-        {#if view === 'table'}
-            {#if isMobile}
-                <div class="event-tiles">
-                    {#each events as event}
-                        <EventTile event={event.originalData} />
-                    {/each}
+<div class="transparent-container">
+        <div class="header-controls">
+            <div class="right-controls">
+                <div class="right-controls">
+                    <Buttons
+                        type="add"
+                        label="Neuer Termin"
+                        onClick={() => window.open('https://cloud.seatable.io/dtable/forms/custom/NeuerCoachingTermin/', '_blank')}
+                    />
                 </div>
-            {:else}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Datum und Uhrzeit</th>
-                            <th>Coach</th>
-                            <th>Pledger</th>
-                            <th>Säule</th>
-                            <th>MentorInnen</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {#each events as event, i}
-                        <tr>
-                            <td class="date-cell" on:click={() => handleEventClick(event)}>
-                                {event.originalData.datum_uhrzeit}
-                            </td>
-                            <td>{event.originalData.coach}</td>
-                            <td>
-                                {event.originalData.companyname}
-                              </td>
-                            <td>{event.originalData.saeule}</td>
-                            <td>
-                                {#if event.originalData.status === 'in_process'}
-                                    <!--  Show nothing or a placeholder like "Anfragen ausstehend" -->
-                                    - - -
-                                {:else}
-                                    {event.originalData.mentors?.join(', ') || ''}
-                                {/if}
-                            </td>
-                            <td
-                                class="status-cell"
-                                class:clickable={isStatusClickable(event.originalData, $user.role, $user.vorname)}
-                                class:mentorin-gesucht={getEventStatus(event.originalData, $user.role, $user.vorname) === 'MentorIn gesucht'}
-                                class:mentorin-gefunden={getEventStatus(event.originalData, $user.role, $user.vorname) === 'MentorIn gefunden'}
-                                class:du-bist-mentorin={getEventStatus(event.originalData, $user.role, $user.vorname) === 'Du bist MentorIn'}
-                                class:bitte-warte-auf-rueckmeldung={getEventStatus(event.originalData, $user.role, $user.vorname) === 'Bitte warte auf Rückmeldung'}
-                                on:click={() => handleStatusClick(event)}
-                            >
-                                {getEventStatus(event.originalData, $user.role, $user.vorname)}
-                            </td>
-                        </tr>
+            </div>
+        </div>
+
+        <div class="table-container">
+                {#if isMobile}
+                    <div class="event-tiles">
+                        {#each events as event}
+                        <EventTile 
+                        event={event.originalData} 
+                        on:statusClick={handleStatusButtonClick} 
+                        />
                         {/each}
-                    </tbody>
-                </table>
-            {/if}
-        {:else}
-            <Calendar
-                events={events}
-                handleEventClick={handleEventClick}
-                on:eventClick={({ detail }) => handleEventClick(detail)}
-            />
-        {/if}
-    </div>
+                    </div>
+                {:else}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <Icons name="calendar" color="#057eff" size={16} />
+                                        Datum und Uhrzeit
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <Icons name="user" color="#8246de" size={16} />
+                                        Coach
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <Icons name="user" color="#30c0b0" size={16} />
+                                        Pledger
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <Icons name="bookOpen" color="#f4b446" size={16} />
+                                        Säule
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <Icons name="group" color="#5045ce" size={16} />
+                                        MentorInnen
+                                    </div>
+                                </th>
+                                <th>Status</th> <!-- No icon for Status as requested -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each events as event, i}
+                            <tr>
+                                <td class="date-cell" on:click={() => handleEventClick(event)}>
+                                    <span class="date-part">{formatDate(event.originalData)}</span>
+                                    <span class="time-part">{formatTime(event.originalData)}</span>
+                                </td>
+                                <td>{event.originalData.coach}</td>
+                                <td>
+                                    {event.originalData.companyname}
+                                </td>
+                                <td>{event.originalData.saeule}</td>
+                                <td>
+                                    {#if event.originalData.status === 'in_process'}
+                                        <!--  Show nothing or a placeholder like "Anfragen ausstehend" -->
+                                        <span class="empty-state">- - -</span>
+                                    {:else}
+                                        {event.originalData.mentors?.join(', ') || ''}
+                                    {/if}
+                                </td>
+                                <td class="status-cell">
+                                    <EventStatusButton 
+                                        event={event.originalData} 
+                                        on:statusClick={handleStatusButtonClick} 
+                                    />
+                                </td>
+                            </tr>
+                            {/each}
+                        </tbody>
+                    </table>
+                {/if}
+        </div>
 </div>
 
 {#if showOptInCard && selectedEvent}
@@ -182,106 +188,3 @@
 {/if}
 
 
-<style>
-    .table-container {
-        background: white;
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin-top: 1rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        position: relative; /* For positioning the profile card */
-    }
-
-    .header-controls {
-        background: white;
-        border-radius: 15px;
-        padding: 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .toggle-btn {
-        padding: 0.5em 1em;
-        border-radius: 50px;
-        cursor: pointer;
-        border: 0;
-        background-color: white;
-        box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        font-size: 15px;
-        transition: all 0.2s ease;
-    }
-
-    .toggle-btn:hover {
-        transform: scale(1.05);
-    }
-
-    .toggle-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-        display: inline-block;
-        vertical-align: middle;
-        transition: opacity 0.2s ease;
-    }
-
-    .date-cell {
-        cursor: pointer;
-        color: #2563eb;
-        transition: background-color 0.2s;
-    }
-
-    .date-cell:hover {
-        background-color: #f3f4f6;
-        text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-        .header-controls {
-            padding: 0.75rem 1rem;
-        }
-
-        .toggle-icon {
-            width: 2rem;
-            height: 2rem;
-        }
-
-        .event-tiles {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-    }
-
-    .status-cell {
-        cursor: default;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        text-align: center;
-    }
-
-    .mentorin-gesucht {
-        background-color: #fff3cd;
-        color: #856404;
-    }
-
-    .mentorin-gefunden {
-        background-color: #d4edda;
-        color: #155724;
-    }
-
-    .du-bist-mentorin {
-        background-color: #cce5ff;
-        color: #004085;
-    }
-
-    .bitte-warte-auf-rueckmeldung {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
-
-    .clickable {
-        cursor: pointer;
-    }
-</style>

@@ -4,13 +4,15 @@ export type EventStatus = 'looking_for_mentor' | 'in_process' | 'mentor_found';
 
 export interface Event {
     id: number;
-    datum_uhrzeit: string;
+    // Support both formats
+    datum_uhrzeit?: string;  // Old format (can be null/undefined)
+    datum?: string;          // New format: date only (YYYY-MM-DD)
+    uhrzeit?: string;        // New format: time only (HH:MM:SS)
     coach: string;
-    companyname: string; // Added companyname property
+    companyname: string;
     saeule: string;
     mentors?: string[];
     status: string;
-	mentorRequests?: string[]; // Add mentorRequests
-	assignedMentors?: string[]; // Add assigned Mentors
+    mentorRequests?: string[];
+    assignedMentors?: string[];
 }
-

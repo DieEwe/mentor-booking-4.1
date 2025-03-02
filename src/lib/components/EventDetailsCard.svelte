@@ -1,25 +1,20 @@
-<!-- src/lib/components/EventDetailsCard.svelte -->
 <script lang="ts">
     import type { Event } from '$lib/types/event';
-
+    import { formatDateTime } from '$lib/utils/dateUtils';
+    import EventStatusButton from './EventStatusButton.svelte';
+    import { createEventDispatcher } from 'svelte';
+    
     export let event: Event;
-
-    let showModal = false;
-
-    function handleClose() {
-        showModal = false;
+    
+    const dispatch = createEventDispatcher<{
+        statusClick: Event;
+    }>();
+    
+    function handleStatusClick(e: CustomEvent<Event>) {
+        dispatch('statusClick', e.detail);
     }
-        // Format the date and time
-    function formatDateTime(dateTimeString: string): string {
-        const date = new Date(dateTimeString);
-        return date.toLocaleDateString('de-DE', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        });
-    }
+
+    
 </script>
 
 <div class="event-details-card">
@@ -27,7 +22,7 @@
 
     <div class="detail-item">
         <span class="label">Datum & Uhrzeit:</span>
-        <span class="value">{formatDateTime(event.datum_uhrzeit)}</span>
+        <span class="value">{formatDateTime(event)}</span>
     </div>
 
     <div class="detail-item">
@@ -54,7 +49,9 @@
 
     <div class="detail-item">
         <span class="label">Status:</span>
-        <span class="value">{event.status}</span>
+        <div class="value status-button-container">
+            <EventStatusButton {event} on:statusClick={handleStatusClick} />
+        </div>
     </div>
 </div>
 
@@ -90,6 +87,10 @@
     .value {
         font-weight: 500;
         color: #111827;
+    }
+
+    .status-button-container {
+        max-width: 200px;
     }
 
     @media (max-width: 768px) {

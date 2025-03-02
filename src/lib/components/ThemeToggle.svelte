@@ -1,21 +1,17 @@
 <script lang="ts">
-    import { theme } from './stores';
-    import '../../static/css/dayandnight.css';
+    import { theme, toggleTheme} from '../stores';
+    import '$lib/styles/dayandnight.css';
+    // uses the centralized helper function in stores.ts
 
-    // Handle theme toggle
-    function toggleTheme() {
-        theme.update(current => current === 'light' ? 'dark' : 'light');
-    }
 </script>
 
-
-    <label class="theme-switch">
-        <input 
-            type="checkbox" 
-            class="theme-switch__checkbox"
-            checked={$theme === 'dark'}
-            on:change={toggleTheme}
-        >
+<label class="theme-switch">
+    <input 
+        type="checkbox" 
+        class="theme-switch__checkbox"
+        checked={$theme === 'dark'}
+        on:change={toggleTheme}
+    >
         <div class="theme-switch__container">
             <div class="theme-switch__clouds"></div>
             <div class="theme-switch__stars-container">

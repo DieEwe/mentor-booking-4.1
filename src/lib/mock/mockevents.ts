@@ -1,93 +1,125 @@
 import type { Event } from '$lib/types/event';
 
-
 export const mockEvents: Event[] = [
+    // One event in the old format
     {
         id: 1,
-        datum_uhrzeit: '2024-07-10T10:00:00',
+        datum_uhrzeit: '2025-03-05T10:00:00',
         coach: 'Max Mustermann',
-        companyname: 'Airbus Bremen', // Assign random company name
+        companyname: 'Airbus Bremen',
         saeule: 'Leadership',
         mentors: ['Alice', 'Bob'],
         status: 'looking_for_mentor',
-		mentorRequests: ['Clara', 'David'],
-		assignedMentors: ['Alice']
+        mentorRequests: ['Clara', 'David'],
+        assignedMentors: ['Alice']
     },
+    // Nine events in the new format
     {
         id: 2,
-        datum_uhrzeit: '2024-07-15T14:00:00',
+        datum: '2025-03-10',
+        uhrzeit: '14:00:00',
         coach: 'Erika Mustermann',
-        companyname: 'Bruker Bremen', // Assign random company name
+        companyname: 'Bruker Bremen',
         saeule: 'Innovation',
         mentors: ['Charlie'],
         status: 'mentor_found',
-		mentorRequests: ['Eve', 'Frank'],
-		assignedMentors: ['Charlie']
+        mentorRequests: [],
+        assignedMentors: ['Charlie']
     },
     {
         id: 3,
-        datum_uhrzeit: '2024-07-20T09:00:00',
-        coach: 'Max Mustermann',
-        companyname: 'Airbus Bremen', // Assign random company name
+        datum: '2025-03-15',
+        uhrzeit: '09:30:00',
+        coach: 'Sabine Weber',
+        companyname: 'Radio Bremen',
         saeule: 'Marketing',
         mentors: ['Grace', 'Heidi'],
         status: 'mentor_found',
-		mentorRequests: ['Judy', 'Ivy'],
-		assignedMentors: ['Grace']
+        mentorRequests: [],
+        assignedMentors: ['Grace']
     },
     {
         id: 4,
-        datum_uhrzeit: '2024-07-25T11:00:00',
-        coach: 'Erika Mustermann',
-        companyname: 'Bruker Bremen', // Assign random company name
-        saeule: 'Sales',
-        mentors: ['Kevin'],
-        status: 'in_process',
-		mentorRequests: ['Lisa', 'Mike'],
-		assignedMentors: ['Kevin']
+        datum: '2025-03-20',
+        uhrzeit: '11:15:00',
+        coach: 'Thomas Schmidt',
+        companyname: 'Mercedes Bremen',
+        saeule: 'Strategie',
+        mentors: [],
+        status: 'looking_for_mentor',
+        mentorRequests: ['Felix', 'Hannah'],
+        assignedMentors: []
     },
-	{
+    {
         id: 5,
-        datum_uhrzeit: '2024-08-01T16:00:00',
-        coach: 'John Doe',
-        companyname: 'Bruker Bremen',
-        saeule: 'Technology',
-        mentors: ['Nancy', 'Oscar'],
-        status: 'mentor_found',
-		mentorRequests: ['Peggy', 'Quentin'],
-		assignedMentors: ['Nancy']
+        datum: '2025-03-25',
+        uhrzeit: '16:45:00',
+        coach: 'Lisa Meyer',
+        companyname: 'Werder Bremen',
+        saeule: 'Leadership',
+        mentors: [],
+        status: 'in_process',
+        mentorRequests: ['Isabella', 'Julian'],
+        assignedMentors: []
     },
     {
         id: 6,
-        datum_uhrzeit: '2024-08-05T13:00:00',
-        coach: 'Jane Smith',
-        companyname: 'Airbus Bremen',
-        saeule: 'Finance',
-        mentors: ['Rachel'],
+        datum: '2025-04-01',
+        uhrzeit: '13:00:00',
+        coach: 'Paul Wagner',
+        companyname: 'Jacobs University',
+        saeule: 'Innovation',
+        mentors: ['Klara'],
         status: 'mentor_found',
-		mentorRequests: ['Steve', 'Tina'],
-		assignedMentors: ['Rachel']
+        mentorRequests: [],
+        assignedMentors: ['Klara']
     },
     {
         id: 7,
-        datum_uhrzeit: '2024-08-12T17:00:00',
-        coach: 'John Doe',
-        companyname: 'Bruker Bremen',
-        saeule: 'Human Resources',
-        mentors: ['Uma', 'Victor'],
-        status: 'mentor_found',
-		mentorRequests: ['Wendy', 'Xavier'],
-		assignedMentors: ['Uma']
+        datum: '2025-04-10',
+        uhrzeit: '10:30:00',
+        coach: 'Nina Fischer',
+        companyname: 'Kühne + Nagel',
+        saeule: 'Marketing',
+        mentors: [],
+        status: 'looking_for_mentor',
+        mentorRequests: ['Lukas', 'Mia'],
+        assignedMentors: []
     },
     {
         id: 8,
-        datum_uhrzeit: '2024-08-18T10:00:00',
-        coach: 'Jane Smith',
-        companyname: 'Mercedes-Benz Bremen',
-        saeule: 'Operations',
-        mentors: ['Yara'],
+        datum: '2025-04-15',
+        uhrzeit: '15:15:00',
+        coach: 'Oliver Bauer',
+        companyname: 'Vitakraft',
+        saeule: 'Strategie',
+        mentors: ['Nora'],
+        status: 'mentor_found',
+        mentorRequests: [],
+        assignedMentors: ['Nora']
+    },
+    {
+        id: 9,
+        datum: '2025-04-20',
+        uhrzeit: '08:45:00',
+        coach: 'Sophie Klein',
+        companyname: 'BLG Logistics',
+        saeule: 'Leadership',
+        mentors: [],
         status: 'in_process',
-		mentorRequests: ['Zack', 'Amy'],
-		assignedMentors: ['Yara']
+        mentorRequests: ['Oscar', 'Paula'],
+        assignedMentors: []
+    },
+    {
+        id: 10,
+        datum: '2025-04-25',
+        uhrzeit: '14:30:00',
+        coach: 'Robert Müller',
+        companyname: 'Univeg Deutschland',
+        saeule: 'Innovation',
+        mentors: ['Quentin', 'Rosa'],
+        status: 'mentor_found',
+        mentorRequests: [],
+        assignedMentors: ['Quentin']
     }
 ];
